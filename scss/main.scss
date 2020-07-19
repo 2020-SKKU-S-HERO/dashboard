@@ -1,0 +1,44 @@
+@font-face {
+  font-family: Roboto;
+  src: url('../fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: Noto Sans KR;
+  src: url("../fonts/NotoSansKR-Regular.otf");
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #333333;
+  font-family: Roboto, Noto Sans KR, sans-serif;
+}
+
+.global-nav-container {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+  padding: 10px;
+  
+  .global-nav {
+    margin: 0 auto;
+    
+    .global-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      li a {
+        color: #333333;
+        padding: 10px;
+        font-size: 16px;
+        
+        img {
+          width: 40px;
+        }
+      }
+    }
+  }
+}
+
+.inner-width {
+  max-width: 1000px;
+}

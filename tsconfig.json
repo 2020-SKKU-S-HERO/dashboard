@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "target": "es6",
+    "outDir": "js",
+    "sourceMap": true,
+    "removeComments": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
