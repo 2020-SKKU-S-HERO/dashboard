@@ -3,15 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express = require("express");
 const nunjucks = require("nunjucks");
-const admin_1 = require("./routes/admin");
+const status_1 = require("./routes/status");
 class App {
     constructor() {
         this.app = express();
+        this.setStatic();
         this.setRouting();
         this.setViewEngine();
     }
+    setStatic() {
+        this.app.use("/css", express.static("css"));
+        this.app.use("/images", express.static("images"));
+    }
     setRouting() {
-        this.app.use("/admin", admin_1.admin);
+        this.app.use("/status", status_1.status);
     }
     setViewEngine() {
         nunjucks.configure("template", {

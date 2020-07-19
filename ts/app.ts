@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as nunjucks from "nunjucks";
-import { admin } from "./routes/admin";
+import { status } from "./routes/status";
 
 class App {
     
@@ -9,12 +9,18 @@ class App {
     constructor() {
         this.app = express();
     
+        this.setStatic();
         this.setRouting();
         this.setViewEngine();
     }
     
+    setStatic(): void {
+        this.app.use("/css", express.static("css"));
+        this.app.use("/images", express.static("images"));
+    }
+    
     setRouting(): void {
-        this.app.use("/admin", admin);
+        this.app.use("/status", status);
     }
     
     setViewEngine(): void {

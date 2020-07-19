@@ -5,6 +5,6 @@ const express = require("express");
 const router = express.Router();
 exports.status = router;
 router.get('/', (req, res) => {
-    res.send("admin app");
+    res.render("status/status.html");
 });
-//# sourceMappingURL=admin.js.map
+//# sourceMappingURL=status.js.map

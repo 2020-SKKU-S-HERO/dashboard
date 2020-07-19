@@ -1,8 +1,8 @@
 import * as express from "express";
 
 const router: express.Router = express.Router();
-export { router as admin };
+export { router as status };
 
 router.get('/', (req, res): void => {
-    res.send("admin app");
+    res.render("status/status.html");
 });
