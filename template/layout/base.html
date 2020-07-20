@@ -7,27 +7,50 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/main.css">
 </head>
 <body>
-    <header>
-        <div class="global-nav-container">
-            <nav class="global-nav inner-width">
-                <ul class="global-nav-links">
-                    <li><a href="#"><img src="../../images/shero-logo.png" alt="shero-logo"></a></li>
-                    <li><a href="#">Status</a></li>
-                    <li><a href="#">Control</a></li>
+    <div class="body-container">
+        <header>
+            <div class="global-nav-container">
+                <nav class="global-nav">
+                    <div class="logo">
+                        <a href="#"><img src="../../images/shero-logo.png" alt="shero-logo"></a>
+                        <a href="#">S HERO :: Carbonium TEAM</a>
+                    </div>
+                    <ul class="global-nav-links">
+                        <li><a href="#">Status</a></li>
+                        <li><a href="#">Control</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <nav class="sidebar-nav">
+                <ul class="sidebar-nav-links">
+                    <li class="nav-time">
+                        <a href="#">
+                            <span>DashBoard</span>
+                            <img src="../../images/svg/arrow.svg">
+                        </a>
+                    </li>
+                    <li class="nav-time">
+                        <a href="#">
+                            <span>Control</span>
+                            <img src="../../images/svg/arrow.svg">
+                        </a>
+                    </li>
                 </ul>
             </nav>
-        </div>
-    </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-    <footer>
-
-    </footer>
+            <div class="content-container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+        <footer>
+        
+        </footer>
+    </div>
 </body>
 </html>

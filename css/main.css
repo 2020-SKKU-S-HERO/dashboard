@@ -6,35 +6,108 @@
   font-family: Noto Sans KR;
   src: url("../fonts/NotoSansKR-Regular.otf");
 }
+html {
+  min-height: 100vh;
+}
+
 body {
-  background-color: #FFFFFF;
-  color: #333333;
   font-family: Roboto, Noto Sans KR, sans-serif;
+  height: 100vh;
+}
+
+.body-container {
+  height: 100%;
 }
 
 .global-nav-container {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
-  padding: 10px;
+  height: 50px;
+  color: #FFFFFF;
+  background-color: #5A3D63;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }
 .global-nav-container .global-nav {
-  margin: 0 auto;
+  height: 100%;
+  display: flex;
+}
+.global-nav-container .global-nav .logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+.global-nav-container .global-nav .logo a {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  height: 100%;
+  color: #FFFFFF;
+}
+.global-nav-container .global-nav .logo a img {
+  width: 30px;
 }
 .global-nav-container .global-nav .global-nav-links {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.global-nav-container .global-nav .global-nav-links li a {
-  color: #333333;
-  padding: 10px;
-  font-size: 16px;
+.global-nav-container .global-nav .global-nav-links li {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
-.global-nav-container .global-nav .global-nav-links li a img {
-  width: 40px;
+.global-nav-container .global-nav .global-nav-links li a {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  height: 100%;
+  color: #FFFFFF;
+  transition-duration: 0.5s;
+}
+.global-nav-container .global-nav .global-nav-links li a:hover {
+  background-color: #815C8D;
 }
 
-.inner-width {
-  max-width: 1000px;
+main {
+  display: flex;
+  height: calc(100% - 50px);
+}
+main .sidebar-nav {
+  background-color: #3C2942;
+  color: #FFFFFF;
+  width: 300px;
+}
+main .sidebar-nav .sidebar-nav-links .nav-time {
+  height: 50px;
+}
+main .sidebar-nav .sidebar-nav-links .nav-time a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  color: #FFFFFF;
+  transition-duration: 0.5s;
+}
+main .sidebar-nav .sidebar-nav-links .nav-time a img {
+  height: 10px;
+  margin-left: auto;
+}
+main .sidebar-nav .sidebar-nav-links .nav-time a:hover {
+  background-color: #553D5C;
+}
+
+.content-container {
+  width: 100%;
+}
+
+.chart {
+  border: 1px solid #DDDDDD;
+  padding: 10px;
+}
+.chart iframe {
+  height: 40vh;
+  width: 100%;
 }
 
 /*# sourceMappingURL=main.css.map */
