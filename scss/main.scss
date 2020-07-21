@@ -9,6 +9,7 @@ $headerHeight: 50px;
 $sidebarFontColor: #FFFFFF;
 $sidebarBackgroundColor: #3C2942;
 $sidebarHoverBackgroundColor: #553D5C;
+$sidebarWidth: 250px;
 
 
 @font-face {
@@ -99,7 +100,7 @@ main {
   .sidebar-nav {
     background-color: $sidebarBackgroundColor;
     color: $sidebarFontColor;
-    width: 300px;
+    width: $sidebarWidth;
     
     .sidebar-nav-links {
       
@@ -131,11 +132,13 @@ main {
 }
 
 .content-container {
-  width: 100%;
+  width: calc(100% - #{$sidebarWidth});
+  padding: 10px;
 }
 
 .chart {
-  border: 1px solid #DDDDDD;
+  border: 2px solid #DFDFDF;
+  border-radius: 5px;
   padding: 10px;
   
   iframe {

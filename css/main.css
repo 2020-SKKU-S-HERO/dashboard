@@ -75,7 +75,7 @@ main {
 main .sidebar-nav {
   background-color: #3C2942;
   color: #FFFFFF;
-  width: 300px;
+  width: 250px;
 }
 main .sidebar-nav .sidebar-nav-links .nav-time {
   height: 50px;
@@ -98,11 +98,13 @@ main .sidebar-nav .sidebar-nav-links .nav-time a:hover {
 }
 
 .content-container {
-  width: 100%;
+  width: calc(100% - 250px);
+  padding: 10px;
 }
 
 .chart {
-  border: 1px solid #DDDDDD;
+  border: 2px solid #DFDFDF;
+  border-radius: 5px;
   padding: 10px;
 }
 .chart iframe {
