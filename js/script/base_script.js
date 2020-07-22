@@ -31,9 +31,6 @@ if (menuEl) {
 window.addEventListener('resize', () => {
     if (sidebarEl) {
         if (window.innerWidth > 768) {
-            sidebarEl.style.transitionDuration = "0s";
-            sidebarEl.style.left = "0";
-            sidebarEl.style.position = "static";
             if (isClosed) {
                 sidebarEl.style.width = "0px";
             }
@@ -42,8 +39,6 @@ window.addEventListener('resize', () => {
             }
         }
         else {
-            sidebarEl.style.transitionDuration = "0.5s";
-            sidebarEl.style.position = "fixed";
             sidebarEl.style.width = "100vw";
             if (isClosed) {
                 sidebarEl.style.left = "-100vw";

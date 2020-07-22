@@ -84,7 +84,6 @@ main .sidebar-nav {
   background-color: #3C2942;
   color: #FFFFFF;
   width: 0;
-  transition-duration: 0.5s;
 }
 main .sidebar-nav .sidebar-nav-links .nav-time {
   height: 50px;
