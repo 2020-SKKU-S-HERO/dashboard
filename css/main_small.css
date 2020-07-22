@@ -1,0 +1,11 @@
+main .sidebar-nav {
+  position: fixed;
+  height: 100vh;
+}
+
+.chart iframe {
+  height: 250px;
+  width: 100%;
+}
+
+/*# sourceMappingURL=main_small.css.map */

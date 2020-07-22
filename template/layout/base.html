@@ -7,50 +7,48 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../css/reset.css">
-    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" media="(max-width: 768px)" href="css/main_small.css">
 </head>
 <body>
-    <div class="body-container">
-        <header>
-            <div class="global-nav-container">
-                <nav class="global-nav">
-                    <div class="logo">
-                        <a href="#"><img src="../../images/shero-logo.png" alt="shero-logo"></a>
-                        <a href="#">S HERO :: Carbonium TEAM</a>
-                    </div>
-                    <ul class="global-nav-links">
-                        <li><a href="#">Status</a></li>
-                        <li><a href="#">Control</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-        <main>
-            <nav class="sidebar-nav">
-                <ul class="sidebar-nav-links">
-                    <li class="nav-time">
-                        <a href="#">
-                            <span>DashBoard</span>
-                            <img src="../../images/svg/arrow.svg">
-                        </a>
-                    </li>
-                    <li class="nav-time">
-                        <a href="#">
-                            <span>Control</span>
-                            <img src="../../images/svg/arrow.svg">
-                        </a>
-                    </li>
+    <header>
+        <div class="global-nav-container">
+            <nav class="global-nav">
+                <div class="logo">
+                    <a href="#"><div class="logo-image">shero-logo</div></a>
+                </div>
+                <ul class="global-nav-links">
+                    <li><a href="#" id="menu-toggle-btn"><img src="images/svg/menu.svg" alt="menu"></a></li>
                 </ul>
             </nav>
-            <div class="content-container">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </main>
-        <footer>
-        
-        </footer>
-    </div>
+        </div>
+    </header>
+    <main>
+        <nav class="sidebar-nav">
+            <ul class="sidebar-nav-links">
+                <li class="nav-time">
+                    <a href="#">
+                        <span>DashBoard</span>
+                        <img src="images/svg/arrow.svg">
+                    </a>
+                </li>
+                <li class="nav-time">
+                    <a href="#">
+                        <span>Control</span>
+                        <img src="images/svg/arrow.svg">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content-container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+    <footer>
+    
+    </footer>
+    <script src="js/script/base_script.js"></script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 @font-face {
   font-family: Roboto;
-  src: url("../fonts/Roboto-Regular.ttf");
+  src: url("fonts/Roboto-Regular.ttf");
 }
 @font-face {
   font-family: Noto Sans KR;
-  src: url("../fonts/NotoSansKR-Regular.otf");
+  src: url("fonts/NotoSansKR-Regular.otf");
 }
 html {
   min-height: 100vh;
@@ -12,23 +12,19 @@ html {
 
 body {
   font-family: Roboto, Noto Sans KR, sans-serif;
-  height: 100vh;
-}
-
-.body-container {
-  height: 100%;
+  min-height: 100vh;
 }
 
 .global-nav-container {
   height: 50px;
   color: #FFFFFF;
   background-color: #5A3D63;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 .global-nav-container .global-nav {
   height: 100%;
   display: flex;
+  padding: 0 14px;
 }
 .global-nav-container .global-nav .logo {
   height: 100%;
@@ -39,12 +35,24 @@ body {
 .global-nav-container .global-nav .logo a {
   display: flex;
   align-items: center;
-  padding: 0 10px;
-  height: 100%;
   color: #FFFFFF;
 }
-.global-nav-container .global-nav .logo a img {
-  width: 30px;
+.global-nav-container .global-nav .logo a .logo-image {
+  height: 35px;
+  width: 35px;
+  background: url("../images/svg/logo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  text-indent: -9999px;
+  transition-duration: 0.5s;
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+.global-nav-container .global-nav .logo a .logo-image:hover {
+  background: url("../images/svg/logo-active.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .global-nav-container .global-nav .global-nav-links {
   display: flex;
@@ -70,12 +78,13 @@ body {
 
 main {
   display: flex;
-  height: calc(100% - 50px);
+  min-height: calc(100% - 50px);
 }
 main .sidebar-nav {
   background-color: #3C2942;
   color: #FFFFFF;
-  width: 250px;
+  width: 0;
+  transition-duration: 0.5s;
 }
 main .sidebar-nav .sidebar-nav-links .nav-time {
   height: 50px;
@@ -88,6 +97,7 @@ main .sidebar-nav .sidebar-nav-links .nav-time a {
   padding: 20px;
   color: #FFFFFF;
   transition-duration: 0.5s;
+  font-size: 14px;
 }
 main .sidebar-nav .sidebar-nav-links .nav-time a img {
   height: 10px;
@@ -98,17 +108,19 @@ main .sidebar-nav .sidebar-nav-links .nav-time a:hover {
 }
 
 .content-container {
-  width: calc(100% - 250px);
-  padding: 10px;
+  width: 100%;
+  padding: 20px;
 }
 
 .chart {
+  width: 100%;
   border: 2px solid #DFDFDF;
   border-radius: 5px;
   padding: 10px;
+  margin-bottom: 20px;
 }
 .chart iframe {
-  height: 40vh;
+  height: 40vw;
   width: 100%;
 }
 

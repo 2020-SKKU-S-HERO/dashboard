@@ -17,6 +17,8 @@ class App {
     setStatic(): void {
         this.app.use("/css", express.static("css"));
         this.app.use("/images", express.static("images"));
+        this.app.use("/js", express.static("js"));
+        this.app.use("/fonts", express.static("fonts"));
     }
     
     setRouting(): void {

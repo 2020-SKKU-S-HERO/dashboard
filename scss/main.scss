@@ -1,11 +1,10 @@
-
 // header
 $headerFontColor: #FFFFFF;
 $headerBackgroundColor: #5A3D63;
 $headerHoverBackgroundColor: #815C8D;
 $headerHeight: 50px;
 
-//sidebar
+// sidebar
 $sidebarFontColor: #FFFFFF;
 $sidebarBackgroundColor: #3C2942;
 $sidebarHoverBackgroundColor: #553D5C;
@@ -14,12 +13,12 @@ $sidebarWidth: 250px;
 
 @font-face {
   font-family: Roboto;
-  src: url("../fonts/Roboto-Regular.ttf");
+  src: url("fonts/Roboto-Regular.ttf");
 }
 
 @font-face {
   font-family: Noto Sans KR;
-  src: url("../fonts/NotoSansKR-Regular.otf");
+  src: url("fonts/NotoSansKR-Regular.otf");
 }
 
 html {
@@ -28,23 +27,19 @@ html {
 
 body {
   font-family: Roboto, Noto Sans KR, sans-serif;
-  height: 100vh;
-}
-
-.body-container {
-  height: 100%;
+  min-height: 100vh;
 }
 
 .global-nav-container {
   height: $headerHeight;
   color: $headerFontColor;
   background-color: $headerBackgroundColor;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   
   .global-nav {
     height: 100%;
     display: flex;
+    padding: 0 14px;
     
     .logo {
       height: 100%;
@@ -55,12 +50,25 @@ body {
       a {
         display: flex;
         align-items: center;
-        padding: 0 10px;
-        height: 100%;
         color: $headerFontColor;
   
-        img {
-          width: 30px;
+        .logo-image {
+          height: 35px;
+          width: 35px;
+          background: url("../images/svg/logo.svg");
+          background-size: contain;
+          background-repeat: no-repeat;
+          text-indent: -9999px;
+          transition-duration: 0.5s;
+          position: relative;
+          top: 2px;
+          left: 2px;
+    
+          &:hover {
+            background: url("../images/svg/logo-active.svg");
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
         }
       }
     }
@@ -95,15 +103,15 @@ body {
 
 main {
   display: flex;
-  height: calc(100% - #{$headerHeight});
+  min-height: calc(100% - #{$headerHeight});
   
   .sidebar-nav {
     background-color: $sidebarBackgroundColor;
     color: $sidebarFontColor;
-    width: $sidebarWidth;
+    width: 0;
+    transition-duration: 0.5s;
     
     .sidebar-nav-links {
-      
       
       .nav-time {
         height: 50px;
@@ -116,6 +124,7 @@ main {
           padding: 20px;
           color: $sidebarFontColor;
           transition-duration: 0.5s;
+          font-size: 14px;
           
           img {
             height: 10px;
@@ -132,17 +141,19 @@ main {
 }
 
 .content-container {
-  width: calc(100% - #{$sidebarWidth});
-  padding: 10px;
+  width: 100%;
+  padding: 20px;
 }
 
 .chart {
+  width: 100%;
   border: 2px solid #DFDFDF;
   border-radius: 5px;
   padding: 10px;
+  margin-bottom: 20px;
   
   iframe {
-    height: 40vh;
+    height: 40vw;
     width: 100%;
   }
 }

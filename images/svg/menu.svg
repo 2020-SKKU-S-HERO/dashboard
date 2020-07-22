@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <g id="그룹_8" data-name="그룹 8" transform="translate(-76.5 -221)">
+    <line id="선_9" data-name="선 9" class="cls-1" x2="20" transform="translate(76.5 222.5)"/>
+    <line id="선_10" data-name="선 10" class="cls-1" x2="20" transform="translate(76.5 231.5)"/>
+    <line id="선_11" data-name="선 11" class="cls-1" x2="20" transform="translate(76.5 240.5)"/>
+  </g>
+</svg>

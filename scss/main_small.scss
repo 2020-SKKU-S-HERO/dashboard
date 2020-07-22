@@ -1,0 +1,26 @@
+// header
+$headerFontColor: #FFFFFF;
+$headerBackgroundColor: #5A3D63;
+$headerHoverBackgroundColor: #815C8D;
+$headerHeight: 50px;
+
+//sidebar
+$sidebarFontColor: #FFFFFF;
+$sidebarBackgroundColor: #3C2942;
+$sidebarHoverBackgroundColor: #553D5C;
+$sidebarWidth: 100vw;
+
+main {
+  .sidebar-nav {
+    position: fixed;
+    height: 100vh;
+  }
+}
+
+.chart {
+  
+  iframe {
+    height: 250px;
+    width: 100%;
+  }
+}

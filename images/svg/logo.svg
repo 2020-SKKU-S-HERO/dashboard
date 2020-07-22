@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #be80bd;
+      }
+
+      .cls-2 {
+        fill: #be80bd;
+        font-size: 28px;
+        font-family: SitkaBanner-Bold, Sitka Banner;
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="그룹_6" data-name="그룹 6" transform="translate(-36 -89)">
+    <g id="타원_1" data-name="타원 1" class="cls-1" transform="translate(36 90)">
+      <circle class="cls-3" cx="12" cy="12" r="12"/>
+      <circle class="cls-4" cx="12" cy="12" r="11.5"/>
+    </g>
+    <text id="S" class="cls-2" transform="translate(41 111)"><tspan x="0" y="0">S</tspan></text>
+  </g>
+</svg>
