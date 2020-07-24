@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as nunjucks from "nunjucks";
-import { status } from "./routes/status";
+import { dashboardRouter } from "./routes/dashboard";
+import { controlRouter } from "./routes/control";
 
 class App {
     
@@ -26,7 +27,8 @@ class App {
             res.render("index.html");
         });
         
-        this.app.use("/status", status);
+        this.app.use("/dashboard", dashboardRouter);
+        this.app.use("/control", controlRouter);
     }
     
     setViewEngine(): void {

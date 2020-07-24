@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express = require("express");
 const nunjucks = require("nunjucks");
-const status_1 = require("./routes/status");
+const dashboard_1 = require("./routes/dashboard");
+const control_1 = require("./routes/control");
 class App {
     constructor() {
         this.app = express();
@@ -21,7 +22,8 @@ class App {
         this.app.get("", (req, res) => {
             res.render("index.html");
         });
-        this.app.use("/status", status_1.status);
+        this.app.use("/dashboard", dashboard_1.dashboardRouter);
+        this.app.use("/control", control_1.controlRouter);
     }
     setViewEngine() {
         nunjucks.configure("template", {

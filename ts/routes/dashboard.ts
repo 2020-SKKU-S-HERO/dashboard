@@ -1,8 +1,8 @@
 import * as express from "express";
 
 const router: express.Router = express.Router();
-export { router as status };
+export { router as dashboardRouter };
 
 router.get('/', (req, res): void => {
-    res.render("status/status.html");
+    res.render("dashboard.html");
 });

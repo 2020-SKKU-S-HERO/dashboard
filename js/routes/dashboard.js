@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.status = void 0;
+exports.dashboardRouter = void 0;
 const express = require("express");
 const router = express.Router();
-exports.status = router;
+exports.dashboardRouter = router;
 router.get('/', (req, res) => {
-    res.render("status/status.html");
+    res.render("dashboard.html");
 });
-//# sourceMappingURL=status.js.map
+//# sourceMappingURL=dashboard.js.map
