@@ -103,7 +103,7 @@ body {
 
 main {
   display: flex;
-  min-height: calc(100% - #{$headerHeight});
+  min-height: calc(100vh - #{$headerHeight});
   
   .sidebar-nav {
     background-color: $sidebarBackgroundColor;

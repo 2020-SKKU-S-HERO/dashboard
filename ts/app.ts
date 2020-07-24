@@ -22,6 +22,10 @@ class App {
     }
     
     setRouting(): void {
+        this.app.get("", (req, res): void => {
+            res.render("index.html");
+        });
+        
         this.app.use("/status", status);
     }
     
@@ -31,7 +35,6 @@ class App {
             express: this.app
         });
     }
-    
 }
 
 export const app: express.Express = new App().app;

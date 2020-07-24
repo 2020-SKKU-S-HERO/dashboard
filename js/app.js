@@ -18,6 +18,9 @@ class App {
         this.app.use("/fonts", express.static("fonts"));
     }
     setRouting() {
+        this.app.get("", (req, res) => {
+            res.render("index.html");
+        });
         this.app.use("/status", status_1.status);
     }
     setViewEngine() {

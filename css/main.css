@@ -78,7 +78,7 @@ body {
 
 main {
   display: flex;
-  min-height: calc(100% - 50px);
+  min-height: calc(100vh - 50px);
 }
 main .sidebar-nav {
   background-color: #3C2942;
