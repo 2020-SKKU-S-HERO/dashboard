@@ -1,0 +1,30 @@
+// common
+@mixin shadowDefault {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12),
+              0 1px 2px rgba(0, 0, 0, .24);
+}
+
+@mixin borderDefault($direction) {
+  @if ($direction == top) {
+    border-top: 1px solid #DDDDDD;
+  } @else if ($direction == bottom) {
+    border-bottom: 1px solid #DDDDDD;
+  }
+}
+
+// header
+$headerFontColor: #FFFFFF;
+$headerBackgroundColor: #3F50B4;
+$headerHoverFontColor: #FFFFFF;
+$headerHoverBackgroundColor: #5260B8;
+$headerHeight: 50px;
+
+// sidebar
+$sidebarFontColor: #444444;
+$sidebarBackgroundColor: #FFFFFF;
+$sidebarHoverFontColor: #000000;
+$sidebarHoverBackgroundColor: #E4E4F6;
+$sidebarWidth: 300px;
+
+// content
+$contentHeaderHeight: 40px;

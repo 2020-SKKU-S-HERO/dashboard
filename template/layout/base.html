@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>{{ Title }}</title>
+    <title>{{ title }}</title>
     <meta name="author" content="701b">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,17 +12,16 @@
     
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" media="(max-width: 768px)" href="css/main_small.css">
 </head>
 <body>
     <header>
         <div class="global-nav-container">
             <nav class="global-nav">
                 <div class="logo">
-                    <a href="/"><div class="logo-image">shero-logo</div></a>
+                    <a href="/"><img src="images/svg/logo.svg" alt=""></a>
                 </div>
                 <ul class="global-nav-links">
-                    <li><a href="#" id="menu-toggle-btn"><img src="images/svg/menu.svg" alt="menu"></a></li>
+                    <li><a href="#" id="menu-toggle-btn"><img src="images/svg/menu.svg" alt=""></a>
                 </ul>
             </nav>
         </div>
@@ -30,13 +29,35 @@
     <main>
         <nav class="sidebar-nav">
             <ul class="sidebar-nav-links">
-                <li class="nav-time">
-                    <a href="/dashboard">
+                <li class="nav-item">
+                    <a href="#">
                         <span>DashBoard</span>
                         <img src="images/svg/arrow.svg">
                     </a>
+                    <ul class="sidebar-detail-nav-links">
+                        <li class="nav-item">
+                            <a href="/dashboard">
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                <span>Location 1</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                <span>Location 2</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                <span>Location 3</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="nav-time">
+                <li class="nav-item">
                     <a href="/control">
                         <span>Control</span>
                         <img src="images/svg/arrow.svg">
@@ -45,8 +66,13 @@
             </ul>
         </nav>
         <div class="content-container">
-            {% block content %}
-            {% endblock %}
+            <div class="content-header">
+                <span>Dashboard - Home</span>
+            </div>
+            <div class="content-main">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
     </main>
     <footer>

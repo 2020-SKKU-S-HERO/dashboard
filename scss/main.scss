@@ -1,24 +1,21 @@
-// header
-$headerFontColor: #FFFFFF;
-$headerBackgroundColor: #5A3D63;
-$headerHoverBackgroundColor: #815C8D;
-$headerHeight: 50px;
+@import "main_common";
 
-// sidebar
-$sidebarFontColor: #FFFFFF;
-$sidebarBackgroundColor: #3C2942;
-$sidebarHoverBackgroundColor: #553D5C;
-$sidebarWidth: 250px;
+@media (max-width: 768px) {
+  @import "main_small";
+}
 
+@media (min-width: 768px) {
+  @import "main_big";
+}
 
 @font-face {
   font-family: Roboto;
-  src: url("fonts/Roboto-Regular.ttf");
+  src: url("../fonts/Roboto-Regular.ttf");
 }
 
 @font-face {
   font-family: Noto Sans KR;
-  src: url("fonts/NotoSansKR-Regular.otf");
+  src: url("../fonts/NotoSansKR-Regular.otf");
 }
 
 html {
@@ -31,10 +28,12 @@ body {
 }
 
 .global-nav-container {
+  position: relative;
   height: $headerHeight;
   color: $headerFontColor;
   background-color: $headerBackgroundColor;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  @include shadowDefault;
+  z-index: 100;
   
   .global-nav {
     height: 100%;
@@ -46,29 +45,22 @@ body {
       display: flex;
       align-items: center;
       margin-right: auto;
-  
+      
       a {
         display: flex;
         align-items: center;
         color: $headerFontColor;
-  
-        .logo-image {
+        
+        #logo-image {
           height: 35px;
           width: 35px;
           background: url("../images/svg/logo.svg");
           background-size: contain;
           background-repeat: no-repeat;
           text-indent: -9999px;
-          transition-duration: 0.5s;
           position: relative;
           top: 2px;
           left: 2px;
-    
-          &:hover {
-            background: url("../images/svg/logo-active.svg");
-            background-size: contain;
-            background-repeat: no-repeat;
-          }
         }
       }
     }
@@ -77,22 +69,24 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-  
+      
       li {
         display: flex;
         align-items: center;
         height: 100%;
-  
+        
         a {
           display: flex;
           align-items: center;
           padding: 10px;
           height: 100%;
           color: $headerFontColor;
-          transition-duration: 0.5s;
-    
-          &:hover {
-            background-color: $headerHoverBackgroundColor;
+          
+          #menu-toggle-btn-image {
+            height: 21px;
+            width: 20px;
+            background: url("../images/svg/menu.svg");
+            text-indent: -9999px;
           }
         }
       }
@@ -104,44 +98,160 @@ body {
 main {
   display: flex;
   min-height: calc(100vh - #{$headerHeight});
+  width: 100%;
   
   .sidebar-nav {
     background-color: $sidebarBackgroundColor;
     color: $sidebarFontColor;
-    width: 0;
+    @include shadowDefault;
+    z-index: 99;
     
     .sidebar-nav-links {
       
-      .nav-time {
-        height: 50px;
+      >.nav-item {
+        transition-duration: 0.5s;
         
-        a {
+        >a {
           display: flex;
           align-items: center;
           width: 100%;
-          height: 100%;
+          height: 50px;
           padding: 20px;
           color: $sidebarFontColor;
-          transition-duration: 0.5s;
           font-size: 14px;
           
           img {
+            transition-duration: 0.5s;
             height: 10px;
             margin-left: auto;
           }
+        }
+        
+        .sidebar-detail-nav-links {
+          overflow: hidden;
           
-          &:hover {
-            background-color: $sidebarHoverBackgroundColor;
+          >.nav-item {
+            height: 0;
+            transition-duration: 0.5s;
+            
+            >a {
+              display: flex;
+              align-items: center;
+              width: 100%;
+              height: 100%;
+              padding-left: 30px;
+              color: $sidebarFontColor;
+              font-size: 12px;
+              transition-duration: 0.5s;
+            }
+          }
+        }
+      }
+    }
+  
+    .sidebar-nav-links--extended {
+      
+      >a {
+        background-color: $sidebarHoverBackgroundColor !important;
+        color: $sidebarHoverFontColor !important;
+      }
+    
+      img {
+        transform: rotate(90deg);
+      }
+    
+      .sidebar-detail-nav-links {
+        
+        >.nav-item {
+          height: 40px !important;
+        }
+      }
+    }
+  }
+  
+  .sidebar-nav--extended {
+    // big, small에서 정의됨.
+  }
+  
+  .content-container {
+    position: relative;
+    width: 100%;
+    z-index: 98;
+    
+    .content-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 50px;
+      padding-left: 20px;
+      color: #222222;
+      font-size: 16px;
+      @include shadowDefault;
+      z-index: 97;
+    }
+    
+    .content-main {
+      display: flex;
+      height: calc(100% - #{$contentHeaderHeight});
+      background-color: #ECEBEB;
+      padding: 0 10px;
+      
+      .card {
+        flex-wrap: wrap;
+        max-width: 50%;
+        width: 100%;
+        padding: 20px 10px;
+  
+        .card-content {
+          width: 100%;
+          background-color: #FFFFFF;
+          @include shadowDefault;
+    
+          .division-line {
+            @include borderDefault(top);
+          }
+          
+          .card-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            font-size: 16px;
+          }
+    
+          .list-header {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            width: 100%;
+            padding-left: 20px;
+            font-size: 14px;
+          }
+    
+          .list {
+      
+            > li {
+              display: flex;
+              align-items: center;
+              height: 50px;
+              width: 100%;
+              padding-left: 20px;
+              font-size: 14px;
+              @include borderDefault(bottom);
+            }
+      
+            > li:last-child {
+              border: none;
+            }
           }
         }
       }
     }
   }
-}
-
-.content-container {
-  width: 100%;
-  padding: 20px;
+  
+  .content-container--reduced {
+    // big에서 정의됨.
+  }
 }
 
 .chart {

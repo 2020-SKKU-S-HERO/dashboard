@@ -1,47 +1,21 @@
-const sidebarEl: HTMLElement | null = document.querySelector(".sidebar-nav");
-const menuEl: HTMLElement | null = document.querySelector("#menu-toggle-btn");
+const sidebarEl: HTMLElement | null = document.querySelector('.sidebar-nav');
+const menuEl: HTMLElement | null = document.querySelector('#menu-toggle-btn');
+const contentContainerEl: HTMLElement | null = document.querySelector('.content-container');
+const sidebarNavItemElList: NodeListOf<HTMLElement> = document.querySelectorAll('.sidebar-nav-links>.nav-item');
 
-let isClosed: boolean = true;
+menuEl?.addEventListener('click', (): void => {
+    contentContainerEl?.classList.toggle('content-container--reduced');
+    sidebarEl?.classList.toggle('sidebar--extended');
+});
 
-if (menuEl) {
-    menuEl.addEventListener("click", (): void => {
-        if (sidebarEl) {
-            if (window.innerWidth > 768) {
-                if (isClosed) {
-                    sidebarEl.style.width = "350px";
-                    isClosed = false;
-                } else {
-                    sidebarEl.style.width = "0px";
-                    isClosed = true;
-                }
-            } else {
-                if (isClosed) {
-                    sidebarEl.style.left = "0";
-                    isClosed = false;
-                } else {
-                    sidebarEl.style.left = "-100vw";
-                    isClosed = true;
-                }
-            }
-        }
-    })
-}
+sidebarNavItemElList.forEach((el: HTMLElement): void => {
+    const child: HTMLElement | null = el.querySelector('a');
+    
+    child?.addEventListener('click', (): void => {
+        el.classList.toggle('sidebar-nav-links--extended')
+    });
+})
 
 window.addEventListener('resize', (): void => {
-    if (sidebarEl) {
-        if (window.innerWidth > 768) {
-            if (isClosed) {
-                sidebarEl.style.width = "0px";
-            } else {
-                sidebarEl.style.width = "350px";
-            }
-        } else {
-            sidebarEl.style.width = "100vw";
-            if (isClosed) {
-                sidebarEl.style.left = "-100vw";
-            } else {
-                sidebarEl.style.left = "0";
-            }
-        }
-    }
-})
+
+});

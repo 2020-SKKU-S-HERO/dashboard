@@ -1,0 +1,39 @@
+@import "main_common";
+
+.global-nav-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+main {
+  position: absolute;
+  top: $headerHeight;
+  
+  .sidebar-nav {
+    position: fixed;
+    height: calc(100vh - #{$headerHeight});
+    width: 100%;
+    left: -100%;
+    transition-duration: 0.5s;
+    z-index: 3;
+  }
+  
+  .sidebar--extended {
+    left: 0;
+  }
+  
+  .content-container {
+    z-index: 1;
+  }
+}
+
+.chart {
+  
+  iframe {
+    height: 250px;
+    width: 100%;
+  }
+}

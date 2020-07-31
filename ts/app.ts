@@ -1,7 +1,8 @@
-import * as express from "express";
-import * as nunjucks from "nunjucks";
-import { dashboardRouter } from "./routes/dashboard";
-import { controlRouter } from "./routes/control";
+import * as express from 'express';
+import * as nunjucks from 'nunjucks';
+import * as bodyParser from 'body-parser';
+import { dashboardRouter } from './routes/dashboard';
+import { controlRouter } from './routes/control';
 
 class App {
     
@@ -9,33 +10,39 @@ class App {
     
     constructor() {
         this.app = express();
-    
+        
+        this.setMiddleWare();
         this.setStatic();
         this.setRouting();
         this.setViewEngine();
     }
     
     setStatic(): void {
-        this.app.use("/css", express.static("css"));
-        this.app.use("/images", express.static("images"));
-        this.app.use("/js", express.static("js"));
-        this.app.use("/fonts", express.static("fonts"));
+        this.app.use('/css', express.static('css'));
+        this.app.use('/images', express.static('images'));
+        this.app.use('/js', express.static('js'));
+        this.app.use('/fonts', express.static('fonts'));
     }
     
     setRouting(): void {
-        this.app.get("", (req, res): void => {
-            res.render("index.html");
+        this.app.get('', (req, res): void => {
+            res.render('index.html');
         });
         
-        this.app.use("/dashboard", dashboardRouter);
-        this.app.use("/control", controlRouter);
+        this.app.use('/dashboard', dashboardRouter);
+        this.app.use('/control', controlRouter);
     }
     
     setViewEngine(): void {
-        nunjucks.configure("template", {
+        nunjucks.configure('template', {
             autoescape: true,
             express: this.app
         });
+    }
+    
+    setMiddleWare(): void {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
     }
 }
 

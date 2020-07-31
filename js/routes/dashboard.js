@@ -5,6 +5,6 @@ const express = require("express");
 const router = express.Router();
 exports.dashboardRouter = router;
 router.get('/', (req, res) => {
-    res.render("dashboard.html");
+    res.render("dashboard/home.html");
 });
 //# sourceMappingURL=dashboard.js.map
