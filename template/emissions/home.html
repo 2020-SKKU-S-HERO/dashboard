@@ -60,7 +60,9 @@
                 <ul class="chart-info">
                     <li class="info-item">
                         <div class="info-value">
-                            <span>20,000t</span>
+                            <span>
+                                {{ todayTotalEmissions }}
+                            </span>
                         </div>
                         <div class="info-description">
                             <span>오늘 누적 CO2 배출량</span>
@@ -95,10 +97,14 @@
                         <option value="2020-02">2020-02</option>
                         <option value="2020-03">2020-03</option>
                         <option value="2020-04">2020-04</option>
+                        <option value="2020-05">2020-05</option>
+                        <option value="2020-06">2020-06</option>
+                        <option value="2020-07">2020-07</option>
+                        <option value="2020-08">2020-08</option>
                     </select>
                 </div>
                 <div class="chart">
-                    <iframe id="past-emission-chart-home" src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
+                    <iframe id="past-emission-chart-home" src="" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">

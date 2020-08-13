@@ -1,4 +1,5 @@
-import * as express from "express";
+import * as express from 'express';
+import { app } from '../app';
 
 const router: express.Router = express.Router();
 export { router as emissionsRouter };
@@ -8,18 +9,21 @@ router.use('/images', express.static('images'));
 router.use('/js', express.static('js'));
 router.use('/fonts', express.static('fonts'));
 
-router.get('/home', (req: any, res: any): void => {
-    res.render("emissions/home.html");
+router.get('/home', (req: any, res: any, next: any): void => {
+    app.locals.todayTotalEmissions = '4,500t';
+    next();
+}, (req: any, res: any): void => {
+    res.render('emissions/home.html');
 });
 
 router.get('/workplace1', (req: any, res: any): void => {
-    res.render("emissions/workplace1.html");
+    res.render('emissions/workplace1.html');
 });
 
 router.get('/workplace2', (req: any, res: any): void => {
-    res.render("emissions/workplace2.html");
+    res.render('emissions/workplace2.html');
 });
 
 router.get('/workplace3', (req: any, res: any): void => {
-    res.render("emissions/workplace3.html");
+    res.render('emissions/workplace3.html');
 });
