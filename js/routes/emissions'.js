@@ -7,4 +7,4 @@ exports.emissionsRouter = router;
 router.get('/', (req, res) => {
     res.render("dashboard/home.html");
 });
-//# sourceMappingURL=dashboard.js.map
+//# sourceMappingURL=emissions'.js.map

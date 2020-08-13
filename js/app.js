@@ -4,7 +4,7 @@ exports.app = void 0;
 const express = require("express");
 const nunjucks = require("nunjucks");
 const bodyParser = require("body-parser");
-const dashboard_1 = require("./routes/dashboard");
+const emissions_1 = require("./routes/emissions");
 const control_1 = require("./routes/control");
 class App {
     constructor() {
@@ -24,7 +24,7 @@ class App {
         this.app.get('', (req, res) => {
             res.render('index.html');
         });
-        this.app.use('/dashboard', dashboard_1.dashboardRouter);
+        this.app.use('/emissions', emissions_1.emissionsRouter);
         this.app.use('/control', control_1.controlRouter);
     }
     setViewEngine() {

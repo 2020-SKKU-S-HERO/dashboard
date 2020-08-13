@@ -1,0 +1,128 @@
+{% set title = "탄소배출량 산정 시스템 : CO2 배출량 - 1번 사업장" %}
+{% extends "layout/base.html" %}
+
+{%  block content -%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="container-title">
+                <span>CO2 배출량 - 2번 사업장</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card card-red">
+                <div class="center-box">
+                    <div class="box-title">
+                        <span>올해 누적 CO2 배출량</span>
+                    </div>
+                    <div class="box-value">
+                        <span>455,240,000t</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card card-green">
+                <div class="center-box">
+                    <div class="box-title">
+                        <span>올해 남은 허용 CO2 배출량</span>
+                    </div>
+                    <div class="box-value">
+                        <span>72,850,000t</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card card-blue">
+                <div class="center-box">
+                    <div class="box-title">
+                        <span>올해 남은 허용 CO2 배출량</span>
+                    </div>
+                    <div class="box-value">
+                        <span>72,850,000t</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">
+                    <span>오늘 CO2 배출량</span>
+                </div>
+                <div class="chart">
+                    <iframe src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
+                </div>
+                <div class="chart-info">
+                    <div class="info-item">
+                        <div class="info-value">
+                            <span>20,000t</span>
+                        </div>
+                        <div class="info-description">
+                            <span>오늘 누적 CO2 배출량</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-value info-value--increase">
+                            <img src="" alt="">
+                            <span>14.5%</span>
+                        </div>
+                        <div class="info-description">
+                            <span>이번 달 평균 대비</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-value">
+                            <span>123,456</span>
+                        </div>
+                        <div class="info-description">
+                            <span>다른 어떤 데이터</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">
+                    <span>지난 CO2 배출량</span>
+                </div>
+                <div class="chart">
+                    <iframe src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
+                </div>
+                <div class="chart-info">
+                    <div class="info-item">
+                        <div class="info-value">
+                            <span>20,000t</span>
+                        </div>
+                        <div class="info-description">
+                            <span>오늘 누적 CO2 배출량</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-value">
+                            <img src="" alt="">
+                            <span>14.5%</span>
+                        </div>
+                        <div class="info-description">
+                            <span>이번 달 평균 대비</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-value">
+                            <span>123,456</span>
+                        </div>
+                        <div class="info-description">
+                            <span>다른 어떤 데이터</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock %}

@@ -36,15 +36,15 @@
     transition-duration: 0.5s;
   }
   .global-nav-container .global-nav .logo a:hover {
-    background-color: #5260B8;
-    color: #FFFFFF;
+    background-color: #EFEFEF;
+    color: #222222;
   }
   .global-nav-container .global-nav .global-nav-links li a {
     transition-duration: 0.5s;
   }
   .global-nav-container .global-nav .global-nav-links li a:hover {
-    background-color: #5260B8;
-    color: #FFFFFF;
+    background-color: #EFEFEF;
+    color: #222222;
   }
 
   main .sidebar-nav {
@@ -76,22 +76,37 @@
 }
 @font-face {
   font-family: Noto Sans KR;
+  src: url("../fonts/NotoSansKR-Light.otf");
+  font-weight: 300;
+}
+@font-face {
+  font-family: Noto Sans KR;
   src: url("../fonts/NotoSansKR-Regular.otf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: Noto Sans KR;
+  src: url("../fonts/NotoSansKR-Medium.otf");
+  font-weight: 500;
 }
 html {
   min-height: 100vh;
 }
 
 body {
-  font-family: Roboto, Noto Sans KR, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   min-height: 100vh;
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 .global-nav-container {
   position: relative;
   height: 50px;
-  color: #FFFFFF;
-  background-color: #3F50B4;
+  color: #222222;
+  background-color: #FFFFFF;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   z-index: 100;
 }
@@ -109,7 +124,7 @@ body {
 .global-nav-container .global-nav .logo a {
   display: flex;
   align-items: center;
-  color: #FFFFFF;
+  color: #222222;
 }
 .global-nav-container .global-nav .logo a #logo-image {
   height: 35px;
@@ -137,7 +152,7 @@ body {
   align-items: center;
   padding: 10px;
   height: 100%;
-  color: #FFFFFF;
+  color: #222222;
 }
 .global-nav-container .global-nav .global-nav-links li a #menu-toggle-btn-image {
   height: 21px;
@@ -206,74 +221,147 @@ main .content-container {
   width: 100%;
   z-index: 98;
 }
-main .content-container .content-header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 50px;
-  padding-left: 20px;
-  color: #222222;
-  font-size: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  z-index: 97;
-}
 main .content-container .content-main {
   display: flex;
-  height: calc(100% - 40px);
-  background-color: #ECEBEB;
-  padding: 0 10px;
+  height: 100%;
+  background-color: #F5F5F5;
 }
-main .content-container .content-main .card {
-  flex-wrap: wrap;
-  max-width: 50%;
-  width: 100%;
-  padding: 20px 10px;
-}
-main .content-container .content-main .card .card-content {
-  width: 100%;
-  background-color: #FFFFFF;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-main .content-container .content-main .card .card-content .division-line {
-  border-top: 1px solid #DDDDDD;
-}
-main .content-container .content-main .card .card-content .card-header {
-  display: flex;
-  align-items: center;
-  width: 100%;
+.container-fluid {
   padding: 20px;
-  font-size: 16px;
 }
-main .content-container .content-main .card .card-content .list-header {
-  display: flex;
-  align-items: center;
-  height: 40px;
-  width: 100%;
-  padding-left: 20px;
+
+.row {
+  margin: 0 -10px;
+}
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+  padding: 0 10px 20px 10px;
+}
+
+.container-title {
+  color: #676767;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 3px;
+  color: #222222;
   font-size: 14px;
-}
-main .content-container .content-main .card .card-content .list > li {
-  display: flex;
-  align-items: center;
-  height: 50px;
-  width: 100%;
-  padding-left: 20px;
-  font-size: 14px;
-  border-bottom: 1px solid #DDDDDD;
-}
-main .content-container .content-main .card .card-content .list > li:last-child {
   border: none;
 }
-.chart {
+.card .card-title {
+  font-size: 16px;
+  padding: 10px 15px;
+  margin: 0;
+}
+.card .chart-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  border-top: 1px solid #DDDDDD;
+}
+.card .chart-info .info-item {
+  text-align: center;
+}
+.card .chart-info .info-item .info-value {
+  margin-bottom: 5px;
+}
+.card .chart-info .info-item .info-description {
+  color: #AAAAAA;
+  font-weight: 300;
+}
+.card .chart-info .info-item .info-value--increase {
+  color: #EC407A;
+}
+.card .chart-info .info-item .info-value--decrease {
+  color: #02AAF6;
+}
+.card .center-box {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.card .center-box .box-title {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  padding-bottom: 20px;
+  text-shadow: 0 3px 3px rgba(0, 0, 0, 0.24);
+}
+.card .center-box .box-value {
+  font-size: 30px;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 3px 3px rgba(0, 0, 0, 0.24);
+}
+.card .chart {
+  height: 300px;
   width: 100%;
-  border: 2px solid #DFDFDF;
-  border-radius: 5px;
-  padding: 10px;
+}
+.card iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.weather-card {
+  height: 150px;
+}
+.weather-card .box-weather {
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
 }
-.chart iframe {
-  height: 40vw;
-  width: 100%;
+.weather-card .box-weather img {
+  padding-right: 10px;
+}
+.weather-card .box-weather span {
+  font-size: 30px;
+  padding-bottom: 2px;
+}
+.weather-card .box-weather-small {
+  display: flex;
+  align-items: center;
+}
+.weather-card .box-weather-small img {
+  padding-right: 5px;
+}
+.weather-card .box-weather-small span {
+  font-size: 17px;
+  padding-bottom: 3px;
+}
+
+.status-card {
+  height: 150px;
+}
+.status-card .status-list {
+  border-top: 1px solid #DDDDDD;
+  padding-left: 15px;
+}
+.status-card .status-list .status-item {
+  display: flex;
+  align-items: center;
+  height: 35px;
+}
+
+.card-red, .card-green, .card-blue {
+  color: #FFFFFF;
+  height: 150px;
+}
+
+.card-red {
+  background-color: #EC407A;
+}
+
+.card-green {
+  background-color: #00D9BF;
+}
+
+.card-blue {
+  background-color: #02AAF6;
 }
 
 /*# sourceMappingURL=main.css.map */

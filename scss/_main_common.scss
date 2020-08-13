@@ -13,10 +13,10 @@
 }
 
 // header
-$headerFontColor: #FFFFFF;
-$headerBackgroundColor: #3F50B4;
-$headerHoverFontColor: #FFFFFF;
-$headerHoverBackgroundColor: #5260B8;
+$headerFontColor: #222222;
+$headerBackgroundColor: #FFFFFF;
+$headerHoverFontColor: #222222;
+$headerHoverBackgroundColor: #EFEFEF;
 $headerHeight: 50px;
 
 // sidebar
@@ -27,4 +27,12 @@ $sidebarHoverBackgroundColor: #E4E4F6;
 $sidebarWidth: 300px;
 
 // content
-$contentHeaderHeight: 40px;
+$containerTitleFontColor: #676767;
+
+$color1: #EC407A;
+$color2: #00D9BF;
+$color3: #02AAF6;
+
+$cardFontColor: #222222;
+$colorCardFontColor: #FFFFFF;
+$cardSemiFontColor: #AAAAAA;

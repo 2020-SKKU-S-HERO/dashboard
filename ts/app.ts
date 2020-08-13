@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
 import * as bodyParser from 'body-parser';
-import { dashboardRouter } from './routes/dashboard';
+import { emissionsRouter } from './routes/emissions';
 import { controlRouter } from './routes/control';
 
 class App {
@@ -29,7 +29,7 @@ class App {
             res.render('index.html');
         });
         
-        this.app.use('/dashboard', dashboardRouter);
+        this.app.use('/emissions', emissionsRouter);
         this.app.use('/control', controlRouter);
     }
     

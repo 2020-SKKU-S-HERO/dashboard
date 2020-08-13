@@ -10,6 +10,7 @@
     
     <link rel="icon" href="images/svg/logo.svg">
     
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -18,7 +19,7 @@
         <div class="global-nav-container">
             <nav class="global-nav">
                 <div class="logo">
-                    <a href="/"><img src="images/svg/logo.svg" alt=""></a>
+                    <a href="/">탄소배출량 산정 시스템</a>
                 </div>
                 <ul class="global-nav-links">
                     <li><a href="#" id="menu-toggle-btn"><img src="images/svg/menu.svg" alt=""></a>
@@ -27,48 +28,51 @@
         </div>
     </header>
     <main>
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav sidebar--extended">
             <ul class="sidebar-nav-links">
                 <li class="nav-item">
                     <a href="#">
-                        <span>DashBoard</span>
+                        <span>CO2 배출량</span>
                         <img src="images/svg/arrow.svg">
                     </a>
                     <ul class="sidebar-detail-nav-links">
                         <li class="nav-item">
-                            <a href="/dashboard">
-                                <span>Home</span>
+                            <a href="/emissions/home">
+                                <span>종합</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#">
-                                <span>Location 1</span>
+                            <a href="/emissions/workplace1">
+                                <span>사업장 1</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#">
-                                <span>Location 2</span>
+                            <a href="/emissions/workplace2">
+                                <span>사업장 2</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#">
-                                <span>Location 3</span>
+                            <a href="/emissions/workplace3">
+                                <span>사업장 3</span>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="/cer">
+                        <span>탄소배출권</span>
+<!--                        <img src="images/svg/arrow.svg">-->
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/control">
-                        <span>Control</span>
-                        <img src="images/svg/arrow.svg">
+                        <span>제어</span>
+<!--                        <img src="images/svg/arrow.svg">-->
                     </a>
                 </li>
             </ul>
         </nav>
-        <div class="content-container">
-            <div class="content-header">
-                <span>Dashboard - Home</span>
-            </div>
+        <div class="content-container content-container--reduced">
             <div class="content-main">
                 {% block content %}
                 {% endblock %}

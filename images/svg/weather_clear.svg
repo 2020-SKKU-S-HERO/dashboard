@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="47.846" height="48.361" viewBox="0 0 47.846 48.361">
+  <g id="그룹_12" data-name="그룹 12" transform="translate(0)">
+    <g id="타원_2" data-name="타원 2" transform="translate(10 10.13)" fill="none" stroke="#222" stroke-width="3">
+      <circle cx="14" cy="14" r="14" stroke="none"/>
+      <circle cx="14" cy="14" r="12.5" fill="none"/>
+    </g>
+    <line id="선_41" data-name="선 41" y2="5.659" transform="translate(23.923)" fill="none" stroke="#222" stroke-width="3"/>
+    <path id="패스_4" data-name="패스 4" d="M0,0V5.659" transform="translate(47.846 24.438) rotate(90)" fill="none" stroke="#222" stroke-width="3"/>
+    <path id="패스_5" data-name="패스 5" d="M0,0V5.659" transform="translate(5.659 24.438) rotate(90)" fill="none" stroke="#222" stroke-width="3"/>
+    <line id="선_42" data-name="선 42" y2="5.659" transform="translate(23.923 42.702)" fill="none" stroke="#222" stroke-width="3"/>
+    <line id="선_43" data-name="선 43" y2="5.659" transform="translate(41.358 6.488) rotate(45)" fill="none" stroke="#222" stroke-width="3"/>
+    <line id="선_44" data-name="선 44" y2="5.659" transform="translate(10.49 37.871) rotate(45)" fill="none" stroke="#222" stroke-width="3"/>
+    <line id="선_45" data-name="선 45" y2="5.659" transform="translate(7.002 6.488) rotate(-45)" fill="none" stroke="#222" stroke-width="3"/>
+    <line id="선_46" data-name="선 46" y2="5.659" transform="translate(37.357 37.871) rotate(-45)" fill="none" stroke="#222" stroke-width="3"/>
+  </g>
+</svg>
