@@ -90,9 +90,15 @@
             <div class="card">
                 <div class="card-title">
                     <span>지난 CO2 배출량</span>
+                    <select id="past-emission-chart-date-selector">
+                        <option value="2020-01">2020-01</option>
+                        <option value="2020-02">2020-02</option>
+                        <option value="2020-03">2020-03</option>
+                        <option value="2020-04">2020-04</option>
+                    </select>
                 </div>
                 <div class="chart">
-                    <iframe src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
+                    <iframe id="past-emission-chart-home" src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">
@@ -125,4 +131,5 @@
         </div>
     </div>
 </div>
+<script src="js/script/chart.js"></script>
 {%  endblock %}

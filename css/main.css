@@ -102,6 +102,16 @@ a:hover {
   text-decoration: none;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  float: right;
+  padding: 0 21px 0 5px;
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 95% 60%;
+}
+
 .global-nav-container {
   position: relative;
   height: 50px;
