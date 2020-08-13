@@ -14,5 +14,13 @@ sidebarNavItemElList.forEach((el) => {
     });
 });
 window.addEventListener('resize', () => {
+    if (window.innerWidth < 768) {
+        contentContainerEl === null || contentContainerEl === void 0 ? void 0 : contentContainerEl.classList.remove('content-container--reduced');
+        sidebarEl === null || sidebarEl === void 0 ? void 0 : sidebarEl.classList.remove('sidebar--extended');
+    }
+    else {
+        contentContainerEl === null || contentContainerEl === void 0 ? void 0 : contentContainerEl.classList.add('content-container--reduced');
+        sidebarEl === null || sidebarEl === void 0 ? void 0 : sidebarEl.classList.add('sidebar--extended');
+    }
 });
 //# sourceMappingURL=base_script.js.map

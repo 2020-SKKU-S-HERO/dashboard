@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-4">
+        <div class="col-8 col-xl-4">
             <div class="card card-red">
                 <div class="center-box">
                     <div class="box-title">
@@ -23,28 +23,39 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4">
-            <div class="card card-green">
+        <div class="col-4 col-xl-2">
+            <div class="card weather-card">
                 <div class="center-box">
-                    <div class="box-title">
-                        <span>올해 남은 허용 CO2 배출량</span>
+                    <div class="box-weather">
+                        <img src="images/svg/weather_clear.svg" alt="">
+                        <span>29'C</span>
                     </div>
-                    <div class="box-value">
-                        <span>72,850,000t</span>
+                    <div class="box-weather-small">
+                        <img src="images/svg/water_drop.svg" alt="">
+                        <span>50%</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-4">
-            <div class="card card-blue">
-                <div class="center-box">
-                    <div class="box-title">
-                        <span>올해 남은 허용 CO2 배출량</span>
-                    </div>
-                    <div class="box-value">
-                        <span>72,850,000t</span>
-                    </div>
+        <div class="col-xl-6">
+            <div class="card status-card">
+                <div class="card-title">
+                    <span>상태</span>
                 </div>
+                <ul class="status-list">
+                    <li class="status-item">
+                        <span>가스 센서</span>
+                        <img src="images/svg/green_circle.svg" alt="">
+                    </li>
+                    <li class="status-item">
+                        <span>유속 센서</span>
+                        <img src="images/svg/red_circle.svg" alt="">
+                    </li>
+                    <li class="status-item">
+                        <span>온도 센서</span>
+                        <img src="images/svg/green_circle.svg" alt="">
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -57,33 +68,33 @@
                 <div class="chart">
                     <iframe src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
                 </div>
-                <div class="chart-info">
-                    <div class="info-item">
+                <ul class="chart-info">
+                    <li class="info-item">
                         <div class="info-value">
                             <span>20,000t</span>
                         </div>
                         <div class="info-description">
                             <span>오늘 누적 CO2 배출량</span>
                         </div>
-                    </div>
-                    <div class="info-item">
+                    </li>
+                    <li class="info-item">
                         <div class="info-value info-value--increase">
-                            <img src="" alt="">
+                            <img src="images/svg/increase_arrow.svg" alt=""><img src="" alt="">
                             <span>14.5%</span>
                         </div>
                         <div class="info-description">
                             <span>이번 달 평균 대비</span>
                         </div>
-                    </div>
-                    <div class="info-item">
+                    </li>
+                    <li class="info-item">
                         <div class="info-value">
                             <span>123,456</span>
                         </div>
                         <div class="info-description">
                             <span>다른 어떤 데이터</span>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="col-xl-6">
@@ -94,33 +105,33 @@
                 <div class="chart">
                     <iframe src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
                 </div>
-                <div class="chart-info">
-                    <div class="info-item">
+                <ul class="chart-info">
+                    <li class="info-item">
                         <div class="info-value">
                             <span>20,000t</span>
                         </div>
                         <div class="info-description">
-                            <span>오늘 누적 CO2 배출량</span>
+                            <span>총 CO2 배출량</span>
                         </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-value">
-                            <img src="" alt="">
+                    </li>
+                    <li class="info-item">
+                        <div class="info-value info-value--decrease">
+                            <img src="images/svg/decrease_arrow.svg" alt="">
                             <span>14.5%</span>
                         </div>
                         <div class="info-description">
-                            <span>이번 달 평균 대비</span>
+                            <span>작년 대비</span>
                         </div>
-                    </div>
-                    <div class="info-item">
+                    </li>
+                    <li class="info-item">
                         <div class="info-value">
                             <span>123,456</span>
                         </div>
                         <div class="info-description">
                             <span>다른 어떤 데이터</span>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

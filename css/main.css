@@ -113,7 +113,6 @@ a:hover {
 .global-nav-container .global-nav {
   height: 100%;
   display: flex;
-  padding: 0 14px;
 }
 .global-nav-container .global-nav .logo {
   height: 100%;
@@ -125,6 +124,8 @@ a:hover {
   display: flex;
   align-items: center;
   color: #222222;
+  height: 100%;
+  padding: 0 14px;
 }
 .global-nav-container .global-nav .logo a #logo-image {
   height: 35px;
@@ -141,6 +142,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 14px;
 }
 .global-nav-container .global-nav .global-nav-links li {
   display: flex;
@@ -182,7 +184,7 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a {
   height: 50px;
   padding: 20px;
   color: #444444;
-  font-size: 14px;
+  font-size: 16px;
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a img {
   transition-duration: 0.5s;
@@ -203,7 +205,7 @@ main .sidebar-nav .sidebar-nav-links > .nav-item .sidebar-detail-nav-links > .na
   height: 100%;
   padding-left: 30px;
   color: #444444;
-  font-size: 12px;
+  font-size: 14px;
   transition-duration: 0.5s;
 }
 main .sidebar-nav .sidebar-nav-links--extended > a {
@@ -345,6 +347,9 @@ main .content-container .content-main {
   display: flex;
   align-items: center;
   height: 35px;
+}
+.status-card .status-list .status-item span {
+  margin-right: 15px;
 }
 
 .card-red, .card-green, .card-blue {

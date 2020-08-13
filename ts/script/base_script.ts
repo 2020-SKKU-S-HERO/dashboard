@@ -17,5 +17,11 @@ sidebarNavItemElList.forEach((el: HTMLElement): void => {
 })
 
 window.addEventListener('resize', (): void => {
-
+    if (window.innerWidth < 768) {
+        contentContainerEl?.classList.remove('content-container--reduced');
+        sidebarEl?.classList.remove('sidebar--extended');
+    } else {
+        contentContainerEl?.classList.add('content-container--reduced');
+        sidebarEl?.classList.add('sidebar--extended');
+    }
 });
