@@ -1,15 +1,20 @@
 import * as mysql from 'mysql';
 import * as db_info from './secret/db_info';
+import { Connection, FieldInfo, MysqlError } from 'mysql';
 
-const connection = mysql.createConnection(db_info.info);
+const connection: Connection = mysql.createConnection(db_info.info);
 
-connection.query(`
-SELECT DATE_FORMAT(date_time, '%Y-%m-%d') time, SUM(emissions)
-FROM co2_emissions
-GROUP BY time;`, (error: mysql.MysqlError | null, results: any, fields: mysql.FieldInfo | undefined): void => {
-    if (error) throw error;
+export function getTodayEmissions(onGetEmissions: ((results: any) => void)): void {
+    const today: Date = new Date();
+    const queryStr: string = `
+        SELECT DATE_FORMAT(date_time, '%Y-%m-%d') time, SUM(emissions) total_emissions
+        FROM co2_emissions
+        WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'
+        GROUP BY time;`;
     
-    console.log(results[0].solution);
-});
-
-connection.end();
+    connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) throw error;
+    
+        onGetEmissions(results);
+    });
+}
