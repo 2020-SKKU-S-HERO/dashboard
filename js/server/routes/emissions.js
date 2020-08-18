@@ -72,10 +72,31 @@ router.post('/home/selectedMonthComparedToLastYear', (req, res) => {
     const year = Number(req.body.year);
     const month = Number(req.body.month);
     const selectedMonth = new Date(year, month - 1, 2);
+    const lastYearSameMonth = new Date(year - 1, month - 1, 2);
     db_control.getSelectedMonthEmissions(selectedMonth, (selectedMonthData) => {
-        db_control.getLastYearSelectedMonthEmissions(selectedMonth, (lastYearData) => {
+        db_control.getSelectedMonthEmissions(lastYearSameMonth, (lastYearData) => {
             if (selectedMonthData !== 0 && lastYearData !== 0) {
                 res.send((((selectedMonthData / lastYearData) - 1) * 100).toFixed(1) + '%');
+            }
+            else {
+                res.send('-');
+            }
+        });
+    });
+});
+router.post('/home/selectedYearEmissions', (req, res) => {
+    const year = Number(req.body.year);
+    db_control.getSelectedYearEmissions(year, (data) => {
+        res.send(addCommaInNumber(data) + 't');
+    });
+});
+router.post('/home/selectedYearComparedToLastYear', (req, res) => {
+    const year = Number(req.body.year);
+    console.log(req.body);
+    db_control.getSelectedYearEmissions(year, (selectedYearData) => {
+        db_control.getSelectedYearEmissions(year - 1, (lastYearData) => {
+            if (selectedYearData !== 0 && lastYearData !== 0) {
+                res.send((((selectedYearData / lastYearData) - 1) * 100).toFixed(1) + '%');
             }
             else {
                 res.send('-');

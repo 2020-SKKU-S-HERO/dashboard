@@ -88,9 +88,10 @@ router.post('/home/selectedMonthComparedToLastYear', (req: any, res: any): void 
     const year: number = Number(req.body.year);
     const month: number = Number(req.body.month);
     const selectedMonth: Date = new Date(year, month - 1, 2);
+    const lastYearSameMonth: Date = new Date(year - 1, month - 1, 2);
     
     db_control.getSelectedMonthEmissions(selectedMonth, (selectedMonthData: number): void => {
-        db_control.getLastYearSelectedMonthEmissions(selectedMonth, (lastYearData: number): void => {
+        db_control.getSelectedMonthEmissions(lastYearSameMonth, (lastYearData: number): void => {
             if (selectedMonthData !== 0 && lastYearData !== 0) {
                 res.send((((selectedMonthData / lastYearData) - 1) * 100).toFixed(1) + '%');
             } else {
@@ -99,3 +100,29 @@ router.post('/home/selectedMonthComparedToLastYear', (req: any, res: any): void 
         });
     });
 });
+
+router.post('/home/selectedYearEmissions', (req: any, res: any): void => {
+    const year: number = Number(req.body.year);
+    
+    db_control.getSelectedYearEmissions(year, (data: number): void => {
+        res.send(addCommaInNumber(data) + 't');
+    });
+});
+
+router.post('/home/selectedYearComparedToLastYear', (req: any, res: any): void => {
+    const year: number = Number(req.body.year);
+    
+    console.log(req.body);
+    
+    db_control.getSelectedYearEmissions(year, (selectedYearData: number): void => {
+        db_control.getSelectedYearEmissions(year - 1, (lastYearData: number): void => {
+            
+            if (selectedYearData !== 0 && lastYearData !== 0) {
+                res.send((((selectedYearData / lastYearData) - 1) * 100).toFixed(1) + '%');
+            } else {
+                res.send('-');
+            }
+        });
+    });
+});
+

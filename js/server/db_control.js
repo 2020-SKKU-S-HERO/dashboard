@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLastYearSelectedMonthEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -126,13 +126,13 @@ function getSelectedMonthEmissions(monthDate, onGetEmissions) {
     });
 }
 exports.getSelectedMonthEmissions = getSelectedMonthEmissions;
-function getLastYearSelectedMonthEmissions(monthDate, onGetEmissions) {
-    const lastYear = new Date(monthDate.getFullYear() - 1, monthDate.getMonth(), 15);
+function getSelectedYearEmissions(year, onGetEmissions) {
     const queryStr = `
-        SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
+        SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
         FROM co2_emissions
-        WHERE date_time >= '${lastYear.getFullYear()}-${lastYear.getMonth() + 1}-1' AND date_time < '${lastYear.getFullYear()}-${lastYear.getMonth() + 2}-1'
+        WHERE date_time >= '${year}-1-1' AND date_time < '${year + 1}-1-1'
         GROUP BY time;`;
+    console.log(queryStr);
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
@@ -145,5 +145,5 @@ function getLastYearSelectedMonthEmissions(monthDate, onGetEmissions) {
         }
     });
 }
-exports.getLastYearSelectedMonthEmissions = getLastYearSelectedMonthEmissions;
+exports.getSelectedYearEmissions = getSelectedYearEmissions;
 //# sourceMappingURL=db_control.js.map

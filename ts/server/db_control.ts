@@ -134,19 +134,20 @@ export function getSelectedMonthEmissions(monthDate: Date, onGetEmissions: ((dat
     });
 }
 
-export function getLastYearSelectedMonthEmissions(monthDate: Date, onGetEmissions: ((data: number) => void)): void {
-    const lastYear: Date = new Date(monthDate.getFullYear() - 1, monthDate.getMonth(), 15);
+export function getSelectedYearEmissions(year: number, onGetEmissions: ((data: number) => void)): void {
     const queryStr: string = `
-        SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
+        SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
         FROM co2_emissions
-        WHERE date_time >= '${ lastYear.getFullYear() }-${ lastYear.getMonth() + 1 }-1' AND date_time < '${ lastYear.getFullYear() }-${ lastYear.getMonth() + 2 }-1'
+        WHERE date_time >= '${ year }-1-1' AND date_time < '${ year + 1 }-1-1'
         GROUP BY time;`;
+    
+    console.log(queryStr);
     
     connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
         if (error) {
             throw error;
         }
-    
+        
         try {
             onGetEmissions(results[0]['total_emissions']);
         } catch (e) {

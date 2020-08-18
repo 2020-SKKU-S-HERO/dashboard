@@ -62,36 +62,74 @@ function renewPastEmissionsChart(): void {
     const year: string | undefined = dateString?.substring(0, 4);
     const month: string | undefined = dateString?.substring(5, 7);
     
-    if (selectedMonthTotalEmissions) {
-        setDataByPostHttpRequest('home/selectedMonthEmissions', `year=${year}&month=${month}`, (data: string): void => {
-            selectedMonthTotalEmissions.innerText = data;
-        });
-    }
-    
-    if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
-        setDataByPostHttpRequest('home/selectedMonthComparedToLastYear', `year=${year}&month=${month}`, (data: string): void => {
-            if (data === '-') {
-                selectedMonthComparedToLastYearEl.innerText = '-';
-                selectedMonthComparedToLastYearArrowEl.src = '';
-                selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
-                selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
-            } else if (data[0] === '-') {
-                selectedMonthComparedToLastYearEl.innerText = data.substring(1);
-                selectedMonthComparedToLastYearArrowEl.src = 'images/svg/decrease_arrow.svg';
-                selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
-                selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--decrease');
-            } else if (data[0] === '0') {
-                selectedMonthComparedToLastYearEl.innerText = data;
-                selectedMonthComparedToLastYearArrowEl.src = '';
-                selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
-                selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
-            } else {
-                selectedMonthComparedToLastYearEl.innerText = data;
-                selectedMonthComparedToLastYearArrowEl.src = 'images/svg/increase_arrow.svg';
-                selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
-                selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--increase');
+    switch (selectedInterval) {
+        case Interval.DAILY:
+            if (selectedMonthTotalEmissions) {
+                setDataByPostHttpRequest('home/selectedMonthEmissions', `year=${year}&month=${month}`, (data: string): void => {
+                    selectedMonthTotalEmissions.innerText = data;
+                });
             }
-        });
+    
+            if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
+                setDataByPostHttpRequest('home/selectedMonthComparedToLastYear', `year=${year}&month=${month}`, (data: string): void => {
+                    if (data === '-') {
+                        selectedMonthComparedToLastYearEl.innerText = '-';
+                        selectedMonthComparedToLastYearArrowEl.src = '';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
+                    } else if (data[0] === '-') {
+                        selectedMonthComparedToLastYearEl.innerText = data.substring(1);
+                        selectedMonthComparedToLastYearArrowEl.src = 'images/svg/decrease_arrow.svg';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--decrease');
+                    } else if (data[0] === '0') {
+                        selectedMonthComparedToLastYearEl.innerText = data;
+                        selectedMonthComparedToLastYearArrowEl.src = '';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
+                    } else {
+                        selectedMonthComparedToLastYearEl.innerText = data;
+                        selectedMonthComparedToLastYearArrowEl.src = 'images/svg/increase_arrow.svg';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--increase');
+                    }
+                });
+            }
+            break;
+    
+        case Interval.MONTHLY:
+            if (selectedMonthTotalEmissions) {
+                setDataByPostHttpRequest('home/selectedYearEmissions', `year=${year}`, (data: string): void => {
+                    selectedMonthTotalEmissions.innerText = data;
+                });
+            }
+    
+            if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
+                setDataByPostHttpRequest('home/selectedYearComparedToLastYear', `year=${year}`, (data: string): void => {
+                    if (data === '-') {
+                        selectedMonthComparedToLastYearEl.innerText = '-';
+                        selectedMonthComparedToLastYearArrowEl.src = '';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
+                    } else if (data[0] === '-') {
+                        selectedMonthComparedToLastYearEl.innerText = data.substring(1);
+                        selectedMonthComparedToLastYearArrowEl.src = 'images/svg/decrease_arrow.svg';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--decrease');
+                    } else if (data[0] === '0') {
+                        selectedMonthComparedToLastYearEl.innerText = data;
+                        selectedMonthComparedToLastYearArrowEl.src = '';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
+                    } else {
+                        selectedMonthComparedToLastYearEl.innerText = data;
+                        selectedMonthComparedToLastYearArrowEl.src = 'images/svg/increase_arrow.svg';
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
+                        selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--increase');
+                    }
+                });
+            }
+            break;
     }
 }
 
