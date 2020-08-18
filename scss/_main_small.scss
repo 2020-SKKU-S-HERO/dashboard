@@ -37,3 +37,30 @@ main {
     width: 100%;
   }
 }
+
+.card-red, .card-green, .card-blue {
+  height: 60px;
+}
+
+.card {
+  
+  .chart-info {
+    padding: 10px 30px;
+  }
+  
+  .center-box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    
+    .box-title {
+      font-size: 18px;
+      margin-right: 20px;
+    }
+    
+    .box-value {
+      font-size: 22px;
+    }
+  }
+}

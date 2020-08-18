@@ -75,3 +75,29 @@ main {
     width: calc(100% - #{$sidebarWidth}) !important;
   }
 }
+
+.card-red, .card-green, .card-blue {
+  height: 150px;
+}
+
+.card {
+  
+  .chart-info {
+    padding: 10px 60px;
+  }
+  
+  .center-box {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .box-title {
+      font-size: 20px;
+      padding-bottom: 20px;
+    }
+    
+    .box-value {
+      font-size: 30px;
+    }
+  }
+}

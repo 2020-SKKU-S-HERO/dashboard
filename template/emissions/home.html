@@ -18,7 +18,7 @@
                         <span>올해 누적 CO2 배출량</span>
                     </div>
                     <div class="box-value">
-                        <span>455,240,000t</span>
+                        <span id="this-year-total-emissions">-</span>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <span>올해 남은 허용 CO2 배출량</span>
                     </div>
                     <div class="box-value">
-                        <span>72,850,000t</span>
+                        <span id="this-year-remaining-permissible-emissions">-</span>
                     </div>
                 </div>
             </div>
@@ -39,10 +39,10 @@
             <div class="card card-blue">
                 <div class="center-box">
                     <div class="box-title">
-                        <span>올해 남은 허용 CO2 배출량</span>
+                        <span>예상 초과 배출량</span>
                     </div>
                     <div class="box-value">
-                        <span>72,850,000t</span>
+                        <span>-</span>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <span>오늘 CO2 배출량</span>
                 </div>
                 <div class="chart">
-                    <iframe src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
+                    <iframe id="today-emissions-chart" src="" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">
@@ -67,20 +67,12 @@
                         </div>
                     </li>
                     <li class="info-item">
-                        <div class="info-value info-value--increase">
-                            <img src="images/svg/increase_arrow.svg" alt=""><img src="" alt="">
-                            <span>-%</span>
+                        <div class="info-value">
+                            <img id="today-compared-to-this-month-average-arrow" src="" alt=""><img src="" alt="">
+                            <span id="today-compared-to-this-month-average">-</span>
                         </div>
                         <div class="info-description">
                             <span>이번 달 평균 대비</span>
-                        </div>
-                    </li>
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span>-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>다른 어떤 데이터</span>
                         </div>
                     </li>
                 </ul>
@@ -91,46 +83,41 @@
                 <div class="card-title">
                     <span>지난 CO2 배출량</span>
                     <select id="past-emission-chart-date-selector">
-                        <option value="2020-01-01 00:00:00">2020-01</option>
-                        <option value="2020-02-01 00:00:00">2020-02</option>
-                        <option value="2020-03-01 00:00:00">2020-03</option>
-                        <option value="2020-04-01 00:00:00">2020-04</option>
-                        <option value="2020-05-01 00:00:00">2020-05</option>
-                        <option value="2020-06-01 00:00:00">2020-06</option>
-                        <option value="2020-07-01 00:00:00">2020-07</option>
-                        <option value="2020-08-01 00:00:00">2020-08</option>
+                    </select>
+                    <select id="yearly-monthly-selector">
+                        <option value="daily">일간</option>
+                        <option value="monthly">월간</option>
                     </select>
                 </div>
                 <div class="chart">
-                    <iframe id="past-emission-chart-home" src="" frameborder="0"></iframe>
+                    <iframe id="selected-month-chart" src="" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">
                         <div class="info-value">
-                            <span>-</span>
+                            <span id="selected-month-total-emissions">-</span>
                         </div>
                         <div class="info-description">
                             <span>총 CO2 배출량</span>
                         </div>
                     </li>
                     <li class="info-item">
-                        <div class="info-value info-value--decrease">
-                            <img src="images/svg/decrease_arrow.svg" alt="">
-                            <span>-%</span>
+                        <div class="info-value">
+                            <img id="selected-month-compared-to-last-year-arrow" src="" alt="">
+                            <span id="selected-month-compared-to-last-year">-</span>
                         </div>
                         <div class="info-description">
                             <span>작년 대비</span>
                         </div>
                     </li>
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span>-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>다른 어떤 데이터</span>
-                        </div>
-                    </li>
                 </ul>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">
+                
+                </div>
             </div>
         </div>
     </div>

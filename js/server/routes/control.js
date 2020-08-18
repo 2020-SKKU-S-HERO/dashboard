@@ -5,9 +5,9 @@ const express = require("express");
 const mqtt = require("mqtt");
 const router = express.Router();
 exports.controlRouter = router;
-const host = '127.0.0.1';
+const host = '34.64.238.233';
 const mqttUri = `mqtt://${host}`;
-const topic = 'control';
+const topic = 'ctrl';
 router.get('/', (req, res) => {
     res.render('control.html');
 });

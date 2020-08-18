@@ -30,6 +30,27 @@
     height: 250px;
     width: 100%;
   }
+
+  .card-red, .card-green, .card-blue {
+    height: 60px;
+  }
+
+  .card .chart-info {
+    padding: 10px 30px;
+  }
+  .card .center-box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  .card .center-box .box-title {
+    font-size: 18px;
+    margin-right: 20px;
+  }
+  .card .center-box .box-value {
+    font-size: 22px;
+  }
 }
 @media (min-width: 768px) {
   .global-nav-container .global-nav .logo a {
@@ -49,7 +70,7 @@
 
   main .sidebar-nav {
     position: relative;
-    width: 300px;
+    width: 250px;
     display: none;
   }
   main .sidebar-nav .sidebar-nav-links > .nav-item > a {
@@ -67,7 +88,27 @@
     display: block !important;
   }
   main .content-container--reduced {
-    width: calc(100% - 300px) !important;
+    width: calc(100% - 250px) !important;
+  }
+
+  .card-red, .card-green, .card-blue {
+    height: 150px;
+  }
+
+  .card .chart-info {
+    padding: 10px 60px;
+  }
+  .card .center-box {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .card .center-box .box-title {
+    font-size: 20px;
+    padding-bottom: 20px;
+  }
+  .card .center-box .box-value {
+    font-size: 30px;
   }
 }
 @font-face {
@@ -110,6 +151,11 @@ select {
   float: right;
   padding: 0 21px 0 5px;
   background: url("/images/svg/combobox_arrow.svg") no-repeat 95% 60%;
+  margin-left: 10px;
+}
+
+select:last-child {
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 60%;
 }
 
 .global-nav-container {
@@ -271,14 +317,19 @@ main .content-container .content-main {
 .card .chart-info {
   display: flex;
   justify-content: space-between;
-  padding: 10px 30px;
   border-top: 1px solid #DDDDDD;
 }
 .card .chart-info .info-item {
   text-align: center;
 }
 .card .chart-info .info-item .info-value {
+  display: flex;
   margin-bottom: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.card .chart-info .info-item .info-value img {
+  margin-right: 1px;
 }
 .card .chart-info .info-item .info-description {
   color: #AAAAAA;
@@ -293,19 +344,13 @@ main .content-container .content-main {
 .card .center-box {
   display: flex;
   height: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 .card .center-box .box-title {
-  font-size: 20px;
   font-weight: 500;
   text-align: center;
-  padding-bottom: 20px;
   text-shadow: 0 3px 3px rgba(0, 0, 0, 0.24);
 }
 .card .center-box .box-value {
-  font-size: 30px;
   font-weight: 500;
   text-align: center;
   text-shadow: 0 3px 3px rgba(0, 0, 0, 0.24);
@@ -365,7 +410,6 @@ main .content-container .content-main {
 
 .card-red, .card-green, .card-blue {
   color: #FFFFFF;
-  height: 150px;
 }
 
 .card-red {

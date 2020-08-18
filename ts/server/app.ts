@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
+import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import { emissionsRouter } from './routes/emissions';
 import { controlRouter } from './routes/control';
@@ -41,6 +42,7 @@ class App {
     }
     
     setMiddleWare(): void {
+        //this.app.use(logger('dev'));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }

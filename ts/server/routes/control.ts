@@ -4,9 +4,9 @@ import * as mqtt from 'mqtt';
 const router: express.Router = express.Router();
 export { router as controlRouter };
 
-const host = '127.0.0.1';
-const mqttUri = `mqtt://${host}`;
-const topic = 'control';
+const host: string = '34.64.238.233';
+const mqttUri: string = `mqtt://${host}`;
+const topic: string = 'ctrl';
 
 router.get('/', (req: any, res: any): void => {
     res.render('control.html');

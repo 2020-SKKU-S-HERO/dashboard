@@ -52,6 +52,11 @@ select {
   float: right;
   padding: 0 21px 0 5px;
   background: url("/images/svg/combobox_arrow.svg") no-repeat 95% 60%;
+  margin-left: 10px;
+}
+
+select:last-child {
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 60%;
 }
 
 .global-nav-container {
@@ -253,14 +258,20 @@ main {
   .chart-info {
     display: flex;
     justify-content: space-between;
-    padding: 10px 30px;
     @include borderDefault("top");
     
     .info-item {
       text-align: center;
       
       .info-value {
+        display: flex;
         margin-bottom: 5px;
+        align-items: center;
+        justify-content: center;
+        
+        img {
+          margin-right: 1px;
+        }
       }
       
       .info-description {
@@ -281,20 +292,14 @@ main {
   .center-box {
     display: flex;
     height: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     
     .box-title {
-      font-size: 20px;
       font-weight: 500;
       text-align: center;
-      padding-bottom: 20px;
       text-shadow: 0 3px 3px rgba(0, 0, 0, .24);
     }
     
     .box-value {
-      font-size: 30px;
       font-weight: 500;
       text-align: center;
       text-shadow: 0 3px 3px rgba(0, 0, 0, .24);
@@ -367,7 +372,6 @@ main {
 
 .card-red, .card-green, .card-blue {
   color: $colorCardFontColor;
-  height: 150px;
 }
 
 .card-red {
