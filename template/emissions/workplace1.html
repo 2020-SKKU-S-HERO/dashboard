@@ -6,24 +6,24 @@
     <div class="row">
         <div class="col-12">
             <div class="container-title">
-                <span>CO2 배출량 - 1번 사업장</span>
+                <span>CO2 배출량 - 종합</span>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-8 col-xl-4">
+        <div class="col-xl-4">
             <div class="card card-red">
                 <div class="center-box">
                     <div class="box-title">
                         <span>올해 누적 CO2 배출량</span>
                     </div>
                     <div class="box-value">
-                        <span>455,240,000t</span>
+                        <span id="this-year-total-emissions">-</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-4 col-xl-2">
+        <div class="col-xl-2">
             <div class="card weather-card">
                 <div class="center-box">
                     <div class="box-weather">
@@ -63,35 +63,27 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-title">
-                    <span>오늘 CO2 배출량</span>
+                    <span>오늘 배출량</span>
                 </div>
                 <div class="chart">
-                    <iframe src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
+                    <iframe id="today-emissions-chart" src="" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">
                         <div class="info-value">
-                            <span>20,000t</span>
+                            <span id="today-total-emissions">-</span>
                         </div>
                         <div class="info-description">
-                            <span>오늘 누적 CO2 배출량</span>
-                        </div>
-                    </li>
-                    <li class="info-item">
-                        <div class="info-value info-value--increase">
-                            <img src="images/svg/increase_arrow.svg" alt=""><img src="" alt="">
-                            <span>14.5%</span>
-                        </div>
-                        <div class="info-description">
-                            <span>이번 달 평균 대비</span>
+                            <span>총 배출량</span>
                         </div>
                     </li>
                     <li class="info-item">
                         <div class="info-value">
-                            <span>123,456</span>
+                            <img id="today-compared-to-this-month-average-arrow" src="" alt=""><img src="" alt="">
+                            <span id="today-compared-to-this-month-average">-</span>
                         </div>
                         <div class="info-description">
-                            <span>다른 어떤 데이터</span>
+                            <span>이번 달 평균 대비</span>
                         </div>
                     </li>
                 </ul>
@@ -102,43 +94,59 @@
                 <div class="card-title">
                     <span>지난 CO2 배출량</span>
                     <select id="past-emission-chart-date-selector">
-                        <option value="">2020-01</option>
-                        <option value="">2020-02</option>
-                        <option value="">2020-03</option>
-                        <option value="">2020-04</option>
-                        <option value="">2020-05</option>
-                        <option value="">2020-06</option>
-                        <option value="">2020-07</option>
-                        <option value="">2020-08</option>
+                    </select>
+                    <select id="yearly-monthly-selector">
+                        <option value="daily">일간</option>
+                        <option value="monthly">월간</option>
                     </select>
                 </div>
                 <div class="chart">
-                    <iframe id="past-emission-chart" src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=now-15m&to=now&theme=light&panelId=2" frameborder="0"></iframe>
+                    <iframe id="selected-month-chart" src="" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">
                         <div class="info-value">
-                            <span>20,000t</span>
+                            <span id="selected-month-total-emissions">-</span>
                         </div>
                         <div class="info-description">
-                            <span>총 CO2 배출량</span>
+                            <span>총 배출량</span>
                         </div>
                     </li>
                     <li class="info-item">
-                        <div class="info-value info-value--decrease">
-                            <img src="images/svg/decrease_arrow.svg" alt="">
-                            <span>14.5%</span>
+                        <div class="info-value">
+                            <img id="selected-month-compared-to-last-year-arrow" src="" alt="">
+                            <span id="selected-month-compared-to-last-year">-</span>
                         </div>
                         <div class="info-description">
                             <span>작년 대비</span>
                         </div>
                     </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">
+                    <span>예측 배출량</span>
+                </div>
+                <div class="chart">
+                    <iframe id="" src="" frameborder="0"></iframe>
+                </div>
+                <ul class="chart-info">
                     <li class="info-item">
                         <div class="info-value">
-                            <span>123,456</span>
+                            <span id="">-</span>
                         </div>
                         <div class="info-description">
-                            <span>다른 어떤 데이터</span>
+                            <span>총 예측 배출량</span>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-value">
+                            <span id="">-</span>
+                        </div>
+                        <div class="info-description">
+                            <span>정확도</span>
                         </div>
                     </li>
                 </ul>
@@ -146,4 +154,5 @@
         </div>
     </div>
 </div>
+<script src="js/script/chart.js"></script>
 {%  endblock %}

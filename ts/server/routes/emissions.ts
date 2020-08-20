@@ -45,53 +45,65 @@ router.get('/workplace3', (req: any, res: any): void => {
     res.render('emissions/workplace3.html');
 });
 
-router.get('/home/todayEmissions', (req: any, res: any): void => {
-    db_control.getTodayEmissions((data: number): void => {
+router.post('/home/todayEmissions', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    db_control.getTodayEmissions(location, (data: number): void => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
 
-router.get('/home/thisYearEmissions', (req: any, res: any): void => {
-    db_control.getThisYearEmissions((data: number): void => {
+router.post('/home/thisYearEmissions', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    db_control.getThisYearEmissions(location, (data: number): void => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
 
-router.get('/home/thisYearRemainingPermissibleEmissions', (req: any, res: any): void => {
-    db_control.getThisYearRemainingPermissibleEmissions((data: number): void => {
+router.post('/home/thisYearRemainingPermissibleEmissions', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    db_control.getThisYearRemainingPermissibleEmissions(location, (data: number): void => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
 
-router.get('/home/todayComparedToThisMonthAverageEmissions', (req: any, res: any): void => {
-    db_control.getTodayRatioComparedToThisMonthAverage((data: number): void => {
+router.post('/home/todayComparedToThisMonthAverageEmissions', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    db_control.getTodayRatioComparedToThisMonthAverage(location, (data: number): void => {
         res.send(data.toFixed(1) + '%');
     });
 });
 
-router.get('/home/theMostPastEmissionMonth', (req: any, res: any): void => {
-    db_control.getTheMostPastEmissionMonth((data: number): void => {
+router.post('/home/theMostPastEmissionMonth', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    db_control.getTheMostPastEmissionMonth(location, (data: number): void => {
         res.send(data);
     });
 });
 
 router.post('/home/selectedMonthEmissions', (req: any, res: any): void => {
+    const location: string = req.body.location;
     const year: number = Number(req.body.year);
     const month: number = Number(req.body.month);
     
-    db_control.getSelectedMonthEmissions(new Date(year, month - 1, 2), (data: number): void => {
+    db_control.getSelectedMonthEmissions(new Date(year, month - 1, 2), location, (data: number): void => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
 
 router.post('/home/selectedMonthComparedToLastYear', (req: any, res: any): void => {
+    const location: string = req.body.location;
     const year: number = Number(req.body.year);
     const month: number = Number(req.body.month);
     const selectedMonth: Date = new Date(year, month - 1, 2);
     const lastYearSameMonth: Date = new Date(year - 1, month - 1, 2);
     
-    db_control.getSelectedMonthEmissions(selectedMonth, (selectedMonthData: number): void => {
-        db_control.getSelectedMonthEmissions(lastYearSameMonth, (lastYearData: number): void => {
+    db_control.getSelectedMonthEmissions(selectedMonth, location, (selectedMonthData: number): void => {
+        db_control.getSelectedMonthEmissions(lastYearSameMonth, location, (lastYearData: number): void => {
             if (selectedMonthData !== 0 && lastYearData !== 0) {
                 res.send((((selectedMonthData / lastYearData) - 1) * 100).toFixed(1) + '%');
             } else {
@@ -102,20 +114,20 @@ router.post('/home/selectedMonthComparedToLastYear', (req: any, res: any): void 
 });
 
 router.post('/home/selectedYearEmissions', (req: any, res: any): void => {
+    const location: string = req.body.location;
     const year: number = Number(req.body.year);
     
-    db_control.getSelectedYearEmissions(year, (data: number): void => {
+    db_control.getSelectedYearEmissions(year, location, (data: number): void => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
 
 router.post('/home/selectedYearComparedToLastYear', (req: any, res: any): void => {
+    const location: string = req.body.location;
     const year: number = Number(req.body.year);
     
-    console.log(req.body);
-    
-    db_control.getSelectedYearEmissions(year, (selectedYearData: number): void => {
-        db_control.getSelectedYearEmissions(year - 1, (lastYearData: number): void => {
+    db_control.getSelectedYearEmissions(year, location, (selectedYearData: number): void => {
+        db_control.getSelectedYearEmissions(year - 1, location, (lastYearData: number): void => {
             
             if (selectedYearData !== 0 && lastYearData !== 0) {
                 res.send((((selectedYearData / lastYearData) - 1) * 100).toFixed(1) + '%');

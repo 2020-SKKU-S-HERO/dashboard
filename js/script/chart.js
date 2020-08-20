@@ -11,6 +11,7 @@ const selectedMonthChartEl = document.getElementById('selected-month-chart');
 const selectedMonthTotalEmissions = document.getElementById('selected-month-total-emissions');
 const selectedMonthComparedToLastYearEl = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl = document.getElementById('selected-month-compared-to-last-year-arrow');
+const locationToPost = '';
 const renewingPeriod = 10000;
 var Interval;
 (function (Interval) {
@@ -45,7 +46,7 @@ function setDataByPostHttpRequest(url, dataToSend, onGetData) {
     };
     httpRequest.open('POST', url);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    httpRequest.send(dataToSend);
+    httpRequest.send(dataToSend + `&location=${locationToPost}`);
 }
 function renewPastEmissionsChart() {
     const dateString = dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.options[dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.selectedIndex].value;
@@ -149,7 +150,7 @@ function setSelectorOptions() {
     }
     switch (selectedInterval) {
         case Interval.DAILY:
-            setDataByGetHttpRequest('home/theMostPastEmissionMonth', (data) => {
+            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data) => {
                 const date = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1);
                 for (; date.valueOf() <= today.valueOf(); date.setMonth(date.getMonth() + 1)) {
                     const newOption = new Option(`${date.getFullYear()}-${addZeroInFront(date.getMonth() + 1, 2)}`, `${date.getFullYear()}-${addZeroInFront(date.getMonth() + 1, 2)}-01 00:00:00`);
@@ -159,7 +160,7 @@ function setSelectorOptions() {
             });
             break;
         case Interval.MONTHLY:
-            setDataByGetHttpRequest('home/theMostPastEmissionMonth', (data) => {
+            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data) => {
                 const date = new Date(Number(data.substring(0, 4)), 0, 1);
                 for (; date.valueOf() <= today.valueOf(); date.setFullYear(date.getFullYear() + 1)) {
                     const newOption = new Option(`${date.getFullYear()}`, `${date.getFullYear()}-01-01 00:00:00`);
@@ -186,22 +187,22 @@ function runAfterSettingSelectorOptions() {
 }
 function renewTodayEmissionChart() {
     if (todayTotalEmissionsEl) {
-        setDataByGetHttpRequest('home/todayEmissions', (data) => {
+        setDataByPostHttpRequest('home/todayEmissions', null, (data) => {
             todayTotalEmissionsEl.innerText = data;
         });
     }
     if (thisYearEmissionsEl) {
-        setDataByGetHttpRequest('home/thisYearEmissions', (data) => {
+        setDataByPostHttpRequest('home/thisYearEmissions', null, (data) => {
             thisYearEmissionsEl.innerText = data;
         });
     }
     if (thisYearRemainingPermissibleEmissionsEl) {
-        setDataByGetHttpRequest('home/thisYearRemainingPermissibleEmissions', (data) => {
+        setDataByPostHttpRequest('home/thisYearRemainingPermissibleEmissions', null, (data) => {
             thisYearRemainingPermissibleEmissionsEl.innerText = data;
         });
     }
     if (todayComparedToThisMonthAverageEl && todayComparedToThisMonthAverageArrowEl) {
-        setDataByGetHttpRequest('home/todayComparedToThisMonthAverageEmissions', (data) => {
+        setDataByPostHttpRequest('home/todayComparedToThisMonthAverageEmissions', null, (data) => {
             var _a, _b, _c, _d, _e, _f;
             if (data[0] === '-') {
                 todayComparedToThisMonthAverageEl.innerText = data.substring(1);

@@ -4,13 +4,23 @@ exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.g
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
-function getTodayEmissions(onGetEmissions) {
+function getTodayEmissions(location, onGetEmissions) {
     const today = new Date();
-    const queryStr = `
-        SELECT DATE_FORMAT(date_time, '%Y-%m-%d') time, SUM(emissions) total_emissions
-        FROM co2_emissions
-        WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'
-        GROUP BY time;`;
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m-%d') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}' AND location = ${location}
+            GROUP BY time;`;
+    }
+    else {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m-%d') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'
+            GROUP BY time;`;
+    }
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
@@ -24,13 +34,23 @@ function getTodayEmissions(onGetEmissions) {
     });
 }
 exports.getTodayEmissions = getTodayEmissions;
-function getThisYearEmissions(onGetEmissions) {
+function getThisYearEmissions(location, onGetEmissions) {
     const today = new Date();
-    const queryStr = `
-        SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
-        FROM co2_emissions
-        WHERE date_time >= '${today.getFullYear()}' AND date_time < '${today.getFullYear() + 1}'
-        GROUP BY time;`;
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}' AND date_time < '${today.getFullYear() + 1}' AND location = ${location}
+            GROUP BY time;`;
+    }
+    else {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}' AND date_time < '${today.getFullYear() + 1}'
+            GROUP BY time;`;
+    }
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
@@ -44,17 +64,26 @@ function getThisYearEmissions(onGetEmissions) {
     });
 }
 exports.getThisYearEmissions = getThisYearEmissions;
-function getThisYearRemainingPermissibleEmissions(onGetEmissions) {
+function getThisYearRemainingPermissibleEmissions(location, onGetEmissions) {
     const today = new Date();
-    const queryStr = `
-        SELECT emissions_limit
-        FROM permissible_emissions_limit
-        WHERE year = '${today.getFullYear()}';`;
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT emissions_limit
+            FROM permissible_emissions_limit
+            WHERE year = '${today.getFullYear()}' AND location = ${location};`;
+    }
+    else {
+        queryStr = `
+            SELECT emissions_limit
+            FROM permissible_emissions_limit
+            WHERE year = '${today.getFullYear()}';`;
+    }
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
         }
-        getThisYearEmissions((thisYearData) => {
+        getThisYearEmissions(location, (thisYearData) => {
             try {
                 onGetEmissions(results[0]['emissions_limit'] - thisYearData);
             }
@@ -65,19 +94,29 @@ function getThisYearRemainingPermissibleEmissions(onGetEmissions) {
     });
 }
 exports.getThisYearRemainingPermissibleEmissions = getThisYearRemainingPermissibleEmissions;
-function getTodayRatioComparedToThisMonthAverage(onGetEmissions) {
+function getTodayRatioComparedToThisMonthAverage(location, onGetEmissions) {
     const today = new Date();
     const nextMonth = new Date(today.getFullYear(), today.getMonth() + 2, 1);
-    const queryStr = `
-        SELECT DATE_FORMAT(date_time, '%Y-%m') time, AVG(emissions) average_emissions
-        FROM co2_emissions
-        WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth()}-1'
-        GROUP BY time;`;
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time, AVG(emissions) average_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth()}-1' AND location = ${location}
+            GROUP BY time;`;
+    }
+    else {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time, AVG(emissions) average_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth()}-1'
+            GROUP BY time;`;
+    }
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
         }
-        getTodayEmissions((data) => {
+        getTodayEmissions(location, (data) => {
             try {
                 onGetEmissions(((data / results[0]['average_emissions']) - 1) * 100);
             }
@@ -88,11 +127,21 @@ function getTodayRatioComparedToThisMonthAverage(onGetEmissions) {
     });
 }
 exports.getTodayRatioComparedToThisMonthAverage = getTodayRatioComparedToThisMonthAverage;
-function getTheMostPastEmissionMonth(onGetEmissions) {
-    const queryStr = `
-        SELECT DATE_FORMAT(date_time, '%Y-%m') time
-        FROM co2_emissions
-        GROUP BY time;`;
+function getTheMostPastEmissionMonth(location, onGetEmissions) {
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time
+            FROM co2_emissions
+            WHERE location = ${location}
+            GROUP BY time;`;
+    }
+    else {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time
+            FROM co2_emissions
+            GROUP BY time;`;
+    }
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
@@ -106,13 +155,23 @@ function getTheMostPastEmissionMonth(onGetEmissions) {
     });
 }
 exports.getTheMostPastEmissionMonth = getTheMostPastEmissionMonth;
-function getSelectedMonthEmissions(monthDate, onGetEmissions) {
+function getSelectedMonthEmissions(monthDate, location, onGetEmissions) {
     const nextMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 13);
-    const queryStr = `
-        SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
-        FROM co2_emissions
-        WHERE date_time >= '${monthDate.getFullYear()}-${monthDate.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth() + 1}-1'
-        GROUP BY time;`;
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${monthDate.getFullYear()}-${monthDate.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth() + 1}-1' AND location = ${location}
+            GROUP BY time;`;
+    }
+    else {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${monthDate.getFullYear()}-${monthDate.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth() + 1}-1'
+            GROUP BY time;`;
+    }
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
@@ -126,13 +185,22 @@ function getSelectedMonthEmissions(monthDate, onGetEmissions) {
     });
 }
 exports.getSelectedMonthEmissions = getSelectedMonthEmissions;
-function getSelectedYearEmissions(year, onGetEmissions) {
-    const queryStr = `
-        SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
-        FROM co2_emissions
-        WHERE date_time >= '${year}-1-1' AND date_time < '${year + 1}-1-1'
-        GROUP BY time;`;
-    console.log(queryStr);
+function getSelectedYearEmissions(year, location, onGetEmissions) {
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${year}-1-1' AND date_time < '${year + 1}-1-1' AND location = ${location}
+            GROUP BY time;`;
+    }
+    else {
+        queryStr = `
+            SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${year}-1-1' AND date_time < '${year + 1}-1-1'
+            GROUP BY time;`;
+    }
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;

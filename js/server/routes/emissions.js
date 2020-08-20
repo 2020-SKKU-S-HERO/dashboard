@@ -36,45 +36,52 @@ router.get('/workplace2', (req, res) => {
 router.get('/workplace3', (req, res) => {
     res.render('emissions/workplace3.html');
 });
-router.get('/home/todayEmissions', (req, res) => {
-    db_control.getTodayEmissions((data) => {
+router.post('/home/todayEmissions', (req, res) => {
+    const location = req.body.location;
+    db_control.getTodayEmissions(location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.get('/home/thisYearEmissions', (req, res) => {
-    db_control.getThisYearEmissions((data) => {
+router.post('/home/thisYearEmissions', (req, res) => {
+    const location = req.body.location;
+    db_control.getThisYearEmissions(location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.get('/home/thisYearRemainingPermissibleEmissions', (req, res) => {
-    db_control.getThisYearRemainingPermissibleEmissions((data) => {
+router.post('/home/thisYearRemainingPermissibleEmissions', (req, res) => {
+    const location = req.body.location;
+    db_control.getThisYearRemainingPermissibleEmissions(location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.get('/home/todayComparedToThisMonthAverageEmissions', (req, res) => {
-    db_control.getTodayRatioComparedToThisMonthAverage((data) => {
+router.post('/home/todayComparedToThisMonthAverageEmissions', (req, res) => {
+    const location = req.body.location;
+    db_control.getTodayRatioComparedToThisMonthAverage(location, (data) => {
         res.send(data.toFixed(1) + '%');
     });
 });
-router.get('/home/theMostPastEmissionMonth', (req, res) => {
-    db_control.getTheMostPastEmissionMonth((data) => {
+router.post('/home/theMostPastEmissionMonth', (req, res) => {
+    const location = req.body.location;
+    db_control.getTheMostPastEmissionMonth(location, (data) => {
         res.send(data);
     });
 });
 router.post('/home/selectedMonthEmissions', (req, res) => {
+    const location = req.body.location;
     const year = Number(req.body.year);
     const month = Number(req.body.month);
-    db_control.getSelectedMonthEmissions(new Date(year, month - 1, 2), (data) => {
+    db_control.getSelectedMonthEmissions(new Date(year, month - 1, 2), location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
 router.post('/home/selectedMonthComparedToLastYear', (req, res) => {
+    const location = req.body.location;
     const year = Number(req.body.year);
     const month = Number(req.body.month);
     const selectedMonth = new Date(year, month - 1, 2);
     const lastYearSameMonth = new Date(year - 1, month - 1, 2);
-    db_control.getSelectedMonthEmissions(selectedMonth, (selectedMonthData) => {
-        db_control.getSelectedMonthEmissions(lastYearSameMonth, (lastYearData) => {
+    db_control.getSelectedMonthEmissions(selectedMonth, location, (selectedMonthData) => {
+        db_control.getSelectedMonthEmissions(lastYearSameMonth, location, (lastYearData) => {
             if (selectedMonthData !== 0 && lastYearData !== 0) {
                 res.send((((selectedMonthData / lastYearData) - 1) * 100).toFixed(1) + '%');
             }
@@ -85,16 +92,17 @@ router.post('/home/selectedMonthComparedToLastYear', (req, res) => {
     });
 });
 router.post('/home/selectedYearEmissions', (req, res) => {
+    const location = req.body.location;
     const year = Number(req.body.year);
-    db_control.getSelectedYearEmissions(year, (data) => {
+    db_control.getSelectedYearEmissions(year, location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
 router.post('/home/selectedYearComparedToLastYear', (req, res) => {
+    const location = req.body.location;
     const year = Number(req.body.year);
-    console.log(req.body);
-    db_control.getSelectedYearEmissions(year, (selectedYearData) => {
-        db_control.getSelectedYearEmissions(year - 1, (lastYearData) => {
+    db_control.getSelectedYearEmissions(year, location, (selectedYearData) => {
+        db_control.getSelectedYearEmissions(year - 1, location, (lastYearData) => {
             if (selectedYearData !== 0 && lastYearData !== 0) {
                 res.send((((selectedYearData / lastYearData) - 1) * 100).toFixed(1) + '%');
             }

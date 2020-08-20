@@ -13,6 +13,8 @@ const selectedMonthTotalEmissions: HTMLElement | null = document.getElementById(
 const selectedMonthComparedToLastYearEl: HTMLElement | null = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl: HTMLImageElement | null = <HTMLImageElement>document.getElementById('selected-month-compared-to-last-year-arrow');
 
+const locationToPost: string = '';
+
 const renewingPeriod: number = 10000;
 
 enum Interval {
@@ -42,7 +44,7 @@ function setDataByGetHttpRequest(url: string, onGetData: (data: string) => void)
     httpRequest.send(null);
 }
 
-function setDataByPostHttpRequest(url: string, dataToSend: string, onGetData: (data: string) => void): void {
+function setDataByPostHttpRequest(url: string, dataToSend: string | null, onGetData: (data: string) => void): void {
     const httpRequest: XMLHttpRequest = new XMLHttpRequest();
     
     httpRequest.onreadystatechange = (): void => {
@@ -54,7 +56,7 @@ function setDataByPostHttpRequest(url: string, dataToSend: string, onGetData: (d
     };
     httpRequest.open('POST', url);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    httpRequest.send(dataToSend);
+    httpRequest.send(dataToSend + `&location=${locationToPost}`);
 }
 
 function renewPastEmissionsChart(): void {
@@ -161,7 +163,7 @@ function setSelectorOptions(): void {
     
     switch (selectedInterval) {
         case Interval.DAILY:
-            setDataByGetHttpRequest('home/theMostPastEmissionMonth', (data: string): void => {
+            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data: string): void => {
                 const date: Date = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1);
         
                 for (; date.valueOf() <= today.valueOf(); date.setMonth(date.getMonth() + 1)) {
@@ -175,7 +177,7 @@ function setSelectorOptions(): void {
             break;
     
         case Interval.MONTHLY:
-            setDataByGetHttpRequest('home/theMostPastEmissionMonth', (data: string): void => {
+            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data: string): void => {
                 const date: Date = new Date(Number(data.substring(0, 4)), 0, 1);
         
                 for (; date.valueOf() <= today.valueOf(); date.setFullYear(date.getFullYear() + 1)) {
@@ -210,25 +212,25 @@ function runAfterSettingSelectorOptions(): void {
 
 function renewTodayEmissionChart(): void {
     if (todayTotalEmissionsEl) {
-        setDataByGetHttpRequest('home/todayEmissions', (data: string): void => {
+        setDataByPostHttpRequest('home/todayEmissions', null, (data: string): void => {
             todayTotalEmissionsEl.innerText = data;
         });
     }
     
     if (thisYearEmissionsEl) {
-        setDataByGetHttpRequest('home/thisYearEmissions', (data: string): void => {
+        setDataByPostHttpRequest('home/thisYearEmissions', null, (data: string): void => {
             thisYearEmissionsEl.innerText = data;
         });
     }
     
     if (thisYearRemainingPermissibleEmissionsEl) {
-        setDataByGetHttpRequest('home/thisYearRemainingPermissibleEmissions', (data: string): void => {
+        setDataByPostHttpRequest('home/thisYearRemainingPermissibleEmissions', null, (data: string): void => {
             thisYearRemainingPermissibleEmissionsEl.innerText = data;
         });
     }
     
     if (todayComparedToThisMonthAverageEl && todayComparedToThisMonthAverageArrowEl) {
-        setDataByGetHttpRequest('home/todayComparedToThisMonthAverageEmissions', (data: string): void => {
+        setDataByPostHttpRequest('home/todayComparedToThisMonthAverageEmissions', null, (data: string): void => {
             if (data[0] === '-') {
                 todayComparedToThisMonthAverageEl.innerText = data.substring(1);
                 todayComparedToThisMonthAverageArrowEl.src = 'images/svg/decrease_arrow.svg';
@@ -280,5 +282,7 @@ window.addEventListener('DOMContentLoaded', (): void => {
     
     renewTodayEmissionChart();
 });
+
+
 
 setInterval(renewTodayEmissionChart, renewingPeriod);
