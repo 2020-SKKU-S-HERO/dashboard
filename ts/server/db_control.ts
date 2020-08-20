@@ -12,7 +12,7 @@ export function getTodayEmissions(location: string | undefined, onGetEmissions: 
         queryStr = `
             SELECT DATE_FORMAT(date_time, '%Y-%m-%d') time, SUM(emissions) total_emissions
             FROM co2_emissions
-            WHERE date_time >= '${ today.getFullYear() }-${ today.getMonth() + 1 }-${ today.getDate() }' AND location = ${ location }
+            WHERE date_time >= '${ today.getFullYear() }-${ today.getMonth() + 1 }-${ today.getDate() }' AND location = '${ location }'
             GROUP BY time;`;
     } else {
         queryStr = `
@@ -43,7 +43,7 @@ export function getThisYearEmissions(location: string | undefined, onGetEmission
         queryStr = `
             SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
             FROM co2_emissions
-            WHERE date_time >= '${ today.getFullYear() }' AND date_time < '${ today.getFullYear() + 1 }' AND location = ${ location }
+            WHERE date_time >= '${ today.getFullYear() }' AND date_time < '${ today.getFullYear() + 1 }' AND location = '${ location }'
             GROUP BY time;`;
     } else {
         queryStr = `
@@ -74,7 +74,7 @@ export function getThisYearRemainingPermissibleEmissions(location: string | unde
         queryStr = `
             SELECT emissions_limit
             FROM permissible_emissions_limit
-            WHERE year = '${ today.getFullYear() }' AND location = ${ location };`;
+            WHERE year = '${ today.getFullYear() }' AND location = '${ location }';`;
     } else {
         queryStr = `
             SELECT emissions_limit
@@ -106,7 +106,7 @@ export function getTodayRatioComparedToThisMonthAverage(location: string | undef
         queryStr = `
             SELECT DATE_FORMAT(date_time, '%Y-%m') time, AVG(emissions) average_emissions
             FROM co2_emissions
-            WHERE date_time >= '${ today.getFullYear() }-${ today.getMonth() + 1 }-1' AND date_time < '${ nextMonth.getFullYear() }-${ nextMonth.getMonth() }-1' AND location = ${ location }
+            WHERE date_time >= '${ today.getFullYear() }-${ today.getMonth() + 1 }-1' AND date_time < '${ nextMonth.getFullYear() }-${ nextMonth.getMonth() }-1' AND location = '${ location }'
             GROUP BY time;`;
     } else {
         queryStr = `
@@ -139,7 +139,7 @@ export function getTheMostPastEmissionMonth(location: string | undefined, onGetE
         queryStr = `
             SELECT DATE_FORMAT(date_time, '%Y-%m') time
             FROM co2_emissions
-            WHERE location = ${ location }
+            WHERE location = '${ location }'
             GROUP BY time;`;
     } else {
         queryStr = `
@@ -169,7 +169,7 @@ export function getSelectedMonthEmissions(monthDate: Date, location: string | un
         queryStr = `
             SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
             FROM co2_emissions
-            WHERE date_time >= '${ monthDate.getFullYear() }-${ monthDate.getMonth() + 1 }-1' AND date_time < '${ nextMonth.getFullYear() }-${ nextMonth.getMonth() + 1 }-1' AND location = ${ location }
+            WHERE date_time >= '${ monthDate.getFullYear() }-${ monthDate.getMonth() + 1 }-1' AND date_time < '${ nextMonth.getFullYear() }-${ nextMonth.getMonth() + 1 }-1' AND location = '${ location }'
             GROUP BY time;`;
     } else {
         queryStr = `
@@ -199,7 +199,7 @@ export function getSelectedYearEmissions(year: number, location: string | undefi
         queryStr = `
             SELECT DATE_FORMAT(date_time, '%Y') time, SUM(emissions) total_emissions
             FROM co2_emissions
-            WHERE date_time >= '${ year }-1-1' AND date_time < '${ year + 1 }-1-1' AND location = ${ location }
+            WHERE date_time >= '${ year }-1-1' AND date_time < '${ year + 1 }-1-1' AND location = '${ location }'
             GROUP BY time;`;
     } else {
         queryStr = `

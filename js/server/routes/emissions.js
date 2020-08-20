@@ -63,7 +63,7 @@ router.post('/home/todayComparedToThisMonthAverageEmissions', (req, res) => {
 router.post('/home/theMostPastEmissionMonth', (req, res) => {
     const location = req.body.location;
     db_control.getTheMostPastEmissionMonth(location, (data) => {
-        res.send(data);
+        res.send(data.toString());
     });
 });
 router.post('/home/selectedMonthEmissions', (req, res) => {

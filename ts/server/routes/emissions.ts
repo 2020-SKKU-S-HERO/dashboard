@@ -81,7 +81,7 @@ router.post('/home/theMostPastEmissionMonth', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getTheMostPastEmissionMonth(location, (data: number): void => {
-        res.send(data);
+        res.send(data.toString());
     });
 });
 
