@@ -18,9 +18,36 @@ const isWorkplace1: HTMLElement | null = document.getElementById('emissions-work
 const isWorkplace2: HTMLElement | null = document.getElementById('emissions-workplace2');
 const isWorkplace3: HTMLElement | null = document.getElementById('emissions-workplace3');
 
-const workplace1: string = 'location1';
-const workplace2: string = 'location2';
-const workplace3: string = 'location3';
+const info: any = {
+    home: {
+        location: '',
+        todayEmissionsPanelId: 2,
+        pastDailyEmissionsPanelId: 4,
+        pastMonthlyEmissionsPanelId: 6,
+        predictionEmissionsPanelId: 0
+    },
+    workplace1: {
+        location: 'location1',
+        todayEmissionsPanelId: 8,
+        pastDailyEmissionsPanelId: 12,
+        pastMonthlyEmissionsPanelId: 13,
+        predictionEmissionsPanelId: 0
+    },
+    workplace2: {
+        location: 'location2',
+        todayEmissionsPanelId: 9,
+        pastDailyEmissionsPanelId: 16,
+        pastMonthlyEmissionsPanelId: 17,
+        predictionEmissionsPanelId: 0
+    },
+    workplace3: {
+        location: 'location3',
+        todayEmissionsPanelId: 10,
+        pastDailyEmissionsPanelId: 18,
+        pastMonthlyEmissionsPanelId: 19,
+        predictionEmissionsPanelId: 0
+    }
+}
 
 const renewingPeriod: number = 10000;
 
@@ -29,11 +56,7 @@ enum Interval {
     MONTHLY
 }
 
-let locationToPost: string;
-let todayEmissionsPanelId: number;
-let pastDailyEmissionsPanelId: number;
-let pastMonthlyEmissionsPanelId: number;
-let predictionEmissionsPanelId: number;
+let locationInfo: any;
 
 let selectedInterval: Interval = Interval.DAILY;
 
@@ -69,7 +92,7 @@ function setDataByPostHttpRequest(url: string, dataToSend: string | null, onGetD
     };
     httpRequest.open('POST', url);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    httpRequest.send(dataToSend + `&location=${ locationToPost }`);
+    httpRequest.send(dataToSend + `&location=${ locationInfo.location }`);
 }
 
 function renewPastEmissionsChart(): void {
@@ -156,13 +179,13 @@ function setEmissionChartInterval(fromDateString: string, monthInterval: number,
         case Interval.DAILY:
             toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + monthInterval, 1, -8, 0, -1);
             fromDate.setHours(-4);
-            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ pastDailyEmissionsPanelId }`;
+            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ locationInfo.pastDailyEmissionsPanelId }`;
             break;
         
         case Interval.MONTHLY:
             toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + monthInterval, -10, 0, 0, -1);
             fromDate.setDate(-12);
-            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ pastMonthlyEmissionsPanelId }`;
+            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ locationInfo.pastMonthlyEmissionsPanelId }`;
             break;
     }
 }
@@ -306,7 +329,7 @@ window.addEventListener('DOMContentLoaded', (): void => {
         
         today.setHours(0, 0, 0);
         
-        todayEmissionsChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ todayEmissionsPanelId }`;
+        todayEmissionsChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ locationInfo.todayEmissionsPanelId }`;
     }
     
     setSelectorOptions();
@@ -315,29 +338,13 @@ window.addEventListener('DOMContentLoaded', (): void => {
 });
 
 if (isHome) {
-    locationToPost = '';
-    todayEmissionsPanelId = 2;
-    pastDailyEmissionsPanelId = 4;
-    pastMonthlyEmissionsPanelId = 6;
-    predictionEmissionsPanelId = 0;
+    locationInfo = info.home;
 } else if (isWorkplace1) {
-    locationToPost = workplace1;
-    todayEmissionsPanelId = 8;
-    pastDailyEmissionsPanelId = 12;
-    pastMonthlyEmissionsPanelId = 13;
-    predictionEmissionsPanelId = 0;
+    locationInfo = info.workplace1;
 } else if (isWorkplace2) {
-    locationToPost = workplace2;
-    todayEmissionsPanelId = 9;
-    pastDailyEmissionsPanelId = 16;
-    pastMonthlyEmissionsPanelId = 17;
-    predictionEmissionsPanelId = 0;
+    locationInfo = info.workplace2;
 } else if (isWorkplace3) {
-    locationToPost = workplace3;
-    todayEmissionsPanelId = 10;
-    pastDailyEmissionsPanelId = 18;
-    pastMonthlyEmissionsPanelId = 19;
-    predictionEmissionsPanelId = 0;
+    locationInfo = info.workplace3;
 }
 
 setInterval(renewTodayEmissionChart, renewingPeriod);
