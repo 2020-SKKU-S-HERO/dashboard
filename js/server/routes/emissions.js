@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.emissionsRouter = void 0;
 const express = require("express");
 const db_control = require("../db_control");
+const http = require("http");
 const router = express.Router();
 exports.emissionsRouter = router;
 function addCommaInNumber(num) {
@@ -36,37 +37,37 @@ router.get('/workplace2', (req, res) => {
 router.get('/workplace3', (req, res) => {
     res.render('emissions/workplace3.html');
 });
-router.post('/home/todayEmissions', (req, res) => {
+router.post('/todayEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getTodayEmissions(location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.post('/home/thisYearEmissions', (req, res) => {
+router.post('/thisYearEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getThisYearEmissions(location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.post('/home/thisYearRemainingPermissibleEmissions', (req, res) => {
+router.post('/thisYearRemainingPermissibleEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getThisYearRemainingPermissibleEmissions(location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.post('/home/todayComparedToThisMonthAverageEmissions', (req, res) => {
+router.post('/todayComparedToThisMonthAverageEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getTodayRatioComparedToThisMonthAverage(location, (data) => {
         res.send(data.toFixed(1) + '%');
     });
 });
-router.post('/home/theMostPastEmissionMonth', (req, res) => {
+router.post('/theMostPastEmissionMonth', (req, res) => {
     const location = req.body.location;
     db_control.getTheMostPastEmissionMonth(location, (data) => {
         res.send(data.toString());
     });
 });
-router.post('/home/selectedMonthEmissions', (req, res) => {
+router.post('/selectedMonthEmissions', (req, res) => {
     const location = req.body.location;
     const year = Number(req.body.year);
     const month = Number(req.body.month);
@@ -74,7 +75,7 @@ router.post('/home/selectedMonthEmissions', (req, res) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.post('/home/selectedMonthComparedToLastYear', (req, res) => {
+router.post('/selectedMonthComparedToLastYear', (req, res) => {
     const location = req.body.location;
     const year = Number(req.body.year);
     const month = Number(req.body.month);
@@ -91,14 +92,14 @@ router.post('/home/selectedMonthComparedToLastYear', (req, res) => {
         });
     });
 });
-router.post('/home/selectedYearEmissions', (req, res) => {
+router.post('/selectedYearEmissions', (req, res) => {
     const location = req.body.location;
     const year = Number(req.body.year);
     db_control.getSelectedYearEmissions(year, location, (data) => {
         res.send(addCommaInNumber(data) + 't');
     });
 });
-router.post('/home/selectedYearComparedToLastYear', (req, res) => {
+router.post('/selectedYearComparedToLastYear', (req, res) => {
     const location = req.body.location;
     const year = Number(req.body.year);
     db_control.getSelectedYearEmissions(year, location, (selectedYearData) => {
@@ -109,6 +110,30 @@ router.post('/home/selectedYearComparedToLastYear', (req, res) => {
             else {
                 res.send('-');
             }
+        });
+    });
+});
+router.post('/weather', (req, res) => {
+    const appId = '70da6bb9b7ebe370c2bf958bbf0d3ba4';
+    const cityName = req.body.cityName;
+    const options = {
+        host: 'api.openweathermap.org',
+        port: 80,
+        path: `/data/2.5/weather?q=${cityName}&appid=${appId}`,
+        method: 'GET'
+    };
+    http.get(options, (incomingMessage) => {
+        let resData = '';
+        incomingMessage.on('data', (chunk) => {
+            resData += chunk;
+        });
+        incomingMessage.on('end', () => {
+            const data = JSON.parse(resData);
+            console.log(resData);
+            res.send({ 'weather': data.weather[0].main, 'temperature': data.main.temp, 'humidity': data.main.humidity });
+        });
+        incomingMessage.on('error', (err) => {
+            console.log(err.message);
         });
     });
 });

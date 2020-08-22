@@ -4,6 +4,8 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import { emissionsRouter } from './routes/emissions';
 import { controlRouter } from './routes/control';
+import * as http from 'http';
+import { ClientRequest, IncomingMessage } from 'http';
 
 class App {
     

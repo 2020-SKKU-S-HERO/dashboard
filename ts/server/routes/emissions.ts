@@ -1,6 +1,8 @@
 import * as express from 'express';
 import { app } from '../app';
 import * as db_control from '../db_control';
+import { ClientRequest, IncomingMessage } from 'http';
+import * as http from 'http';
 
 const router: express.Router = express.Router();
 export { router as emissionsRouter };
@@ -45,7 +47,7 @@ router.get('/workplace3', (req: any, res: any): void => {
     res.render('emissions/workplace3.html');
 });
 
-router.post('/home/todayEmissions', (req: any, res: any): void => {
+router.post('/todayEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getTodayEmissions(location, (data: number): void => {
@@ -53,7 +55,7 @@ router.post('/home/todayEmissions', (req: any, res: any): void => {
     });
 });
 
-router.post('/home/thisYearEmissions', (req: any, res: any): void => {
+router.post('/thisYearEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getThisYearEmissions(location, (data: number): void => {
@@ -61,7 +63,7 @@ router.post('/home/thisYearEmissions', (req: any, res: any): void => {
     });
 });
 
-router.post('/home/thisYearRemainingPermissibleEmissions', (req: any, res: any): void => {
+router.post('/thisYearRemainingPermissibleEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getThisYearRemainingPermissibleEmissions(location, (data: number): void => {
@@ -69,7 +71,7 @@ router.post('/home/thisYearRemainingPermissibleEmissions', (req: any, res: any):
     });
 });
 
-router.post('/home/todayComparedToThisMonthAverageEmissions', (req: any, res: any): void => {
+router.post('/todayComparedToThisMonthAverageEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getTodayRatioComparedToThisMonthAverage(location, (data: number): void => {
@@ -77,7 +79,7 @@ router.post('/home/todayComparedToThisMonthAverageEmissions', (req: any, res: an
     });
 });
 
-router.post('/home/theMostPastEmissionMonth', (req: any, res: any): void => {
+router.post('/theMostPastEmissionMonth', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getTheMostPastEmissionMonth(location, (data: number): void => {
@@ -85,7 +87,7 @@ router.post('/home/theMostPastEmissionMonth', (req: any, res: any): void => {
     });
 });
 
-router.post('/home/selectedMonthEmissions', (req: any, res: any): void => {
+router.post('/selectedMonthEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     const year: number = Number(req.body.year);
     const month: number = Number(req.body.month);
@@ -95,7 +97,7 @@ router.post('/home/selectedMonthEmissions', (req: any, res: any): void => {
     });
 });
 
-router.post('/home/selectedMonthComparedToLastYear', (req: any, res: any): void => {
+router.post('/selectedMonthComparedToLastYear', (req: any, res: any): void => {
     const location: string = req.body.location;
     const year: number = Number(req.body.year);
     const month: number = Number(req.body.month);
@@ -113,7 +115,7 @@ router.post('/home/selectedMonthComparedToLastYear', (req: any, res: any): void 
     });
 });
 
-router.post('/home/selectedYearEmissions', (req: any, res: any): void => {
+router.post('/selectedYearEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     const year: number = Number(req.body.year);
     
@@ -122,7 +124,7 @@ router.post('/home/selectedYearEmissions', (req: any, res: any): void => {
     });
 });
 
-router.post('/home/selectedYearComparedToLastYear', (req: any, res: any): void => {
+router.post('/selectedYearComparedToLastYear', (req: any, res: any): void => {
     const location: string = req.body.location;
     const year: number = Number(req.body.year);
     
@@ -138,3 +140,32 @@ router.post('/home/selectedYearComparedToLastYear', (req: any, res: any): void =
     });
 });
 
+router.post('/weather', (req: any, res: any): void => {
+    const appId: string = '70da6bb9b7ebe370c2bf958bbf0d3ba4';
+    const cityName: string = req.body.cityName;
+    
+    const options = {
+        host: 'api.openweathermap.org',
+        port: 80,
+        path: `/data/2.5/weather?q=${cityName}&appid=${appId}`,
+        method: 'GET'
+    };
+    
+    http.get(options, (incomingMessage: IncomingMessage): void => {
+        let resData: string = '';
+        
+        incomingMessage.on('data', (chunk): void => {
+            resData += chunk;
+        });
+        
+        incomingMessage.on('end', (): void => {
+            const data: JSON = JSON.parse(resData);
+            console.log(resData);
+            res.send({'weather': data.weather[0].main, 'temperature': data.main.temp, 'humidity' : data.main.humidity});
+        });
+        
+        incomingMessage.on('error', (err): void => {
+            console.log(err.message);
+        });
+    });
+});

@@ -27,12 +27,13 @@
             <div class="card weather-card">
                 <div class="center-box">
                     <div class="box-weather">
-                        <img src="images/svg/weather_clear.svg" alt="">
-                        <span>29'C</span>
+<!--                        <img src="images/svg/weather_clear.svg" alt="">-->
+                        <span id="weather-value"></span>
+                        <span id="temperature-value">-</span>
                     </div>
                     <div class="box-weather-small">
                         <img src="images/svg/water_drop.svg" alt="">
-                        <span>50%</span>
+                        <span id="humidity-value">-</span>
                     </div>
                 </div>
             </div>
@@ -154,5 +155,6 @@
         </div>
     </div>
 </div>
-<script src="js/script/chart.js"></script>
+<script type="module" src="js/script/chart.js"></script>
+<script type="module" src="js/script/weather.js"></script>
 {%  endblock %}

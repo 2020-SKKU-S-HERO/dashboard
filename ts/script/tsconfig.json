@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "amd",
-    "moduleResolution": "classic",
+    "module": "ES6",
     "target": "es6",
     "rootDir": "",
     "outDir": "../../js/script",

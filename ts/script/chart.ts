@@ -1,3 +1,5 @@
+import { setDataByPostHttpRequest, locationInfo } from './common.js';
+
 const thisYearEmissionsEl: HTMLElement | null = document.getElementById('this-year-total-emissions');
 const thisYearRemainingPermissibleEmissionsEl: HTMLElement | null = document.getElementById('this-year-remaining-permissible-emissions');
 
@@ -13,42 +15,6 @@ const selectedMonthTotalEmissions: HTMLElement | null = document.getElementById(
 const selectedMonthComparedToLastYearEl: HTMLElement | null = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl: HTMLImageElement | null = <HTMLImageElement>document.getElementById('selected-month-compared-to-last-year-arrow');
 
-const isHome: HTMLElement | null = document.getElementById('emissions-home');
-const isWorkplace1: HTMLElement | null = document.getElementById('emissions-workplace1');
-const isWorkplace2: HTMLElement | null = document.getElementById('emissions-workplace2');
-const isWorkplace3: HTMLElement | null = document.getElementById('emissions-workplace3');
-
-const info: any = {
-    home: {
-        location: '',
-        todayEmissionsPanelId: 2,
-        pastDailyEmissionsPanelId: 4,
-        pastMonthlyEmissionsPanelId: 6,
-        predictionEmissionsPanelId: 0
-    },
-    workplace1: {
-        location: 'location1',
-        todayEmissionsPanelId: 8,
-        pastDailyEmissionsPanelId: 12,
-        pastMonthlyEmissionsPanelId: 13,
-        predictionEmissionsPanelId: 0
-    },
-    workplace2: {
-        location: 'location2',
-        todayEmissionsPanelId: 9,
-        pastDailyEmissionsPanelId: 16,
-        pastMonthlyEmissionsPanelId: 17,
-        predictionEmissionsPanelId: 0
-    },
-    workplace3: {
-        location: 'location3',
-        todayEmissionsPanelId: 10,
-        pastDailyEmissionsPanelId: 18,
-        pastMonthlyEmissionsPanelId: 19,
-        predictionEmissionsPanelId: 0
-    }
-}
-
 const renewingPeriod: number = 10000;
 
 enum Interval {
@@ -56,43 +22,12 @@ enum Interval {
     MONTHLY
 }
 
-let locationInfo: any;
-
 let selectedInterval: Interval = Interval.DAILY;
 
 function addZeroInFront(num: number, width: number): string {
     const numberStr: string = num.toString();
     
     return numberStr.length >= width ? numberStr : new Array(width - numberStr.length + 1).join('0') + numberStr;
-}
-
-function setDataByGetHttpRequest(url: string, onGetData: (data: string) => void): void {
-    const httpRequest: XMLHttpRequest = new XMLHttpRequest();
-    
-    httpRequest.onreadystatechange = (): void => {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                onGetData(httpRequest.responseText);
-            }
-        }
-    };
-    httpRequest.open('GET', url);
-    httpRequest.send(null);
-}
-
-function setDataByPostHttpRequest(url: string, dataToSend: string | null, onGetData: (data: string) => void): void {
-    const httpRequest: XMLHttpRequest = new XMLHttpRequest();
-    
-    httpRequest.onreadystatechange = (): void => {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                onGetData(httpRequest.responseText);
-            }
-        }
-    };
-    httpRequest.open('POST', url);
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    httpRequest.send(dataToSend + `&location=${ locationInfo.location }`);
 }
 
 function renewPastEmissionsChart(): void {
@@ -103,13 +38,13 @@ function renewPastEmissionsChart(): void {
     switch (selectedInterval) {
         case Interval.DAILY:
             if (selectedMonthTotalEmissions) {
-                setDataByPostHttpRequest('home/selectedMonthEmissions', `year=${ year }&month=${ month }`, (data: string): void => {
+                setDataByPostHttpRequest('selectedMonthEmissions', `year=${ year }&month=${ month }&location=${ locationInfo.location }`, (data: string): void => {
                     selectedMonthTotalEmissions.innerText = data;
                 });
             }
             
             if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
-                setDataByPostHttpRequest('home/selectedMonthComparedToLastYear', `year=${ year }&month=${ month }`, (data: string): void => {
+                setDataByPostHttpRequest('selectedMonthComparedToLastYear', `year=${ year }&month=${ month }&location=${ locationInfo.location }`, (data: string): void => {
                     if (data === '-') {
                         selectedMonthComparedToLastYearEl.innerText = '-';
                         selectedMonthComparedToLastYearArrowEl.src = '';
@@ -137,13 +72,13 @@ function renewPastEmissionsChart(): void {
         
         case Interval.MONTHLY:
             if (selectedMonthTotalEmissions) {
-                setDataByPostHttpRequest('home/selectedYearEmissions', `year=${ year }`, (data: string): void => {
+                setDataByPostHttpRequest('selectedYearEmissions', `year=${ year }&location=${ locationInfo.location }`, (data: string): void => {
                     selectedMonthTotalEmissions.innerText = data;
                 });
             }
             
             if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
-                setDataByPostHttpRequest('home/selectedYearComparedToLastYear', `year=${ year }`, (data: string): void => {
+                setDataByPostHttpRequest('selectedYearComparedToLastYear', `year=${ year }&location=${ locationInfo.location }`, (data: string): void => {
                     if (data === '-') {
                         selectedMonthComparedToLastYearEl.innerText = '-';
                         selectedMonthComparedToLastYearArrowEl.src = '';
@@ -199,7 +134,7 @@ function setSelectorOptions(): void {
     
     switch (selectedInterval) {
         case Interval.DAILY:
-            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data: string): void => {
+            setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${ locationInfo.location }`, (data: string): void => {
                 if (data !== '0') {
                     const date: Date = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1);
                     
@@ -222,7 +157,7 @@ function setSelectorOptions(): void {
             break;
         
         case Interval.MONTHLY:
-            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data: string): void => {
+            setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${ locationInfo.location }`, (data: string): void => {
                 if (data !== '0') {
                     const date: Date = new Date(Number(data.substring(0, 4)), 0, 1);
                     
@@ -266,25 +201,25 @@ function runAfterSettingSelectorOptions(): void {
 
 function renewTodayEmissionChart(): void {
     if (todayTotalEmissionsEl) {
-        setDataByPostHttpRequest('home/todayEmissions', null, (data: string): void => {
+        setDataByPostHttpRequest('todayEmissions', `location=${ locationInfo.location }`, (data: string): void => {
             todayTotalEmissionsEl.innerText = data;
         });
     }
     
     if (thisYearEmissionsEl) {
-        setDataByPostHttpRequest('home/thisYearEmissions', null, (data: string): void => {
+        setDataByPostHttpRequest('thisYearEmissions', `location=${ locationInfo.location }`, (data: string): void => {
             thisYearEmissionsEl.innerText = data;
         });
     }
     
     if (thisYearRemainingPermissibleEmissionsEl) {
-        setDataByPostHttpRequest('home/thisYearRemainingPermissibleEmissions', null, (data: string): void => {
+        setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${ locationInfo.location }`, (data: string): void => {
             thisYearRemainingPermissibleEmissionsEl.innerText = data;
         });
     }
     
     if (todayComparedToThisMonthAverageEl && todayComparedToThisMonthAverageArrowEl) {
-        setDataByPostHttpRequest('home/todayComparedToThisMonthAverageEmissions', null, (data: string): void => {
+        setDataByPostHttpRequest('todayComparedToThisMonthAverageEmissions', `location=${ locationInfo.location }`, (data: string): void => {
             if (data[0] === '-') {
                 todayComparedToThisMonthAverageEl.innerText = data.substring(1);
                 todayComparedToThisMonthAverageArrowEl.src = 'images/svg/decrease_arrow.svg';
@@ -336,15 +271,5 @@ window.addEventListener('DOMContentLoaded', (): void => {
     
     renewTodayEmissionChart();
 });
-
-if (isHome) {
-    locationInfo = info.home;
-} else if (isWorkplace1) {
-    locationInfo = info.workplace1;
-} else if (isWorkplace2) {
-    locationInfo = info.workplace2;
-} else if (isWorkplace3) {
-    locationInfo = info.workplace3;
-}
 
 setInterval(renewTodayEmissionChart, renewingPeriod);

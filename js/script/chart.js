@@ -1,4 +1,4 @@
-"use strict";
+import { setDataByPostHttpRequest, locationInfo } from './common.js';
 const thisYearEmissionsEl = document.getElementById('this-year-total-emissions');
 const thisYearRemainingPermissibleEmissionsEl = document.getElementById('this-year-remaining-permissible-emissions');
 const todayEmissionsChartEl = document.getElementById('today-emissions-chart');
@@ -11,76 +11,16 @@ const selectedMonthChartEl = document.getElementById('selected-month-chart');
 const selectedMonthTotalEmissions = document.getElementById('selected-month-total-emissions');
 const selectedMonthComparedToLastYearEl = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl = document.getElementById('selected-month-compared-to-last-year-arrow');
-const isHome = document.getElementById('emissions-home');
-const isWorkplace1 = document.getElementById('emissions-workplace1');
-const isWorkplace2 = document.getElementById('emissions-workplace2');
-const isWorkplace3 = document.getElementById('emissions-workplace3');
-const info = {
-    home: {
-        location: '',
-        todayEmissionsPanelId: 2,
-        pastDailyEmissionsPanelId: 4,
-        pastMonthlyEmissionsPanelId: 6,
-        predictionEmissionsPanelId: 0
-    },
-    workplace1: {
-        location: 'location1',
-        todayEmissionsPanelId: 8,
-        pastDailyEmissionsPanelId: 12,
-        pastMonthlyEmissionsPanelId: 13,
-        predictionEmissionsPanelId: 0
-    },
-    workplace2: {
-        location: 'location2',
-        todayEmissionsPanelId: 9,
-        pastDailyEmissionsPanelId: 16,
-        pastMonthlyEmissionsPanelId: 17,
-        predictionEmissionsPanelId: 0
-    },
-    workplace3: {
-        location: 'location3',
-        todayEmissionsPanelId: 10,
-        pastDailyEmissionsPanelId: 18,
-        pastMonthlyEmissionsPanelId: 19,
-        predictionEmissionsPanelId: 0
-    }
-};
 const renewingPeriod = 10000;
 var Interval;
 (function (Interval) {
     Interval[Interval["DAILY"] = 0] = "DAILY";
     Interval[Interval["MONTHLY"] = 1] = "MONTHLY";
 })(Interval || (Interval = {}));
-let locationInfo;
 let selectedInterval = Interval.DAILY;
 function addZeroInFront(num, width) {
     const numberStr = num.toString();
     return numberStr.length >= width ? numberStr : new Array(width - numberStr.length + 1).join('0') + numberStr;
-}
-function setDataByGetHttpRequest(url, onGetData) {
-    const httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = () => {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                onGetData(httpRequest.responseText);
-            }
-        }
-    };
-    httpRequest.open('GET', url);
-    httpRequest.send(null);
-}
-function setDataByPostHttpRequest(url, dataToSend, onGetData) {
-    const httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = () => {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                onGetData(httpRequest.responseText);
-            }
-        }
-    };
-    httpRequest.open('POST', url);
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    httpRequest.send(dataToSend + `&location=${locationInfo.location}`);
 }
 function renewPastEmissionsChart() {
     const dateString = dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.options[dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.selectedIndex].value;
@@ -89,12 +29,12 @@ function renewPastEmissionsChart() {
     switch (selectedInterval) {
         case Interval.DAILY:
             if (selectedMonthTotalEmissions) {
-                setDataByPostHttpRequest('home/selectedMonthEmissions', `year=${year}&month=${month}`, (data) => {
+                setDataByPostHttpRequest('selectedMonthEmissions', `year=${year}&month=${month}&location=${locationInfo.location}`, (data) => {
                     selectedMonthTotalEmissions.innerText = data;
                 });
             }
             if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
-                setDataByPostHttpRequest('home/selectedMonthComparedToLastYear', `year=${year}&month=${month}`, (data) => {
+                setDataByPostHttpRequest('selectedMonthComparedToLastYear', `year=${year}&month=${month}&location=${locationInfo.location}`, (data) => {
                     var _a, _b, _c, _d, _e, _f, _g, _h;
                     if (data === '-') {
                         selectedMonthComparedToLastYearEl.innerText = '-';
@@ -125,12 +65,12 @@ function renewPastEmissionsChart() {
             break;
         case Interval.MONTHLY:
             if (selectedMonthTotalEmissions) {
-                setDataByPostHttpRequest('home/selectedYearEmissions', `year=${year}`, (data) => {
+                setDataByPostHttpRequest('selectedYearEmissions', `year=${year}&location=${locationInfo.location}`, (data) => {
                     selectedMonthTotalEmissions.innerText = data;
                 });
             }
             if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
-                setDataByPostHttpRequest('home/selectedYearComparedToLastYear', `year=${year}`, (data) => {
+                setDataByPostHttpRequest('selectedYearComparedToLastYear', `year=${year}&location=${locationInfo.location}`, (data) => {
                     var _a, _b, _c, _d, _e, _f, _g, _h;
                     if (data === '-') {
                         selectedMonthComparedToLastYearEl.innerText = '-';
@@ -184,7 +124,7 @@ function setSelectorOptions() {
     }
     switch (selectedInterval) {
         case Interval.DAILY:
-            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data) => {
+            setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${locationInfo.location}`, (data) => {
                 if (data !== '0') {
                     const date = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1);
                     for (; date.valueOf() <= today.valueOf(); date.setMonth(date.getMonth() + 1)) {
@@ -202,7 +142,7 @@ function setSelectorOptions() {
             });
             break;
         case Interval.MONTHLY:
-            setDataByPostHttpRequest('home/theMostPastEmissionMonth', null, (data) => {
+            setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${locationInfo.location}`, (data) => {
                 if (data !== '0') {
                     const date = new Date(Number(data.substring(0, 4)), 0, 1);
                     for (; date.valueOf() <= today.valueOf(); date.setFullYear(date.getFullYear() + 1)) {
@@ -237,22 +177,22 @@ function runAfterSettingSelectorOptions() {
 }
 function renewTodayEmissionChart() {
     if (todayTotalEmissionsEl) {
-        setDataByPostHttpRequest('home/todayEmissions', null, (data) => {
+        setDataByPostHttpRequest('todayEmissions', `location=${locationInfo.location}`, (data) => {
             todayTotalEmissionsEl.innerText = data;
         });
     }
     if (thisYearEmissionsEl) {
-        setDataByPostHttpRequest('home/thisYearEmissions', null, (data) => {
+        setDataByPostHttpRequest('thisYearEmissions', `location=${locationInfo.location}`, (data) => {
             thisYearEmissionsEl.innerText = data;
         });
     }
     if (thisYearRemainingPermissibleEmissionsEl) {
-        setDataByPostHttpRequest('home/thisYearRemainingPermissibleEmissions', null, (data) => {
+        setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${locationInfo.location}`, (data) => {
             thisYearRemainingPermissibleEmissionsEl.innerText = data;
         });
     }
     if (todayComparedToThisMonthAverageEl && todayComparedToThisMonthAverageArrowEl) {
-        setDataByPostHttpRequest('home/todayComparedToThisMonthAverageEmissions', null, (data) => {
+        setDataByPostHttpRequest('todayComparedToThisMonthAverageEmissions', `location=${locationInfo.location}`, (data) => {
             var _a, _b, _c, _d, _e, _f;
             if (data[0] === '-') {
                 todayComparedToThisMonthAverageEl.innerText = data.substring(1);
@@ -297,17 +237,5 @@ window.addEventListener('DOMContentLoaded', () => {
     setSelectorOptions();
     renewTodayEmissionChart();
 });
-if (isHome) {
-    locationInfo = info.home;
-}
-else if (isWorkplace1) {
-    locationInfo = info.workplace1;
-}
-else if (isWorkplace2) {
-    locationInfo = info.workplace2;
-}
-else if (isWorkplace3) {
-    locationInfo = info.workplace3;
-}
 setInterval(renewTodayEmissionChart, renewingPeriod);
 //# sourceMappingURL=chart.js.map
