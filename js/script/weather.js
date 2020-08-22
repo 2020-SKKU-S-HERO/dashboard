@@ -1,7 +1,8 @@
 import { setDataByPostHttpRequest, locationInfo } from './common.js';
-const weatherValueEl = document.getElementById('weather-value');
+const weatherIconEl = document.getElementById('weather-icon');
 const temperatureValueEl = document.getElementById('temperature-value');
 const humidityValueEl = document.getElementById('humidity-value');
+const renewingPeriod = 60000;
 var Weather;
 (function (Weather) {
     Weather[Weather["SUNNY"] = 0] = "SUNNY";
@@ -13,11 +14,10 @@ var Weather;
     Weather[Weather["FOGGY"] = 6] = "FOGGY";
 })(Weather || (Weather = {}));
 function renewWeather() {
-    if (weatherValueEl && temperatureValueEl && humidityValueEl) {
+    if (weatherIconEl && temperatureValueEl && humidityValueEl) {
         setDataByPostHttpRequest('weather', `cityName=${locationInfo.cityName}`, (data) => {
             const weatherData = JSON.parse(data);
-            console.log(weatherData);
-            weatherValueEl.innerText = weatherData.weather;
+            weatherIconEl.src = `http://openweathermap.org/img/wn/${weatherData.weather_icon}@2x.png`;
             temperatureValueEl.innerText = (weatherData.temperature - 273.15).toFixed(1) + '°C';
             humidityValueEl.innerText = weatherData.humidity + '%';
         });
@@ -26,4 +26,5 @@ function renewWeather() {
 window.addEventListener('DOMContentLoaded', () => {
     renewWeather();
 });
+setInterval(renewWeather, renewingPeriod);
 //# sourceMappingURL=weather.js.map

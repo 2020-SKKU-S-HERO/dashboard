@@ -3,6 +3,7 @@ import { app } from '../app';
 import * as db_control from '../db_control';
 import { ClientRequest, IncomingMessage } from 'http';
 import * as http from 'http';
+import { getNowWeatherData, insertWeatherData } from '../db_control';
 
 const router: express.Router = express.Router();
 export { router as emissionsRouter };
@@ -141,31 +142,42 @@ router.post('/selectedYearComparedToLastYear', (req: any, res: any): void => {
 });
 
 router.post('/weather', (req: any, res: any): void => {
-    const appId: string = '70da6bb9b7ebe370c2bf958bbf0d3ba4';
     const cityName: string = req.body.cityName;
     
-    const options = {
-        host: 'api.openweathermap.org',
-        port: 80,
-        path: `/data/2.5/weather?q=${cityName}&appid=${appId}`,
-        method: 'GET'
-    };
-    
-    http.get(options, (incomingMessage: IncomingMessage): void => {
-        let resData: string = '';
+    getNowWeatherData(cityName, (data: any | null): void => {
+        if (data) {
+            const weatherData: any = {'weather_icon': data['weather_icon'], 'temperature': data['temperature'], 'humidity' : data['humidity']};
+            
+            res.send(weatherData);
+        } else {
+            const appId: string = '70da6bb9b7ebe370c2bf958bbf0d3ba4';
+            const options = {
+                host: 'api.openweathermap.org',
+                port: 80,
+                path: `/data/2.5/weather?q=${cityName}&appid=${appId}`,
+                method: 'GET'
+            };
+            
+            http.get(options, (incomingMessage: IncomingMessage): void => {
+                let resData: string = '';
         
-        incomingMessage.on('data', (chunk): void => {
-            resData += chunk;
-        });
+                incomingMessage.on('data', (chunk): void => {
+                    resData += chunk;
+                });
         
-        incomingMessage.on('end', (): void => {
-            const data: JSON = JSON.parse(resData);
-            console.log(resData);
-            res.send({'weather': data.weather[0].main, 'temperature': data.main.temp, 'humidity' : data.main.humidity});
-        });
+                incomingMessage.on('end', (): void => {
+                    const data: any = JSON.parse(resData);
+                    const weatherDataToSave: any = {'city_name': cityName, 'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity' : data.main.humidity}
+                    const weatherDataToSend: any = {'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity' : data.main.humidity};
+
+                    insertWeatherData(weatherDataToSave);
+                    res.send(weatherDataToSend);
+                });
         
-        incomingMessage.on('error', (err): void => {
-            console.log(err.message);
-        });
+                incomingMessage.on('error', (err): void => {
+                    console.log(err.message);
+                });
+            });
+        }
     });
 });

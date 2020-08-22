@@ -319,20 +319,13 @@ main {
 }
 
 .weather-card {
-  height: 150px;
   
   .box-weather {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    
-    img {
-      padding-right: 10px;
-    }
     
     span {
       font-size: 30px;
-      padding-bottom: 2px;
     }
   }
   
@@ -341,12 +334,12 @@ main {
     align-items: center;
     
     img {
-      padding-right: 5px;
+      padding-right: 9px;
     }
     
     span {
       font-size: 17px;
-      padding-bottom: 3px;
+      padding-bottom: 2px;
     }
   }
 }

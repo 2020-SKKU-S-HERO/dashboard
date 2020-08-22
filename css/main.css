@@ -31,6 +31,13 @@
     width: 100%;
   }
 
+  .weather-card {
+    height: 60px;
+  }
+  .weather-card .box-weather img {
+    height: 80px;
+  }
+
   .card-red, .card-green, .card-blue {
     height: 60px;
   }
@@ -89,6 +96,13 @@
   }
   main .content-container--reduced {
     width: calc(100% - 250px) !important;
+  }
+
+  .weather-card {
+    height: 150px;
+  }
+  .weather-card .box-weather-small {
+    padding-bottom: 15px;
   }
 
   .card-red, .card-green, .card-blue {
@@ -365,31 +379,23 @@ main .content-container .content-main {
   overflow-x: hidden;
 }
 
-.weather-card {
-  height: 150px;
-}
 .weather-card .box-weather {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-}
-.weather-card .box-weather img {
-  padding-right: 10px;
 }
 .weather-card .box-weather span {
   font-size: 30px;
-  padding-bottom: 2px;
 }
 .weather-card .box-weather-small {
   display: flex;
   align-items: center;
 }
 .weather-card .box-weather-small img {
-  padding-right: 5px;
+  padding-right: 9px;
 }
 .weather-card .box-weather-small span {
   font-size: 17px;
-  padding-bottom: 3px;
+  padding-bottom: 2px;
 }
 
 .status-card {

@@ -1,8 +1,10 @@
 import { setDataByPostHttpRequest, locationInfo } from './common.js';
 
-const weatherValueEl: HTMLElement | null = document.getElementById('weather-value');
+const weatherIconEl: HTMLImageElement | null = <HTMLImageElement>document.getElementById('weather-icon');
 const temperatureValueEl: HTMLElement | null = document.getElementById('temperature-value');
 const humidityValueEl: HTMLElement | null = document.getElementById('humidity-value');
+
+const renewingPeriod: number = 60000;
 
 enum Weather {
     SUNNY,
@@ -15,14 +17,12 @@ enum Weather {
 }
 
 function renewWeather(): void {
-    if (weatherValueEl && temperatureValueEl && humidityValueEl) {
+    if (weatherIconEl && temperatureValueEl && humidityValueEl) {
         setDataByPostHttpRequest('weather', `cityName=${ locationInfo.cityName }`, (data: string): void => {
-            const weatherData: JSON = JSON.parse(data);
-    
-            console.log(weatherData);
+            const weatherData: any = JSON.parse(data);
             
-            weatherValueEl.innerText = weatherData.weather;
-            temperatureValueEl.innerText =(weatherData.temperature - 273.15).toFixed(1) + '°C';
+            weatherIconEl.src = `http://openweathermap.org/img/wn/${ weatherData.weather_icon }@2x.png`;
+            temperatureValueEl.innerText = (weatherData.temperature - 273.15).toFixed(1) + '°C';
             humidityValueEl.innerText = weatherData.humidity + '%';
         });
     }
@@ -31,3 +31,5 @@ function renewWeather(): void {
 window.addEventListener('DOMContentLoaded', (): void => {
     renewWeather();
 });
+
+setInterval(renewWeather, renewingPeriod);

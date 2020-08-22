@@ -4,6 +4,7 @@ exports.emissionsRouter = void 0;
 const express = require("express");
 const db_control = require("../db_control");
 const http = require("http");
+const db_control_1 = require("../db_control");
 const router = express.Router();
 exports.emissionsRouter = router;
 function addCommaInNumber(num) {
@@ -114,27 +115,37 @@ router.post('/selectedYearComparedToLastYear', (req, res) => {
     });
 });
 router.post('/weather', (req, res) => {
-    const appId = '70da6bb9b7ebe370c2bf958bbf0d3ba4';
     const cityName = req.body.cityName;
-    const options = {
-        host: 'api.openweathermap.org',
-        port: 80,
-        path: `/data/2.5/weather?q=${cityName}&appid=${appId}`,
-        method: 'GET'
-    };
-    http.get(options, (incomingMessage) => {
-        let resData = '';
-        incomingMessage.on('data', (chunk) => {
-            resData += chunk;
-        });
-        incomingMessage.on('end', () => {
-            const data = JSON.parse(resData);
-            console.log(resData);
-            res.send({ 'weather': data.weather[0].main, 'temperature': data.main.temp, 'humidity': data.main.humidity });
-        });
-        incomingMessage.on('error', (err) => {
-            console.log(err.message);
-        });
+    db_control_1.getNowWeatherData(cityName, (data) => {
+        if (data) {
+            const weatherData = { 'weather_icon': data['weather_icon'], 'temperature': data['temperature'], 'humidity': data['humidity'] };
+            res.send(weatherData);
+        }
+        else {
+            const appId = '70da6bb9b7ebe370c2bf958bbf0d3ba4';
+            const options = {
+                host: 'api.openweathermap.org',
+                port: 80,
+                path: `/data/2.5/weather?q=${cityName}&appid=${appId}`,
+                method: 'GET'
+            };
+            http.get(options, (incomingMessage) => {
+                let resData = '';
+                incomingMessage.on('data', (chunk) => {
+                    resData += chunk;
+                });
+                incomingMessage.on('end', () => {
+                    const data = JSON.parse(resData);
+                    const weatherDataToSave = { 'city_name': cityName, 'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity': data.main.humidity };
+                    const weatherDataToSend = { 'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity': data.main.humidity };
+                    db_control_1.insertWeatherData(weatherDataToSave);
+                    res.send(weatherDataToSend);
+                });
+                incomingMessage.on('error', (err) => {
+                    console.log(err.message);
+                });
+            });
+        }
     });
 });
 //# sourceMappingURL=emissions.js.map

@@ -221,3 +221,39 @@ export function getSelectedYearEmissions(year: number, location: string | undefi
         }
     });
 }
+
+export function getNowWeatherData(cityName: string, onGetData: (data: any | null) => void): void {
+    const now: Date = new Date();
+    const timeStr: string = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:00:00`;
+    const queryStr: string = `
+        SELECT weather_icon, temperature, humidity
+        FROM weather
+        WHERE date_time = '${timeStr}' AND city_name = '${cityName}'`;
+    
+    connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+            
+        }
+    
+        if (results.length === 0) {
+            onGetData(null);
+        } else {
+            onGetData(results[0]);
+        }
+    });
+}
+
+export function insertWeatherData(data: any): void {
+    const now: Date = new Date();
+    const timeStr: string = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:00:00`;
+    const queryStr: string = `
+        INSERT INTO weather(date_time, city_name, weather_icon, temperature, humidity)
+        VALUES('${timeStr}', '${data.city_name}', '${data.weather_icon}', ${data.temperature}, ${data.humidity})`;
+    
+    connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+    });
+}

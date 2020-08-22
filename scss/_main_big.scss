@@ -76,6 +76,14 @@ main {
   }
 }
 
+.weather-card {
+  height: 150px;
+  
+  .box-weather-small {
+    padding-bottom: 15px;
+  }
+}
+
 .card-red, .card-green, .card-blue {
   height: 150px;
 }

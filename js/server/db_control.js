@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -214,4 +214,37 @@ function getSelectedYearEmissions(year, location, onGetEmissions) {
     });
 }
 exports.getSelectedYearEmissions = getSelectedYearEmissions;
+function getNowWeatherData(cityName, onGetData) {
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:00:00`;
+    const queryStr = `
+        SELECT weather_icon, temperature, humidity
+        FROM weather
+        WHERE date_time = '${timeStr}' AND city_name = '${cityName}'`;
+    connection.query(queryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        if (results.length === 0) {
+            onGetData(null);
+        }
+        else {
+            onGetData(results[0]);
+        }
+    });
+}
+exports.getNowWeatherData = getNowWeatherData;
+function insertWeatherData(data) {
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:00:00`;
+    const queryStr = `
+        INSERT INTO weather(date_time, city_name, weather_icon, temperature, humidity)
+        VALUES('${timeStr}', '${data.city_name}', '${data.weather_icon}', ${data.temperature}, ${data.humidity})`;
+    connection.query(queryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+    });
+}
+exports.insertWeatherData = insertWeatherData;
 //# sourceMappingURL=db_control.js.map

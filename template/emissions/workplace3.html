@@ -23,22 +23,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-2">
+        <div class="col-xl-4">
             <div class="card weather-card">
                 <div class="center-box">
                     <div class="box-weather">
-                        <!--                        <img src="images/svg/weather_clear.svg" alt="">-->
-                        <span id="weather-value"></span>
+                        <img id="weather-icon" src="" alt="">
                         <span id="temperature-value">-</span>
                     </div>
                     <div class="box-weather-small">
-                        <img src="images/svg/water_drop.svg" alt="">
+                        <img src="images/svg/weather/humidity.svg" alt="">
                         <span id="humidity-value">-</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-6">
+        <div class="col-xl-4">
             <div class="card status-card">
                 <div class="card-title">
                     <span>상태</span>
@@ -93,7 +92,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-title">
-                    <span>지난 CO2 배출량</span>
+                    <span>이전 배출량</span>
                     <select id="past-emission-chart-date-selector">
                     </select>
                     <select id="yearly-monthly-selector">
@@ -131,7 +130,7 @@
                     <span>예측 배출량</span>
                 </div>
                 <div class="chart">
-                    <iframe id="" src="" frameborder="0"></iframe>
+                    <iframe id="prediction-chart" src="" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">

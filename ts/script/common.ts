@@ -9,7 +9,7 @@ const info: any = {
         todayEmissionsPanelId: 2,
         pastDailyEmissionsPanelId: 4,
         pastMonthlyEmissionsPanelId: 6,
-        predictionEmissionsPanelId: 0
+        predictionEmissionsPanelId: 22
     },
     workplace1: {
         location: 'location1',
@@ -17,7 +17,7 @@ const info: any = {
         todayEmissionsPanelId: 8,
         pastDailyEmissionsPanelId: 12,
         pastMonthlyEmissionsPanelId: 13,
-        predictionEmissionsPanelId: 0
+        predictionEmissionsPanelId: 21
     },
     workplace2: {
         location: 'location2',
@@ -25,7 +25,7 @@ const info: any = {
         todayEmissionsPanelId: 9,
         pastDailyEmissionsPanelId: 16,
         pastMonthlyEmissionsPanelId: 17,
-        predictionEmissionsPanelId: 0
+        predictionEmissionsPanelId: 20
     },
     workplace3: {
         location: 'location3',
@@ -33,7 +33,7 @@ const info: any = {
         todayEmissionsPanelId: 10,
         pastDailyEmissionsPanelId: 18,
         pastMonthlyEmissionsPanelId: 19,
-        predictionEmissionsPanelId: 0
+        predictionEmissionsPanelId: 23
     }
 }
 

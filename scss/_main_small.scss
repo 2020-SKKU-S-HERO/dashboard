@@ -38,6 +38,17 @@ main {
   }
 }
 
+.weather-card {
+  height: 60px;
+  
+  .box-weather {
+    
+    img {
+      height: 80px;
+    }
+  }
+}
+
 .card-red, .card-green, .card-blue {
   height: 60px;
 }

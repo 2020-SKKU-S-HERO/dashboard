@@ -15,6 +15,8 @@ const selectedMonthTotalEmissions: HTMLElement | null = document.getElementById(
 const selectedMonthComparedToLastYearEl: HTMLElement | null = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl: HTMLImageElement | null = <HTMLImageElement>document.getElementById('selected-month-compared-to-last-year-arrow');
 
+const predictionChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('prediction-chart');
+
 const renewingPeriod: number = 10000;
 
 enum Interval {
@@ -265,6 +267,13 @@ window.addEventListener('DOMContentLoaded', (): void => {
         today.setHours(0, 0, 0);
         
         todayEmissionsChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ locationInfo.todayEmissionsPanelId }`;
+    }
+    
+    if (predictionChartEl) {
+        const today: Date = new Date();
+        const lastDayAtThisYear: Date = new Date(today.getFullYear(), 11, 31);
+        
+        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=${lastDayAtThisYear.valueOf()}&theme=light&panelId=${ locationInfo.predictionEmissionsPanelId }`;
     }
     
     setSelectorOptions();

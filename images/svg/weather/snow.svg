@@ -1,0 +1,14 @@
+<snowy xmlns="http://www.w3.org/2000/svg" width="109.616" height="101.96" viewBox="0 0 109.616 101.96">
+  <g id="그룹_17" data-name="그룹 17" transform="translate(-1097.57 -585.08)">
+    <path id="패스_8" data-name="패스 8" d="M1236.3,546.2h70.2c24.8-5.2,24.45-49.55-12.55-40.55-3.65-52.35-64.05-29.45-53.05,3.15C1212.75,508.65,1212.5,540.6,1236.3,546.2Z" transform="translate(-119 113)" fill="none" stroke="#222" stroke-width="5"/>
+    <line id="선_62" data-name="선 62" x1="18.619" transform="translate(1113.5 675.562)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_63" data-name="선 63" x1="18.619" transform="translate(1118.155 667.5) rotate(60)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_64" data-name="선 64" x1="18.619" transform="translate(1118.155 683.624) rotate(-60)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_65" data-name="선 65" x1="18.619" transform="translate(1142.5 675.562)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_66" data-name="선 66" x1="18.619" transform="translate(1147.155 667.5) rotate(60)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_67" data-name="선 67" x1="18.619" transform="translate(1147.155 683.624) rotate(-60)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_68" data-name="선 68" x1="18.619" transform="translate(1171.5 675.562)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_69" data-name="선 69" x1="18.619" transform="translate(1176.155 667.5) rotate(60)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+    <line id="선_70" data-name="선 70" x1="18.619" transform="translate(1176.155 683.624) rotate(-60)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="5"/>
+  </g>
+</snowy>

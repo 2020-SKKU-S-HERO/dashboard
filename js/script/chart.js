@@ -11,6 +11,7 @@ const selectedMonthChartEl = document.getElementById('selected-month-chart');
 const selectedMonthTotalEmissions = document.getElementById('selected-month-total-emissions');
 const selectedMonthComparedToLastYearEl = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl = document.getElementById('selected-month-compared-to-last-year-arrow');
+const predictionChartEl = document.getElementById('prediction-chart');
 const renewingPeriod = 10000;
 var Interval;
 (function (Interval) {
@@ -233,6 +234,11 @@ window.addEventListener('DOMContentLoaded', () => {
         const today = new Date();
         today.setHours(0, 0, 0);
         todayEmissionsChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=now&theme=light&panelId=${locationInfo.todayEmissionsPanelId}`;
+    }
+    if (predictionChartEl) {
+        const today = new Date();
+        const lastDayAtThisYear = new Date(today.getFullYear(), 11, 31);
+        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=${lastDayAtThisYear.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
     }
     setSelectorOptions();
     renewTodayEmissionChart();
