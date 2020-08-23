@@ -32,3 +32,8 @@ npm start
 
 포트는 3000으로 설정되어 있다. 만약 포트 충돌 에러가 일어난다면, 
 `js/server/server.js`에서 port 변수의 값을 수정한다.
+
+## 외부 라이브러리
+
+1. [Bootstrap](http://bootstrapk.com/)
+2. [Switchery](https://github.com/abpetkov/switchery)

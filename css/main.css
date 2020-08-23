@@ -430,4 +430,16 @@ main .content-container .content-main {
   background-color: #02AAF6;
 }
 
+.table thead {
+  border-bottom: 1px solid #DDDDDD;
+}
+.table thead td, .table thead th {
+  font-weight: 400;
+  padding: 6px;
+}
+.table tbody td, .table tbody th {
+  font-weight: normal;
+  padding: 8px;
+}
+
 /*# sourceMappingURL=main.css.map */

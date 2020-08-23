@@ -4,6 +4,7 @@ import * as db_control from '../db_control';
 import { ClientRequest, IncomingMessage } from 'http';
 import * as http from 'http';
 import { getNowWeatherData, insertWeatherData } from '../db_control';
+import * as mqtt from 'mqtt';
 
 const router: express.Router = express.Router();
 export { router as emissionsRouter };
@@ -180,4 +181,28 @@ router.post('/weather', (req: any, res: any): void => {
             });
         }
     });
+});
+
+router.post('/mqtt', (req: any, res: any): void => {
+    const host: string = '34.64.238.233';
+    const mqttUri: string = `mqtt://${host}`;
+    const topic: string = 'ctrl';
+    
+    const client: mqtt.MqttClient = mqtt.connect(mqttUri);
+    
+    client.on('connect', (connection: mqtt.Packet): void => {
+        const workplace: string = req.body.workplace;
+        const censor: string = req.body.censor;
+        const power: string = req.body.power;
+        
+        client.publish(`${topic}/${workplace}/${censor}`, power, { qos: 0 }, (err: Error | undefined, packet: mqtt.Packet | undefined): void => {
+            if (!err) {
+                console.log(`Data sent to ${topic}/${workplace}/${censor} -- ${power}`);
+            }
+            
+            client.end();
+        });
+    });
+    
+    res.send();
 });

@@ -39,23 +39,32 @@
         </div>
         <div class="col-xl-4">
             <div class="card status-card">
-                <div class="card-title">
-                    <span>상태</span>
-                </div>
-                <ul class="status-list">
-                    <li class="status-item">
-                        <span>가스 센서</span>
-                        <img src="images/svg/green_circle.svg" alt="">
-                    </li>
-                    <li class="status-item">
-                        <span>유속 센서</span>
-                        <img src="images/svg/red_circle.svg" alt="">
-                    </li>
-                    <li class="status-item">
-                        <span>온도 센서</span>
-                        <img src="images/svg/green_circle.svg" alt="">
-                    </li>
-                </ul>
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th scope="col">센서</th>
+                        <th scope="col">LED 전등</th>
+                        <th scope="col">연결 상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">가스 센서</th>
+                        <td><input type="checkbox" id="gas-censor-toggle-btn"></td>
+                        <td><img src="images/svg/green_circle.svg" alt=""></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">유속 센서</th>
+                        <td><input type="checkbox" id="flow-censor-toggle-btn"></td>
+                        <td><img src="images/svg/green_circle.svg" alt=""></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">온도 센서</th>
+                        <td><input type="checkbox" id="temp-censor-toggle-btn"></td>
+                        <td><img src="images/svg/red_circle.svg" alt=""></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -156,4 +165,6 @@
 </div>
 <script type="module" src="js/script/chart.js"></script>
 <script type="module" src="js/script/weather.js"></script>
+<script src="js/script/library/switchery.js"></script>
+<script type="module" src="js/script/censor.js"></script>
 {%  endblock %}

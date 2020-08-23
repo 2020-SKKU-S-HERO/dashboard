@@ -5,6 +5,7 @@ const express = require("express");
 const db_control = require("../db_control");
 const http = require("http");
 const db_control_1 = require("../db_control");
+const mqtt = require("mqtt");
 const router = express.Router();
 exports.emissionsRouter = router;
 function addCommaInNumber(num) {
@@ -147,5 +148,23 @@ router.post('/weather', (req, res) => {
             });
         }
     });
+});
+router.post('/mqtt', (req, res) => {
+    const host = '34.64.238.233';
+    const mqttUri = `mqtt://${host}`;
+    const topic = 'ctrl';
+    const client = mqtt.connect(mqttUri);
+    client.on('connect', (connection) => {
+        const workplace = req.body.workplace;
+        const censor = req.body.censor;
+        const power = req.body.power;
+        client.publish(`${topic}/${workplace}/${censor}`, power, { qos: 0 }, (err, packet) => {
+            if (!err) {
+                console.log(`Data sent to ${topic}/${workplace}/${censor} -- ${power}`);
+            }
+            client.end();
+        });
+    });
+    res.send();
 });
 //# sourceMappingURL=emissions.js.map

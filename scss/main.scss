@@ -378,3 +378,23 @@ main {
 .card-blue {
   background-color: $color3;
 }
+
+.table {
+  
+  thead {
+    @include borderDefault('bottom');
+  
+    td, th {
+      font-weight: 400;
+      padding: 6px;
+    }
+  }
+  
+  tbody {
+    
+    td, th {
+      font-weight: normal;
+      padding: 8px;
+    }
+  }
+}
