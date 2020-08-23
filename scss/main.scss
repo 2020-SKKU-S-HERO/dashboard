@@ -308,7 +308,7 @@ main {
   
   .chart {
     height: 300px;
-    width: 100%;
+    width: 99.9%;
 
     iframe {
       width: 100%;
@@ -380,21 +380,22 @@ main {
 }
 
 .table {
+  font-size: 15px;
   
   thead {
-    @include borderDefault('bottom');
+    @include borderDefault("bottom");
   
     td, th {
       font-weight: 400;
-      padding: 6px;
+      padding: 6px 15px;
     }
   }
   
   tbody {
     
     td, th {
-      font-weight: normal;
-      padding: 8px;
+      font-weight: 400;
+      padding: 7px 15px;
     }
   }
 }

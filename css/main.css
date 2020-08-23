@@ -371,7 +371,7 @@ main .content-container .content-main {
 }
 .card .chart {
   height: 300px;
-  width: 100%;
+  width: 99.9%;
 }
 .card .chart iframe {
   width: 100%;
@@ -430,16 +430,19 @@ main .content-container .content-main {
   background-color: #02AAF6;
 }
 
+.table {
+  font-size: 15px;
+}
 .table thead {
   border-bottom: 1px solid #DDDDDD;
 }
 .table thead td, .table thead th {
   font-weight: 400;
-  padding: 6px;
+  padding: 6px 15px;
 }
 .table tbody td, .table tbody th {
-  font-weight: normal;
-  padding: 8px;
+  font-weight: 400;
+  padding: 7px 15px;
 }
 
 /*# sourceMappingURL=main.css.map */

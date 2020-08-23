@@ -17,7 +17,7 @@ const info: any = {
         todayEmissionsPanelId: 8,
         pastDailyEmissionsPanelId: 12,
         pastMonthlyEmissionsPanelId: 13,
-        predictionEmissionsPanelId: 21
+        predictionEmissionsPanelId: 24
     },
     workplace2: {
         location: 'location2',
@@ -25,7 +25,7 @@ const info: any = {
         todayEmissionsPanelId: 9,
         pastDailyEmissionsPanelId: 16,
         pastMonthlyEmissionsPanelId: 17,
-        predictionEmissionsPanelId: 20
+        predictionEmissionsPanelId: 25
     },
     workplace3: {
         location: 'location3',
@@ -33,7 +33,7 @@ const info: any = {
         todayEmissionsPanelId: 10,
         pastDailyEmissionsPanelId: 18,
         pastMonthlyEmissionsPanelId: 19,
-        predictionEmissionsPanelId: 23
+        predictionEmissionsPanelId: 26
     }
 }
 

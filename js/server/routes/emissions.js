@@ -167,4 +167,10 @@ router.post('/mqtt', (req, res) => {
     });
     res.send();
 });
+router.post('/thisYearPredictionEmissions', (req, res) => {
+    const location = req.body.location;
+    db_control.getThisYearPredictionEmissions(location, (data) => {
+        res.send(addCommaInNumber(data) + 't');
+    });
+});
 //# sourceMappingURL=emissions.js.map

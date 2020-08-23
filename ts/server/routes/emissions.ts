@@ -206,3 +206,11 @@ router.post('/mqtt', (req: any, res: any): void => {
     
     res.send();
 });
+
+router.post('/thisYearPredictionEmissions', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    db_control.getThisYearPredictionEmissions(location, (data: number): void => {
+        res.send(addCommaInNumber(data) + 't');
+    });
+});

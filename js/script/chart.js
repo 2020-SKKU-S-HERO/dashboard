@@ -1,6 +1,7 @@
 import { setDataByPostHttpRequest, locationInfo } from './common.js';
 const thisYearEmissionsEl = document.getElementById('this-year-total-emissions');
 const thisYearRemainingPermissibleEmissionsEl = document.getElementById('this-year-remaining-permissible-emissions');
+const expectedOverEmissionsEl = document.getElementById('expected-over-emissions');
 const todayEmissionsChartEl = document.getElementById('today-emissions-chart');
 const todayTotalEmissionsEl = document.getElementById('today-total-emissions');
 const todayComparedToThisMonthAverageEl = document.getElementById('today-compared-to-this-month-average');
@@ -12,6 +13,7 @@ const selectedMonthTotalEmissions = document.getElementById('selected-month-tota
 const selectedMonthComparedToLastYearEl = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl = document.getElementById('selected-month-compared-to-last-year-arrow');
 const predictionChartEl = document.getElementById('prediction-chart');
+const thisYearTotalPredictionEmissionsEl = document.getElementById('this-year-total-prediction-emissions');
 const renewingPeriod = 10000;
 var Interval;
 (function (Interval) {
@@ -176,20 +178,32 @@ function runAfterSettingSelectorOptions() {
     }
     renewPastEmissionsChart();
 }
-function renewTodayEmissionChart() {
-    if (todayTotalEmissionsEl) {
-        setDataByPostHttpRequest('todayEmissions', `location=${locationInfo.location}`, (data) => {
-            todayTotalEmissionsEl.innerText = data;
-        });
-    }
+function renewCardValue() {
     if (thisYearEmissionsEl) {
         setDataByPostHttpRequest('thisYearEmissions', `location=${locationInfo.location}`, (data) => {
             thisYearEmissionsEl.innerText = data;
         });
     }
-    if (thisYearRemainingPermissibleEmissionsEl) {
+    if (thisYearRemainingPermissibleEmissionsEl && expectedOverEmissionsEl) {
         setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${locationInfo.location}`, (data) => {
             thisYearRemainingPermissibleEmissionsEl.innerText = data;
+            setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${locationInfo.location}`, (predictionData) => {
+                const permissibleEmissions = Number(data.substring(0, data.length - 1));
+                const predictionEmissions = Number(predictionData.substring(0, predictionData.length - 1));
+                if (predictionEmissions - permissibleEmissions > 0) {
+                    expectedOverEmissionsEl.innerText = predictionEmissions - permissibleEmissions + 't';
+                }
+                else {
+                    expectedOverEmissionsEl.innerText = '0t';
+                }
+            });
+        });
+    }
+}
+function renewTodayEmissionChart() {
+    if (todayTotalEmissionsEl) {
+        setDataByPostHttpRequest('todayEmissions', `location=${locationInfo.location}`, (data) => {
+            todayTotalEmissionsEl.innerText = data;
         });
     }
     if (todayComparedToThisMonthAverageEl && todayComparedToThisMonthAverageArrowEl) {
@@ -216,6 +230,13 @@ function renewTodayEmissionChart() {
         });
     }
 }
+function renewPredictionEmissionsChart() {
+    if (thisYearTotalPredictionEmissionsEl) {
+        setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${locationInfo.location}`, (data) => {
+            thisYearTotalPredictionEmissionsEl.innerText = data;
+        });
+    }
+}
 yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.addEventListener('change', () => {
     const selectedStr = yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.options[yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.selectedIndex].value;
     switch (selectedStr) {
@@ -237,11 +258,16 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     if (predictionChartEl) {
         const today = new Date();
-        const lastDayAtThisYear = new Date(today.getFullYear(), 11, 31);
-        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=${lastDayAtThisYear.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
+        const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), 1, 0, 0, -1);
+        today.setDate(-12);
+        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=${nextYear.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
     }
     setSelectorOptions();
     renewTodayEmissionChart();
+    renewPredictionEmissionsChart();
+    renewCardValue();
 });
 setInterval(renewTodayEmissionChart, renewingPeriod);
+setInterval(renewPredictionEmissionsChart, renewingPeriod);
+setInterval(renewCardValue, renewingPeriod);
 //# sourceMappingURL=chart.js.map

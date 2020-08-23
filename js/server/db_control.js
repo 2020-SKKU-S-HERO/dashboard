@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -247,4 +247,34 @@ function insertWeatherData(data) {
     });
 }
 exports.insertWeatherData = insertWeatherData;
+function getThisYearPredictionEmissions(location, onGetEmissions) {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const lastDay = new Date(now.getFullYear(), 12, 1);
+    let queryStr;
+    if (location) {
+        queryStr = `
+            SELECT SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}' AND date_time < '${lastDay.getFullYear()}-${lastDay.getMonth() + 1}-${lastDay.getDate()}' AND location = '${location}'`;
+    }
+    else {
+        queryStr = `
+            SELECT SUM(emissions) total_emissions
+            FROM co2_emissions
+            WHERE date_time >= '${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}' AND date_time < '${lastDay.getFullYear()}-${lastDay.getMonth() + 1}-${lastDay.getDate()}'`;
+    }
+    connection.query(queryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        try {
+            onGetEmissions(results[0]['total_emissions']);
+        }
+        catch (e) {
+            onGetEmissions(0);
+        }
+    });
+}
+exports.getThisYearPredictionEmissions = getThisYearPredictionEmissions;
 //# sourceMappingURL=db_control.js.map
