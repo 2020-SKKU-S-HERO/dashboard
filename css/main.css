@@ -34,7 +34,10 @@
   .weather-card {
     height: 60px;
   }
-  .weather-card .box-weather img {
+  .weather-card .center-box {
+    padding-left: 0 !important;
+  }
+  .weather-card .center-box .box-weather img {
     height: 80px;
   }
 
@@ -385,6 +388,7 @@ main .content-container .content-main {
 }
 .weather-card .box-weather span {
   font-size: 30px;
+  padding-bottom: 3px;
 }
 .weather-card .box-weather-small {
   display: flex;
@@ -442,7 +446,7 @@ main .content-container .content-main {
 }
 .table tbody td, .table tbody th {
   font-weight: 400;
-  padding: 7px 15px;
+  padding: 6px 15px;
 }
 
 /*# sourceMappingURL=main.css.map */

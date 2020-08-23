@@ -41,10 +41,14 @@ main {
 .weather-card {
   height: 60px;
   
-  .box-weather {
+  .center-box {
+    padding-left: 0 !important;
+  
+    .box-weather {
     
-    img {
-      height: 80px;
+      img {
+        height: 80px;
+      }
     }
   }
 }
