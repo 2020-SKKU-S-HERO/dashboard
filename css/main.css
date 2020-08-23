@@ -67,14 +67,14 @@
     transition-duration: 0.5s;
   }
   .global-nav-container .global-nav .logo a:hover {
-    background-color: #EFEFEF;
+    background-color: #E4E4F6;
     color: #222222;
   }
   .global-nav-container .global-nav .global-nav-links li a {
     transition-duration: 0.5s;
   }
   .global-nav-container .global-nav .global-nav-links li a:hover {
-    background-color: #EFEFEF;
+    background-color: #E4E4F6;
     color: #222222;
   }
 
@@ -89,6 +89,12 @@
   main .sidebar-nav .sidebar-nav-links > .nav-item > a:hover {
     background-color: #E4E4F6;
     color: #000000;
+  }
+  main .sidebar-nav .sidebar-nav-links > .nav-item > a:hover #ic-chart {
+    background-image: url("/images/svg/sidebar/chart-active.svg");
+  }
+  main .sidebar-nav .sidebar-nav-links > .nav-item > a:hover #ic-writing {
+    background-image: url("/images/svg/sidebar/writing-active.svg");
   }
   main .sidebar-nav .sidebar-nav-links > .nav-item .sidebar-detail-nav-links a:hover {
     background-color: #E4E4F6;
@@ -266,9 +272,18 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a div {
   display: flex;
   align-items: center;
 }
-main .sidebar-nav .sidebar-nav-links > .nav-item > a div img {
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div .sidebar-icon {
   height: 20px;
+  width: 20px;
   margin-right: 10px;
+  transition-duration: 0.5s;
+  background-size: 20px 20px;
+}
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-chart {
+  background-image: url("/images/svg/sidebar/chart.svg");
+}
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-writing {
+  background-image: url("/images/svg/sidebar/writing.svg");
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div span {
   padding-bottom: 1px;

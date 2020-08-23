@@ -50,6 +50,14 @@ main {
           &:hover {
             background-color: $sidebarHoverBackgroundColor;
             color: $sidebarHoverFontColor;
+            
+            #ic-chart {
+              background-image: url("/images/svg/sidebar/chart-active.svg");
+            }
+  
+            #ic-writing {
+              background-image: url("/images/svg/sidebar/writing-active.svg");
+            }
           }
         }
         

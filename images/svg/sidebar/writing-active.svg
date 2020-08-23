@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26.192" height="26.192" viewBox="0 0 26.192 26.192">
+  <g id="그룹_26" data-name="그룹 26" transform="translate(-2156 -123.808)">
+    <g id="그룹_23" data-name="그룹 23" transform="translate(-21 40)">
+      <g id="사각형_42" data-name="사각형 42" transform="translate(2177 85)" fill="none" stroke="#000" stroke-linejoin="round" stroke-width="2">
+        <rect width="25" height="25" rx="5" stroke="none"/>
+        <rect x="1" y="1" width="23" height="23" rx="4" fill="none"/>
+      </g>
+    </g>
+    <g id="사각형_43" data-name="사각형 43" transform="translate(2163.808 137.95) rotate(-45)" fill="#e4e4f6" stroke="#000" stroke-linejoin="round" stroke-width="1">
+      <rect width="20" height="6" stroke="none"/>
+      <rect x="0.5" y="0.5" width="19" height="5" fill="none"/>
+    </g>
+    <path id="패스_16" data-name="패스 16" d="M2168.575,140.919" transform="translate(-2 1)" fill="none" stroke="#000" stroke-width="1"/>
+    <line id="선_91" data-name="선 91" x1="1.735" y2="5.3" transform="translate(2162.7 138)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="1"/>
+    <path id="패스_17" data-name="패스 17" d="M5,0,0,1.8" transform="translate(2162.9 141.6)" fill="#e4e4f6" stroke="#000" stroke-linecap="round" stroke-width="1"/>
+  </g>
+</svg>
