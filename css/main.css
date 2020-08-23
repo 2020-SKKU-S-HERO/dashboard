@@ -104,6 +104,9 @@
   .weather-card {
     height: 150px;
   }
+  .weather-card .box-weather span {
+    padding-right: 20px;
+  }
   .weather-card .box-weather-small {
     padding-bottom: 15px;
   }
@@ -259,6 +262,17 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a {
   color: #444444;
   font-size: 16px;
 }
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div {
+  display: flex;
+  align-items: center;
+}
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div img {
+  height: 20px;
+  margin-right: 10px;
+}
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div span {
+  padding-bottom: 1px;
+}
 main .sidebar-nav .sidebar-nav-links > .nav-item > a img {
   transition-duration: 0.5s;
   height: 10px;
@@ -285,7 +299,7 @@ main .sidebar-nav .sidebar-nav-links--extended > a {
   background-color: #E4E4F6 !important;
   color: #000000 !important;
 }
-main .sidebar-nav .sidebar-nav-links--extended img {
+main .sidebar-nav .sidebar-nav-links--extended > a > img {
   transform: rotate(90deg);
 }
 main .sidebar-nav .sidebar-nav-links--extended .sidebar-detail-nav-links > .nav-item {
@@ -388,7 +402,7 @@ main .content-container .content-main {
 }
 .weather-card .box-weather span {
   font-size: 30px;
-  padding-bottom: 3px;
+  padding-bottom: 2px;
 }
 .weather-card .box-weather-small {
   display: flex;

@@ -79,6 +79,12 @@ main {
 .weather-card {
   height: 150px;
   
+  .box-weather {
+    span {
+      padding-right: 20px;
+    }
+  }
+  
   .box-weather-small {
     padding-bottom: 15px;
   }

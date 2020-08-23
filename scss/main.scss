@@ -154,6 +154,20 @@ main {
           color: $sidebarFontColor;
           font-size: 16px;
           
+          div {
+            display: flex;
+            align-items: center;
+          
+            img {
+              height: 20px;
+              margin-right: 10px;
+            }
+            
+            span {
+              padding-bottom: 1px;
+            }
+          }
+          
           img {
             transition-duration: 0.5s;
             height: 10px;
@@ -188,10 +202,10 @@ main {
       > a {
         background-color: $sidebarHoverBackgroundColor !important;
         color: $sidebarHoverFontColor !important;
-      }
-      
-      img {
-        transform: rotate(90deg);
+  
+        > img {
+          transform: rotate(90deg);
+        }
       }
       
       .sidebar-detail-nav-links {
@@ -326,7 +340,7 @@ main {
     
     span {
       font-size: 30px;
-      padding-bottom: 3px;
+      padding-bottom: 2px;
     }
   }
   
