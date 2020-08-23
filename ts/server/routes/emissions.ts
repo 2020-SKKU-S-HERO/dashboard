@@ -53,7 +53,7 @@ router.post('/todayEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getTodayEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + ' t');
+        res.send(data.toString());
     });
 });
 
@@ -61,7 +61,7 @@ router.post('/thisYearEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getThisYearEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + ' t');
+        res.send(data.toString());
     });
 });
 
@@ -69,7 +69,7 @@ router.post('/thisYearRemainingPermissibleEmissions', (req: any, res: any): void
     const location: string = req.body.location;
     
     db_control.getThisYearRemainingPermissibleEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + ' t');
+        res.send(data.toString());
     });
 });
 
@@ -77,7 +77,7 @@ router.post('/todayComparedToThisMonthAverageEmissions', (req: any, res: any): v
     const location: string = req.body.location;
     
     db_control.getTodayRatioComparedToThisMonthAverage(location, (data: number): void => {
-        res.send(data.toFixed(1) + '%');
+        res.send(data.toString());
     });
 });
 
@@ -95,7 +95,7 @@ router.post('/selectedMonthEmissions', (req: any, res: any): void => {
     const month: number = Number(req.body.month);
     
     db_control.getSelectedMonthEmissions(new Date(year, month - 1, 2), location, (data: number): void => {
-        res.send(addCommaInNumber(data) + ' t');
+        res.send(data.toString());
     });
 });
 
@@ -109,7 +109,7 @@ router.post('/selectedMonthComparedToLastYear', (req: any, res: any): void => {
     db_control.getSelectedMonthEmissions(selectedMonth, location, (selectedMonthData: number): void => {
         db_control.getSelectedMonthEmissions(lastYearSameMonth, location, (lastYearData: number): void => {
             if (selectedMonthData !== 0 && lastYearData !== 0) {
-                res.send((((selectedMonthData / lastYearData) - 1) * 100).toFixed(1) + '%');
+                res.send((((selectedMonthData / lastYearData) - 1) * 100).toString());
             } else {
                 res.send('-');
             }
@@ -122,7 +122,7 @@ router.post('/selectedYearEmissions', (req: any, res: any): void => {
     const year: number = Number(req.body.year);
     
     db_control.getSelectedYearEmissions(year, location, (data: number): void => {
-        res.send(addCommaInNumber(data) + ' t');
+        res.send(data);
     });
 });
 
@@ -134,7 +134,7 @@ router.post('/selectedYearComparedToLastYear', (req: any, res: any): void => {
         db_control.getSelectedYearEmissions(year - 1, location, (lastYearData: number): void => {
             
             if (selectedYearData !== 0 && lastYearData !== 0) {
-                res.send((((selectedYearData / lastYearData) - 1) * 100).toFixed(1) + '%');
+                res.send((((selectedYearData / lastYearData) - 1) * 100).toString());
             } else {
                 res.send('-');
             }
@@ -211,6 +211,6 @@ router.post('/thisYearPredictionEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getThisYearPredictionEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + ' t');
+        res.send(data.toString());
     });
 });
