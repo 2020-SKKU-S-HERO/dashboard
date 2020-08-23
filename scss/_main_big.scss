@@ -46,6 +46,10 @@ main {
 
         >a {
           transition-duration: 0.5s;
+  
+          .sidebar-icon {
+            transition-duration: 0.5s;
+          }
 
           &:hover {
             background-color: $sidebarHoverBackgroundColor;

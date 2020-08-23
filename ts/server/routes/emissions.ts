@@ -53,7 +53,7 @@ router.post('/todayEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getTodayEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 
@@ -61,7 +61,7 @@ router.post('/thisYearEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getThisYearEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 
@@ -69,7 +69,7 @@ router.post('/thisYearRemainingPermissibleEmissions', (req: any, res: any): void
     const location: string = req.body.location;
     
     db_control.getThisYearRemainingPermissibleEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 
@@ -95,7 +95,7 @@ router.post('/selectedMonthEmissions', (req: any, res: any): void => {
     const month: number = Number(req.body.month);
     
     db_control.getSelectedMonthEmissions(new Date(year, month - 1, 2), location, (data: number): void => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 
@@ -122,7 +122,7 @@ router.post('/selectedYearEmissions', (req: any, res: any): void => {
     const year: number = Number(req.body.year);
     
     db_control.getSelectedYearEmissions(year, location, (data: number): void => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 
@@ -211,6 +211,6 @@ router.post('/thisYearPredictionEmissions', (req: any, res: any): void => {
     const location: string = req.body.location;
     
     db_control.getThisYearPredictionEmissions(location, (data: number): void => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });

@@ -86,6 +86,9 @@
   main .sidebar-nav .sidebar-nav-links > .nav-item > a {
     transition-duration: 0.5s;
   }
+  main .sidebar-nav .sidebar-nav-links > .nav-item > a .sidebar-icon {
+    transition-duration: 0.5s;
+  }
   main .sidebar-nav .sidebar-nav-links > .nav-item > a:hover {
     background-color: #E4E4F6;
     color: #000000;
@@ -276,7 +279,6 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a div .sidebar-icon {
   height: 20px;
   width: 20px;
   margin-right: 10px;
-  transition-duration: 0.5s;
   background-size: 20px 20px;
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-chart {
@@ -313,6 +315,12 @@ main .sidebar-nav .sidebar-nav-links > .nav-item .sidebar-detail-nav-links > .na
 main .sidebar-nav .sidebar-nav-links--extended > a {
   background-color: #E4E4F6 !important;
   color: #000000 !important;
+}
+main .sidebar-nav .sidebar-nav-links--extended > a #ic-chart {
+  background-image: url("/images/svg/sidebar/chart-active.svg") !important;
+}
+main .sidebar-nav .sidebar-nav-links--extended > a #ic-writing {
+  background-image: url("/images/svg/sidebar/writing-active.svg") !important;
 }
 main .sidebar-nav .sidebar-nav-links--extended > a > img {
   transform: rotate(90deg);

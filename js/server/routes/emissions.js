@@ -42,19 +42,19 @@ router.get('/workplace3', (req, res) => {
 router.post('/todayEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getTodayEmissions(location, (data) => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 router.post('/thisYearEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getThisYearEmissions(location, (data) => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 router.post('/thisYearRemainingPermissibleEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getThisYearRemainingPermissibleEmissions(location, (data) => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 router.post('/todayComparedToThisMonthAverageEmissions', (req, res) => {
@@ -74,7 +74,7 @@ router.post('/selectedMonthEmissions', (req, res) => {
     const year = Number(req.body.year);
     const month = Number(req.body.month);
     db_control.getSelectedMonthEmissions(new Date(year, month - 1, 2), location, (data) => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 router.post('/selectedMonthComparedToLastYear', (req, res) => {
@@ -98,7 +98,7 @@ router.post('/selectedYearEmissions', (req, res) => {
     const location = req.body.location;
     const year = Number(req.body.year);
     db_control.getSelectedYearEmissions(year, location, (data) => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 router.post('/selectedYearComparedToLastYear', (req, res) => {
@@ -170,7 +170,7 @@ router.post('/mqtt', (req, res) => {
 router.post('/thisYearPredictionEmissions', (req, res) => {
     const location = req.body.location;
     db_control.getThisYearPredictionEmissions(location, (data) => {
-        res.send(addCommaInNumber(data) + 't');
+        res.send(addCommaInNumber(data) + ' t');
     });
 });
 //# sourceMappingURL=emissions.js.map
