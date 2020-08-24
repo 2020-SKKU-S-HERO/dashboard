@@ -421,6 +421,7 @@ main {
   
   thead {
     @include borderDefault("bottom");
+    text-align: center;
   
     td, th {
       font-weight: 400;
@@ -429,6 +430,7 @@ main {
   }
   
   tbody {
+    text-align: center;
     
     td, th {
       font-weight: 400;
@@ -455,6 +457,7 @@ main {
     text-align: center;
     
     td, th {
+      
       font-weight: 400;
     }
   }
