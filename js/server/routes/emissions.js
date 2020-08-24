@@ -8,21 +8,6 @@ const db_control_1 = require("../db_control");
 const mqtt = require("mqtt");
 const router = express.Router();
 exports.emissionsRouter = router;
-function addCommaInNumber(num) {
-    const sign = num < 0 ? '-' : '';
-    const numberStr = Math.abs(num).toString();
-    let resultStr = '';
-    const point = numberStr.length % 3;
-    let pos = 0;
-    while (pos < numberStr.length) {
-        if (pos % 3 === point && pos !== 0) {
-            resultStr += ',';
-        }
-        resultStr += numberStr[pos];
-        pos++;
-    }
-    return sign + resultStr;
-}
 router.use('/css', express.static('css'));
 router.use('/images', express.static('images'));
 router.use('/js', express.static('js'));
@@ -98,7 +83,7 @@ router.post('/selectedYearEmissions', (req, res) => {
     const location = req.body.location;
     const year = Number(req.body.year);
     db_control.getSelectedYearEmissions(year, location, (data) => {
-        res.send(data);
+        res.send(data.toString());
     });
 });
 router.post('/selectedYearComparedToLastYear', (req, res) => {

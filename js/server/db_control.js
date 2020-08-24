@@ -254,14 +254,14 @@ function getThisYearPredictionEmissions(location, onGetEmissions) {
     let queryStr;
     if (location) {
         queryStr = `
-            SELECT SUM(emissions) total_emissions
-            FROM co2_emissions
+            SELECT SUM(predict_value) expected_emissions
+            FROM predict_value
             WHERE date_time >= '${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}' AND date_time < '${lastDay.getFullYear()}-${lastDay.getMonth() + 1}-${lastDay.getDate()}' AND location = '${location}'`;
     }
     else {
         queryStr = `
-            SELECT SUM(emissions) total_emissions
-            FROM co2_emissions
+            SELECT SUM(predict_value) expected_emissions
+            FROM predict_value
             WHERE date_time >= '${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}' AND date_time < '${lastDay.getFullYear()}-${lastDay.getMonth() + 1}-${lastDay.getDate()}'`;
     }
     connection.query(queryStr, (error, results, fields) => {
@@ -269,7 +269,7 @@ function getThisYearPredictionEmissions(location, onGetEmissions) {
             throw error;
         }
         try {
-            onGetEmissions(results[0]['total_emissions']);
+            onGetEmissions(results[0]['expected_emissions']);
         }
         catch (e) {
             onGetEmissions(0);

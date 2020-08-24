@@ -1,14 +1,17 @@
 import { setDataByPostHttpRequest, locationInfo } from './common.js';
 
+// 상단 카드
 const thisYearEmissionsEl: HTMLElement | null = document.getElementById('this-year-total-emissions');
 const thisYearRemainingPermissibleEmissionsEl: HTMLElement | null = document.getElementById('this-year-remaining-permissible-emissions');
 const expectedOverEmissionsEl: HTMLElement | null = document.getElementById('expected-over-emissions');
 
+// 오늘 배출량
 const todayEmissionsChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('today-emissions-chart');
 const todayTotalEmissionsEl: HTMLElement | null = document.getElementById('today-total-emissions');
 const todayComparedToThisMonthAverageEl: HTMLElement | null = document.getElementById('today-compared-to-this-month-average');
 const todayComparedToThisMonthAverageArrowEl: HTMLImageElement | null = <HTMLImageElement>document.getElementById('today-compared-to-this-month-average-arrow');
 
+// 이전 배출량
 const yearlyMonthlySelectorEl: HTMLSelectElement | null = <HTMLSelectElement>document.getElementById('yearly-monthly-selector');
 const dateSelectorEl: HTMLSelectElement | null = <HTMLSelectElement>document.getElementById('past-emission-chart-date-selector');
 const selectedMonthChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('selected-month-chart');
@@ -16,9 +19,11 @@ const selectedMonthTotalEmissions: HTMLElement | null = document.getElementById(
 const selectedMonthComparedToLastYearEl: HTMLElement | null = document.getElementById('selected-month-compared-to-last-year');
 const selectedMonthComparedToLastYearArrowEl: HTMLImageElement | null = <HTMLImageElement>document.getElementById('selected-month-compared-to-last-year-arrow');
 
+// 예측 배출량
 const predictionChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('prediction-chart');
 const thisYearTotalPredictionEmissionsEl: HTMLElement | null = document.getElementById('this-year-total-prediction-emissions');
 
+// 갱신 주기
 const renewingPeriod: number = 10000;
 
 enum Interval {
@@ -44,7 +49,7 @@ function addCommaInNumber(num: number): string {
     while (pos < numberStr.length) {
         if (pos % 3 === point && pos !== 0) {
             resultStr += ',';
-        }
+        }``
         
         resultStr += numberStr[pos];
         pos++;
@@ -62,7 +67,7 @@ function renewPastEmissionsChart(): void {
         case Interval.DAILY:
             if (selectedMonthTotalEmissions) {
                 setDataByPostHttpRequest('selectedMonthEmissions', `year=${ year }&month=${ month }&location=${ locationInfo.location }`, (data: string): void => {
-                    selectedMonthTotalEmissions.innerText = data + ' t';
+                    selectedMonthTotalEmissions.innerText = addCommaInNumber(Number(data)) + ' t';
                 });
             }
             
@@ -74,17 +79,17 @@ function renewPastEmissionsChart(): void {
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
                     } else if (data[0] === '-') {
-                        selectedMonthComparedToLastYearEl.innerText = Number(data.substring(1)).toFixed(1) + ' %';
+                        selectedMonthComparedToLastYearEl.innerText = Number(data.substring(1)).toFixed(1) + '%';
                         selectedMonthComparedToLastYearArrowEl.src = 'images/svg/decrease_arrow.svg';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--decrease');
                     } else if (data[0] === '0') {
-                        selectedMonthComparedToLastYearEl.innerText = data + ' %';
+                        selectedMonthComparedToLastYearEl.innerText = data + '%';
                         selectedMonthComparedToLastYearArrowEl.src = '';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
                     } else {
-                        selectedMonthComparedToLastYearEl.innerText = Number(data).toFixed(1) + ' %';
+                        selectedMonthComparedToLastYearEl.innerText = Number(data).toFixed(1) + '%';
                         selectedMonthComparedToLastYearArrowEl.src = 'images/svg/increase_arrow.svg';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--increase');
@@ -96,7 +101,7 @@ function renewPastEmissionsChart(): void {
         case Interval.MONTHLY:
             if (selectedMonthTotalEmissions) {
                 setDataByPostHttpRequest('selectedYearEmissions', `year=${ year }&location=${ locationInfo.location }`, (data: string): void => {
-                    selectedMonthTotalEmissions.innerText = data + ' t';
+                    selectedMonthTotalEmissions.innerText = addCommaInNumber(Number(data)) + ' t';
                 });
             }
             
@@ -108,17 +113,17 @@ function renewPastEmissionsChart(): void {
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
                     } else if (data[0] === '-') {
-                        selectedMonthComparedToLastYearEl.innerText = Number(data.substring(1)).toFixed(1) + ' %'
+                        selectedMonthComparedToLastYearEl.innerText = Number(data.substring(1)).toFixed(1) + '%'
                         selectedMonthComparedToLastYearArrowEl.src = 'images/svg/decrease_arrow.svg';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--decrease');
                     } else if (data[0] === '0') {
-                        selectedMonthComparedToLastYearEl.innerText = data + ' %';
+                        selectedMonthComparedToLastYearEl.innerText = data + '%';
                         selectedMonthComparedToLastYearArrowEl.src = '';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
                     } else {
-                        selectedMonthComparedToLastYearEl.innerText = Number(data).toFixed(1) + ' %';
+                        selectedMonthComparedToLastYearEl.innerText = Number(data).toFixed(1) + '%';
                         selectedMonthComparedToLastYearArrowEl.src = 'images/svg/increase_arrow.svg';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--decrease');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--increase');
@@ -225,18 +230,21 @@ function runAfterSettingSelectorOptions(): void {
 function renewCardValue(): void {
     if (thisYearEmissionsEl) {
         setDataByPostHttpRequest('thisYearEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            thisYearEmissionsEl.innerText = data + ' t';
+            thisYearEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
         });
     }
     
     if (thisYearRemainingPermissibleEmissionsEl && expectedOverEmissionsEl) {
         setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            thisYearRemainingPermissibleEmissionsEl.innerText = data + ' t';
+            thisYearRemainingPermissibleEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
             
             setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${ locationInfo.location }`, (predictionData: string): void => {
-                const permissibleEmissions: number = Number(data.substring(0, data.length - 1));
-                const predictionEmissions: number = Number(predictionData.substring(0, predictionData.length - 1));
+                const permissibleEmissions: number = Number(data);
+                const predictionEmissions: number = Number(predictionData);
     
+                console.log(permissibleEmissions);
+                console.log(predictionEmissions);
+                
                 if (predictionEmissions - permissibleEmissions > 0) {
                     expectedOverEmissionsEl.innerText = predictionEmissions - permissibleEmissions + ' t';
                 } else {
@@ -250,24 +258,24 @@ function renewCardValue(): void {
 function renewTodayEmissionChart(): void {
     if (todayTotalEmissionsEl) {
         setDataByPostHttpRequest('todayEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            todayTotalEmissionsEl.innerText = data + ' t';
+            todayTotalEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
         });
     }
     
     if (todayComparedToThisMonthAverageEl && todayComparedToThisMonthAverageArrowEl) {
         setDataByPostHttpRequest('todayComparedToThisMonthAverageEmissions', `location=${ locationInfo.location }`, (data: string): void => {
             if (data[0] === '-') {
-                todayComparedToThisMonthAverageEl.innerText = Number(data.substring(1)).toFixed(1) + ' %'
+                todayComparedToThisMonthAverageEl.innerText = Number(data.substring(1)).toFixed(1) + '%'
                 todayComparedToThisMonthAverageArrowEl.src = 'images/svg/decrease_arrow.svg';
                 todayComparedToThisMonthAverageEl.parentElement?.classList.remove('info-value--increase');
                 todayComparedToThisMonthAverageEl.parentElement?.classList.add('info-value--decrease');
             } else if (data[0] === '0') {
-                todayComparedToThisMonthAverageEl.innerText = data + ' %';
+                todayComparedToThisMonthAverageEl.innerText = data + '%';
                 todayComparedToThisMonthAverageArrowEl.src = '';
                 todayComparedToThisMonthAverageEl.parentElement?.classList.remove('info-value--increase');
                 todayComparedToThisMonthAverageEl.parentElement?.classList.remove('info-value--decrease');
             } else {
-                todayComparedToThisMonthAverageEl.innerText = Number(data).toFixed(1) + ' %'
+                todayComparedToThisMonthAverageEl.innerText = Number(data).toFixed(1) + '%'
                 todayComparedToThisMonthAverageArrowEl.src = 'images/svg/increase_arrow.svg';
                 todayComparedToThisMonthAverageEl.parentElement?.classList.remove('info-value--decrease');
                 todayComparedToThisMonthAverageEl.parentElement?.classList.add('info-value--increase');
@@ -279,7 +287,7 @@ function renewTodayEmissionChart(): void {
 function renewPredictionEmissionsChart(): void {
     if (thisYearTotalPredictionEmissionsEl) {
         setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            thisYearTotalPredictionEmissionsEl.innerText = data + ' t';
+            thisYearTotalPredictionEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
         });
     }
 }

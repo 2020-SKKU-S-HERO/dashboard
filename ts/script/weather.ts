@@ -22,7 +22,7 @@ function renewWeather(): void {
             const weatherData: any = JSON.parse(data);
             
             weatherIconEl.src = `http://openweathermap.org/img/wn/${ weatherData.weather_icon }@2x.png`;
-            temperatureValueEl.innerText = (weatherData.temperature - 273.15).toFixed(1) + '°C';
+            temperatureValueEl.innerText = (weatherData.temperature - 273.15).toFixed(1) + '°';
             humidityValueEl.innerText = weatherData.humidity + '%';
         });
     }

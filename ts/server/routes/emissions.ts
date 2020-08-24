@@ -9,25 +9,6 @@ import * as mqtt from 'mqtt';
 const router: express.Router = express.Router();
 export { router as emissionsRouter };
 
-function addCommaInNumber(num: number): string {
-    const sign: string = num < 0 ? '-' : '';
-    const numberStr: string = Math.abs(num).toString();
-    let resultStr: string = '';
-    const point: number = numberStr.length % 3;
-    let pos: number = 0;
-    
-    while (pos < numberStr.length) {
-        if (pos % 3 === point && pos !== 0) {
-            resultStr += ',';
-        }
-        
-        resultStr += numberStr[pos];
-        pos++;
-    }
-    
-    return sign + resultStr;
-}
-
 router.use('/css', express.static('css'));
 router.use('/images', express.static('images'));
 router.use('/js', express.static('js'));
@@ -122,7 +103,7 @@ router.post('/selectedYearEmissions', (req: any, res: any): void => {
     const year: number = Number(req.body.year);
     
     db_control.getSelectedYearEmissions(year, location, (data: number): void => {
-        res.send(data);
+        res.send(data.toString());
     });
 });
 

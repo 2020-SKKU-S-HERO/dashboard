@@ -266,13 +266,13 @@ export function getThisYearPredictionEmissions(location: string | undefined, onG
     
     if (location) {
         queryStr = `
-            SELECT SUM(emissions) total_emissions
-            FROM co2_emissions
+            SELECT SUM(predict_value) expected_emissions
+            FROM predict_value
             WHERE date_time >= '${ tomorrow.getFullYear() }-${ tomorrow.getMonth() + 1 }-${ tomorrow.getDate() }' AND date_time < '${ lastDay.getFullYear() }-${ lastDay.getMonth() + 1 }-${ lastDay.getDate() }' AND location = '${ location }'`;
     } else {
         queryStr = `
-            SELECT SUM(emissions) total_emissions
-            FROM co2_emissions
+            SELECT SUM(predict_value) expected_emissions
+            FROM predict_value
             WHERE date_time >= '${ tomorrow.getFullYear() }-${ tomorrow.getMonth() + 1 }-${ tomorrow.getDate() }' AND date_time < '${ lastDay.getFullYear() }-${ lastDay.getMonth() + 1 }-${ lastDay.getDate() }'`;
     }
     
@@ -282,7 +282,7 @@ export function getThisYearPredictionEmissions(location: string | undefined, onG
         }
         
         try {
-            onGetEmissions(results[0]['total_emissions']);
+            onGetEmissions(results[0]['expected_emissions']);
         } catch (e) {
             onGetEmissions(0);
         }
