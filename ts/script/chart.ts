@@ -255,9 +255,6 @@ function renewCardValue(): void {
             setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${ locationInfo.location }`, (predictionData: string): void => {
                 const permissibleEmissions: number = Number(data);
                 const predictionEmissions: number = Number(predictionData);
-    
-                console.log(permissibleEmissions);
-                console.log(predictionEmissions);
                 
                 if (predictionEmissions - permissibleEmissions > 0) {
                     expectedOverEmissionsEl.innerText = addCommaInNumber(predictionEmissions - permissibleEmissions) + ' t';

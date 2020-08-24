@@ -141,6 +141,21 @@
   }
 }
 @font-face {
+  font-family: Apple SD Gothic Neo;
+  src: url("../fonts/apple/AppleSDGothicNeoR.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: Apple SD Gothic Neo;
+  src: url("../fonts/apple/AppleSDGothicNeoM.ttf");
+  font-weight: 500;
+}
+@font-face {
+  font-family: Apple SD Gothic Neo;
+  src: url("../fonts/apple/AppleSDGothicNeoL.ttf");
+  font-weight: 300;
+}
+@font-face {
   font-family: Roboto;
   src: url("../fonts/Roboto-Regular.ttf");
 }
@@ -164,7 +179,7 @@ html {
 }
 
 body {
-  font-family: Noto Sans KR, sans-serif;
+  font-family: Apple SD Gothic Neo, Noto Sans KR, sans-serif;
   min-height: 100vh;
 }
 
@@ -179,12 +194,15 @@ select {
   border: none;
   float: right;
   padding: 0 21px 0 5px;
-  background: url("/images/svg/combobox_arrow.svg") no-repeat 95% 60%;
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 30%;
   margin-left: 10px;
+}
+select option {
+  text-align: right;
 }
 
 select:last-child {
-  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 60%;
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 30%;
 }
 
 .global-nav-container {
@@ -269,11 +287,15 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a {
   height: 50px;
   padding: 20px;
   color: #444444;
-  font-size: 16px;
+  font-size: 17px;
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div {
   display: flex;
   align-items: center;
+}
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div span {
+  position: relative;
+  top: 2px;
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div .sidebar-icon {
   height: 20px;
@@ -286,9 +308,6 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-chart {
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-writing {
   background-image: url("/images/svg/sidebar/writing.svg");
-}
-main .sidebar-nav .sidebar-nav-links > .nav-item > a div span {
-  padding-bottom: 1px;
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a img {
   transition-duration: 0.5s;
@@ -309,7 +328,7 @@ main .sidebar-nav .sidebar-nav-links > .nav-item .sidebar-detail-nav-links > .na
   height: 100%;
   padding-left: 30px;
   color: #444444;
-  font-size: 14px;
+  font-size: 15px;
   transition-duration: 0.5s;
 }
 main .sidebar-nav .sidebar-nav-links--extended > a {
@@ -377,6 +396,7 @@ main .content-container .content-main {
   text-align: center;
 }
 .card .chart-info .info-item .info-value {
+  font-size: 16px;
   display: flex;
   margin-bottom: 5px;
   align-items: center;
@@ -385,9 +405,13 @@ main .content-container .content-main {
 .card .chart-info .info-item .info-value img {
   margin-right: 1px;
 }
+.card .chart-info .info-item .info-value span {
+  padding-top: 2px;
+}
 .card .chart-info .info-item .info-description {
   color: #AAAAAA;
   font-weight: 300;
+  font-size: 15px;
 }
 .card .chart-info .info-item .info-value--increase {
   color: #EC407A;
@@ -425,7 +449,7 @@ main .content-container .content-main {
 }
 .weather-card .box-weather span {
   font-size: 30px;
-  padding-bottom: 2px;
+  padding-top: 4px;
 }
 .weather-card .box-weather-small {
   display: flex;
@@ -435,8 +459,9 @@ main .content-container .content-main {
   padding-right: 9px;
 }
 .weather-card .box-weather-small span {
+  position: relative;
+  top: 2px;
   font-size: 17px;
-  padding-bottom: 2px;
 }
 
 .status-card {
@@ -474,6 +499,9 @@ main .content-container .content-main {
 .table {
   margin-bottom: 0;
 }
+.table td span {
+  padding-top: 0 !important;
+}
 
 .table-custom1 {
   font-size: 15px;
@@ -485,13 +513,19 @@ main .content-container .content-main {
 .table-custom1 thead td, .table-custom1 thead th {
   font-weight: 400;
   padding: 6px 15px;
+  position: relative;
+  top: 2px;
 }
 .table-custom1 tbody {
   text-align: center;
 }
 .table-custom1 tbody td, .table-custom1 tbody th {
   font-weight: 400;
-  padding: 7px 15px;
+  padding: 8px 15px;
+}
+.table-custom1 tbody th {
+  position: relative;
+  top: 2px;
 }
 
 .table-custom2 {
@@ -505,12 +539,14 @@ main .content-container .content-main {
 }
 .table-custom2 thead td, .table-custom2 thead th {
   font-weight: 400;
+  padding: 15px 12px 12px 12px;
 }
 .table-custom2 tbody {
   text-align: center;
 }
 .table-custom2 tbody td, .table-custom2 tbody th {
   font-weight: 400;
+  padding: 13px 12px 12px 12px;
 }
 
 #pie-chart {

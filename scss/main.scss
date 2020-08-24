@@ -9,6 +9,24 @@
 }
 
 @font-face {
+  font-family: Apple SD Gothic Neo;
+  src: url("../fonts/apple/AppleSDGothicNeoR.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Apple SD Gothic Neo;
+  src: url("../fonts/apple/AppleSDGothicNeoM.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Apple SD Gothic Neo;
+  src: url("../fonts/apple/AppleSDGothicNeoL.ttf");
+  font-weight: 300;
+}
+
+@font-face {
   font-family: Roboto;
   src: url("../fonts/Roboto-Regular.ttf");
 }
@@ -36,7 +54,7 @@ html {
 }
 
 body {
-  font-family: Noto Sans KR, sans-serif;
+  font-family: Apple SD Gothic Neo, Noto Sans KR, sans-serif;
   min-height: 100vh;
 }
 
@@ -51,12 +69,16 @@ select {
   border: none;
   float: right;
   padding: 0 21px 0 5px;
-  background: url("/images/svg/combobox_arrow.svg") no-repeat 95% 60%;
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 30%;
   margin-left: 10px;
+  
+  option {
+    text-align: right;
+  }
 }
 
 select:last-child {
-  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 60%;
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 30%;
 }
 
 .global-nav-container {
@@ -152,11 +174,16 @@ main {
           height: 50px;
           padding: 20px;
           color: $sidebarFontColor;
-          font-size: 16px;
+          font-size: 17px;
           
           div {
             display: flex;
             align-items: center;
+            
+            span {
+              position: relative;
+              top: 2px;
+            }
             
             .sidebar-icon {
               height: 20px;
@@ -171,10 +198,6 @@ main {
             
             #ic-writing {
               background-image: url("/images/svg/sidebar/writing.svg");
-            }
-            
-            span {
-              padding-bottom: 1px;
             }
           }
           
@@ -199,7 +222,7 @@ main {
               height: 100%;
               padding-left: 30px;
               color: $sidebarFontColor;
-              font-size: 14px;
+              font-size: 15px;
               transition-duration: 0.5s;
             }
           }
@@ -296,6 +319,7 @@ main {
       text-align: center;
       
       .info-value {
+        font-size: 16px;
         display: flex;
         margin-bottom: 5px;
         align-items: center;
@@ -304,11 +328,16 @@ main {
         img {
           margin-right: 1px;
         }
+        
+        span {
+          padding-top: 2px;
+        }
       }
       
       .info-description {
         color: $cardSemiFontColor;
         font-weight: 300;
+        font-size: 15px;
       }
       
       .info-value--increase {
@@ -358,7 +387,7 @@ main {
     
     span {
       font-size: 30px;
-      padding-bottom: 2px;
+      padding-top: 4px;
     }
   }
   
@@ -371,8 +400,9 @@ main {
     }
     
     span {
+      position: relative;
+      top: 2px;
       font-size: 17px;
-      padding-bottom: 2px;
     }
   }
 }
@@ -414,6 +444,12 @@ main {
 
 .table {
   margin-bottom: 0;
+  
+  td {
+    span {
+      padding-top: 0 !important;
+    }
+  }
 }
 
 .table-custom1 {
@@ -426,6 +462,8 @@ main {
     td, th {
       font-weight: 400;
       padding: 6px 15px;
+      position: relative;
+      top: 2px;
     }
   }
   
@@ -434,7 +472,12 @@ main {
     
     td, th {
       font-weight: 400;
-      padding: 7px 15px;
+      padding: 8px 15px;
+    }
+    
+    th {
+      position: relative;
+      top: 2px;
     }
   }
 }
@@ -450,6 +493,7 @@ main {
     
     td, th {
       font-weight: 400;
+      padding: 15px 12px 12px 12px;
     }
   }
   
@@ -457,8 +501,8 @@ main {
     text-align: center;
     
     td, th {
-      
       font-weight: 400;
+      padding: 13px 12px 12px 12px;
     }
   }
 }
