@@ -141,6 +141,38 @@
                 </ul>
             </div>
         </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">기여도 분석</div>
+                <iframe id="pie-chart" src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&theme=light&panelId=28" frameborder="0"></iframe>
+                <table class="table table-custom2">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: 23%">사업장 명</th>
+                        <th scope="col" style="width: 54%">올해 배출량</th>
+                        <th scope="col" style="width: 23%">기여도</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">서울 사업장</th>
+                        <td><span id="location1-this-year-emissions">-</span></td>
+                        <td><span id="location1-contribution">-</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">수원 사업장</th>
+                        <td><span id="location2-this-year-emissions">-</span></td>
+                        <td><span id="location2-contribution">-</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">인천 사업장</th>
+                        <td><span id="location3-this-year-emissions">-</span></td>
+                        <td><span id="location3-contribution">-</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <script type="module" src="js/script/chart.js"></script>

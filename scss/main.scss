@@ -413,6 +413,10 @@ main {
 }
 
 .table {
+  margin: 0;
+}
+
+.table-custom1 {
   font-size: 15px;
   
   thead {
@@ -428,7 +432,34 @@ main {
     
     td, th {
       font-weight: 400;
-      padding: 6px 15px;
+      padding: 7px 15px;
     }
   }
+}
+
+.table-custom2 {
+  font-size: 15px;
+  width: 100%;
+  
+  thead {
+    border-bottom: 3px double #DDDDDD;
+    text-align: center;
+    
+    td, th {
+      font-weight: 400;
+    }
+  }
+  
+  tbody {
+    text-align: center;
+    
+    td, th {
+      font-weight: 400;
+    }
+  }
+}
+
+#pie-chart {
+  height: 178px;
+  width: 99.9%;
 }

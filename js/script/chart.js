@@ -1,4 +1,4 @@
-import { setDataByPostHttpRequest, locationInfo } from './common.js';
+import { setDataByPostHttpRequest, locationInfo, info } from './common.js';
 const thisYearEmissionsEl = document.getElementById('this-year-total-emissions');
 const thisYearRemainingPermissibleEmissionsEl = document.getElementById('this-year-remaining-permissible-emissions');
 const expectedOverEmissionsEl = document.getElementById('expected-over-emissions');
@@ -14,6 +14,12 @@ const selectedMonthComparedToLastYearEl = document.getElementById('selected-mont
 const selectedMonthComparedToLastYearArrowEl = document.getElementById('selected-month-compared-to-last-year-arrow');
 const predictionChartEl = document.getElementById('prediction-chart');
 const thisYearTotalPredictionEmissionsEl = document.getElementById('this-year-total-prediction-emissions');
+const thisYearEmissionsOfLocation1El = document.getElementById('location1-this-year-emissions');
+const thisYearEmissionsOfLocation2El = document.getElementById('location2-this-year-emissions');
+const thisYearEmissionsOfLocation3El = document.getElementById('location3-this-year-emissions');
+const contributionOfLocation1El = document.getElementById('location1-contribution');
+const contributionOfLocation2El = document.getElementById('location2-contribution');
+const contributionOfLocation3El = document.getElementById('location3-contribution');
 const renewingPeriod = 10000;
 var Interval;
 (function (Interval) {
@@ -202,14 +208,19 @@ function renewCardValue() {
     }
     if (thisYearRemainingPermissibleEmissionsEl && expectedOverEmissionsEl) {
         setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${locationInfo.location}`, (data) => {
-            thisYearRemainingPermissibleEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            if (Number(data) > 0) {
+                thisYearRemainingPermissibleEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            }
+            else {
+                thisYearRemainingPermissibleEmissionsEl.innerText = '0 t';
+            }
             setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${locationInfo.location}`, (predictionData) => {
                 const permissibleEmissions = Number(data);
                 const predictionEmissions = Number(predictionData);
                 console.log(permissibleEmissions);
                 console.log(predictionEmissions);
                 if (predictionEmissions - permissibleEmissions > 0) {
-                    expectedOverEmissionsEl.innerText = predictionEmissions - permissibleEmissions + ' t';
+                    expectedOverEmissionsEl.innerText = addCommaInNumber(predictionEmissions - permissibleEmissions) + ' t';
                 }
                 else {
                     expectedOverEmissionsEl.innerText = '0 t';
@@ -255,19 +266,29 @@ function renewPredictionEmissionsChart() {
         });
     }
 }
-yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.addEventListener('change', () => {
-    const selectedStr = yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.options[yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.selectedIndex].value;
-    switch (selectedStr) {
-        case 'daily':
-            selectedInterval = Interval.DAILY;
-            break;
-        case 'monthly':
-            selectedInterval = Interval.MONTHLY;
-            break;
+function renewContributionChart() {
+    if (thisYearEmissionsOfLocation1El && thisYearEmissionsOfLocation2El && thisYearEmissionsOfLocation3El && contributionOfLocation1El && contributionOfLocation2El && contributionOfLocation3El) {
+        setDataByPostHttpRequest('thisYearEmissions', `location=${info.workplace1.location}`, (data1) => {
+            setDataByPostHttpRequest('thisYearEmissions', `location=${info.workplace2.location}`, (data2) => {
+                setDataByPostHttpRequest('thisYearEmissions', `location=${info.workplace3.location}`, (data3) => {
+                    const emissionsOfLocation1 = Number(data1);
+                    const emissionsOfLocation2 = Number(data2);
+                    const emissionsOfLocation3 = Number(data3);
+                    const sumOfEmissions = emissionsOfLocation1 + emissionsOfLocation2 + emissionsOfLocation3;
+                    const contributionOfLocation1 = emissionsOfLocation1 / sumOfEmissions * 100;
+                    const contributionOfLocation2 = emissionsOfLocation2 / sumOfEmissions * 100;
+                    const contributionOfLocation3 = emissionsOfLocation3 / sumOfEmissions * 100;
+                    thisYearEmissionsOfLocation1El.innerText = emissionsOfLocation1 + ' t';
+                    thisYearEmissionsOfLocation2El.innerText = emissionsOfLocation2 + ' t';
+                    thisYearEmissionsOfLocation3El.innerText = emissionsOfLocation3 + ' t';
+                    contributionOfLocation1El.innerText = contributionOfLocation1.toFixed(1) + '%';
+                    contributionOfLocation2El.innerText = contributionOfLocation2.toFixed(1) + '%';
+                    contributionOfLocation3El.innerText = contributionOfLocation3.toFixed(1) + '%';
+                });
+            });
+        });
     }
-    setSelectorOptions();
-});
-dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.addEventListener('change', runAfterSettingSelectorOptions);
+}
 window.addEventListener('DOMContentLoaded', () => {
     if (todayEmissionsChartEl) {
         const today = new Date();
@@ -284,8 +305,23 @@ window.addEventListener('DOMContentLoaded', () => {
     renewTodayEmissionChart();
     renewPredictionEmissionsChart();
     renewCardValue();
+    renewContributionChart();
 });
+yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.addEventListener('change', () => {
+    const selectedStr = yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.options[yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.selectedIndex].value;
+    switch (selectedStr) {
+        case 'daily':
+            selectedInterval = Interval.DAILY;
+            break;
+        case 'monthly':
+            selectedInterval = Interval.MONTHLY;
+            break;
+    }
+    setSelectorOptions();
+});
+dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.addEventListener('change', runAfterSettingSelectorOptions);
 setInterval(renewTodayEmissionChart, renewingPeriod);
 setInterval(renewPredictionEmissionsChart, renewingPeriod);
 setInterval(renewCardValue, renewingPeriod);
+setInterval(renewContributionChart, renewingPeriod);
 //# sourceMappingURL=chart.js.map

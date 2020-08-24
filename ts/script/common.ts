@@ -3,7 +3,7 @@ const isWorkplace1: HTMLElement | null = document.getElementById('emissions-work
 const isWorkplace2: HTMLElement | null = document.getElementById('emissions-workplace2');
 const isWorkplace3: HTMLElement | null = document.getElementById('emissions-workplace3');
 
-const info: any = {
+export const info: any = {
     home: {
         location: '',
         todayEmissionsPanelId: 2,

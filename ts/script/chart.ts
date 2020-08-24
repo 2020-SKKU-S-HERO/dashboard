@@ -1,4 +1,4 @@
-import { setDataByPostHttpRequest, locationInfo } from './common.js';
+import { setDataByPostHttpRequest, locationInfo, info } from './common.js';
 
 // 상단 카드
 const thisYearEmissionsEl: HTMLElement | null = document.getElementById('this-year-total-emissions');
@@ -22,6 +22,16 @@ const selectedMonthComparedToLastYearArrowEl: HTMLImageElement | null = <HTMLIma
 // 예측 배출량
 const predictionChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('prediction-chart');
 const thisYearTotalPredictionEmissionsEl: HTMLElement | null = document.getElementById('this-year-total-prediction-emissions');
+
+// 기여도 분석
+const thisYearEmissionsOfLocation1El: HTMLElement | null = document.getElementById('location1-this-year-emissions');
+const thisYearEmissionsOfLocation2El: HTMLElement | null = document.getElementById('location2-this-year-emissions');
+const thisYearEmissionsOfLocation3El: HTMLElement | null = document.getElementById('location3-this-year-emissions');
+
+const contributionOfLocation1El: HTMLElement | null = document.getElementById('location1-contribution');
+const contributionOfLocation2El: HTMLElement | null = document.getElementById('location2-contribution');
+const contributionOfLocation3El: HTMLElement | null = document.getElementById('location3-contribution');
+
 
 // 갱신 주기
 const renewingPeriod: number = 10000;
@@ -236,7 +246,11 @@ function renewCardValue(): void {
     
     if (thisYearRemainingPermissibleEmissionsEl && expectedOverEmissionsEl) {
         setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            thisYearRemainingPermissibleEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            if (Number(data) > 0) {
+                thisYearRemainingPermissibleEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            } else {
+                thisYearRemainingPermissibleEmissionsEl.innerText = '0 t';
+            }
             
             setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${ locationInfo.location }`, (predictionData: string): void => {
                 const permissibleEmissions: number = Number(data);
@@ -246,7 +260,7 @@ function renewCardValue(): void {
                 console.log(predictionEmissions);
                 
                 if (predictionEmissions - permissibleEmissions > 0) {
-                    expectedOverEmissionsEl.innerText = predictionEmissions - permissibleEmissions + ' t';
+                    expectedOverEmissionsEl.innerText = addCommaInNumber(predictionEmissions - permissibleEmissions) + ' t';
                 } else {
                     expectedOverEmissionsEl.innerText = '0 t';
                 }
@@ -292,23 +306,31 @@ function renewPredictionEmissionsChart(): void {
     }
 }
 
-yearlyMonthlySelectorEl?.addEventListener('change', (): void => {
-    const selectedStr: string = yearlyMonthlySelectorEl?.options[yearlyMonthlySelectorEl?.selectedIndex].value;
+function renewContributionChart(): void {
+    if (thisYearEmissionsOfLocation1El && thisYearEmissionsOfLocation2El && thisYearEmissionsOfLocation3El && contributionOfLocation1El && contributionOfLocation2El && contributionOfLocation3El) {
+        setDataByPostHttpRequest('thisYearEmissions', `location=${ info.workplace1.location }`, (data1: string): void => {
+            setDataByPostHttpRequest('thisYearEmissions', `location=${ info.workplace2.location }`, (data2: string): void => {
+                setDataByPostHttpRequest('thisYearEmissions', `location=${ info.workplace3.location }`, (data3: string): void => {
+                    const emissionsOfLocation1: number = Number(data1);
+                    const emissionsOfLocation2: number = Number(data2);
+                    const emissionsOfLocation3: number = Number(data3);
+                    const sumOfEmissions: number = emissionsOfLocation1 + emissionsOfLocation2 + emissionsOfLocation3;
+                    const contributionOfLocation1: number = emissionsOfLocation1 / sumOfEmissions * 100;
+                    const contributionOfLocation2: number = emissionsOfLocation2 / sumOfEmissions * 100;
+                    const contributionOfLocation3: number = emissionsOfLocation3 / sumOfEmissions * 100;
     
-    switch (selectedStr) {
-        case 'daily':
-            selectedInterval = Interval.DAILY;
-            break;
-        
-        case 'monthly':
-            selectedInterval = Interval.MONTHLY;
-            break;
+                    thisYearEmissionsOfLocation1El.innerText = emissionsOfLocation1 + ' t';
+                    thisYearEmissionsOfLocation2El.innerText = emissionsOfLocation2 + ' t';
+                    thisYearEmissionsOfLocation3El.innerText = emissionsOfLocation3 + ' t';
+    
+                    contributionOfLocation1El.innerText = contributionOfLocation1.toFixed(1) + '%';
+                    contributionOfLocation2El.innerText = contributionOfLocation2.toFixed(1) + '%';
+                    contributionOfLocation3El.innerText = contributionOfLocation3.toFixed(1) + '%';
+                });
+            });
+        });
     }
-    
-    setSelectorOptions();
-});
-
-dateSelectorEl?.addEventListener('change', runAfterSettingSelectorOptions);
+}
 
 window.addEventListener('DOMContentLoaded', (): void => {
     if (todayEmissionsChartEl) {
@@ -333,8 +355,28 @@ window.addEventListener('DOMContentLoaded', (): void => {
     renewTodayEmissionChart();
     renewPredictionEmissionsChart();
     renewCardValue();
+    renewContributionChart();
 });
+
+yearlyMonthlySelectorEl?.addEventListener('change', (): void => {
+    const selectedStr: string = yearlyMonthlySelectorEl?.options[yearlyMonthlySelectorEl?.selectedIndex].value;
+    
+    switch (selectedStr) {
+        case 'daily':
+            selectedInterval = Interval.DAILY;
+            break;
+        
+        case 'monthly':
+            selectedInterval = Interval.MONTHLY;
+            break;
+    }
+    
+    setSelectorOptions();
+});
+
+dateSelectorEl?.addEventListener('change', runAfterSettingSelectorOptions);
 
 setInterval(renewTodayEmissionChart, renewingPeriod);
 setInterval(renewPredictionEmissionsChart, renewingPeriod);
 setInterval(renewCardValue, renewingPeriod);
+setInterval(renewContributionChart, renewingPeriod);

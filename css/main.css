@@ -472,18 +472,45 @@ main .content-container .content-main {
 }
 
 .table {
+  margin: 0;
+}
+
+.table-custom1 {
   font-size: 15px;
 }
-.table thead {
+.table-custom1 thead {
   border-bottom: 1px solid #DDDDDD;
 }
-.table thead td, .table thead th {
+.table-custom1 thead td, .table-custom1 thead th {
   font-weight: 400;
   padding: 6px 15px;
 }
-.table tbody td, .table tbody th {
+.table-custom1 tbody td, .table-custom1 tbody th {
   font-weight: 400;
-  padding: 6px 15px;
+  padding: 7px 15px;
+}
+
+.table-custom2 {
+  font-size: 15px;
+  width: 100%;
+}
+.table-custom2 thead {
+  border-bottom: 3px double #DDDDDD;
+  text-align: center;
+}
+.table-custom2 thead td, .table-custom2 thead th {
+  font-weight: 400;
+}
+.table-custom2 tbody {
+  text-align: center;
+}
+.table-custom2 tbody td, .table-custom2 tbody th {
+  font-weight: 400;
+}
+
+#pie-chart {
+  height: 178px;
+  width: 99.9%;
 }
 
 /*# sourceMappingURL=main.css.map */
