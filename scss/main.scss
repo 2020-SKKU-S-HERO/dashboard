@@ -199,6 +199,10 @@ main {
             #ic-writing {
               background-image: url("/images/svg/sidebar/writing.svg");
             }
+            
+            #ic-increasing-chart {
+              background-image: url("/images/svg/sidebar/increasing-chart.svg");
+            }
           }
           
           img {
@@ -242,6 +246,10 @@ main {
   
         #ic-writing {
           background-image: url("/images/svg/sidebar/writing-active.svg") !important;
+        }
+  
+        #ic-increasing-chart {
+          background-image: url("/images/svg/sidebar/increasing-chart-active.svg") !important;
         }
   
         > img {

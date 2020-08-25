@@ -99,6 +99,9 @@
   main .sidebar-nav .sidebar-nav-links > .nav-item > a:hover #ic-writing {
     background-image: url("/images/svg/sidebar/writing-active.svg");
   }
+  main .sidebar-nav .sidebar-nav-links > .nav-item > a:hover #ic-increasing-chart {
+    background-image: url("/images/svg/sidebar/increasing-chart-active.svg");
+  }
   main .sidebar-nav .sidebar-nav-links > .nav-item .sidebar-detail-nav-links a:hover {
     background-color: #E4E4F6;
     color: #000000 !important;
@@ -309,6 +312,9 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-chart {
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-writing {
   background-image: url("/images/svg/sidebar/writing.svg");
 }
+main .sidebar-nav .sidebar-nav-links > .nav-item > a div #ic-increasing-chart {
+  background-image: url("/images/svg/sidebar/increasing-chart.svg");
+}
 main .sidebar-nav .sidebar-nav-links > .nav-item > a img {
   transition-duration: 0.5s;
   height: 10px;
@@ -340,6 +346,9 @@ main .sidebar-nav .sidebar-nav-links--extended > a #ic-chart {
 }
 main .sidebar-nav .sidebar-nav-links--extended > a #ic-writing {
   background-image: url("/images/svg/sidebar/writing-active.svg") !important;
+}
+main .sidebar-nav .sidebar-nav-links--extended > a #ic-increasing-chart {
+  background-image: url("/images/svg/sidebar/increasing-chart-active.svg") !important;
 }
 main .sidebar-nav .sidebar-nav-links--extended > a > img {
   transform: rotate(90deg);
