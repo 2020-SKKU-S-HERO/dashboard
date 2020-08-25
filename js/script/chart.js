@@ -276,9 +276,9 @@ function renewContributionChart() {
                     const contributionOfLocation1 = emissionsOfLocation1 / sumOfEmissions * 100;
                     const contributionOfLocation2 = emissionsOfLocation2 / sumOfEmissions * 100;
                     const contributionOfLocation3 = emissionsOfLocation3 / sumOfEmissions * 100;
-                    thisYearEmissionsOfLocation1El.innerText = emissionsOfLocation1 + ' t';
-                    thisYearEmissionsOfLocation2El.innerText = emissionsOfLocation2 + ' t';
-                    thisYearEmissionsOfLocation3El.innerText = emissionsOfLocation3 + ' t';
+                    thisYearEmissionsOfLocation1El.innerText = addCommaInNumber(emissionsOfLocation1) + ' t';
+                    thisYearEmissionsOfLocation2El.innerText = addCommaInNumber(emissionsOfLocation2) + ' t';
+                    thisYearEmissionsOfLocation3El.innerText = addCommaInNumber(emissionsOfLocation3) + ' t';
                     contributionOfLocation1El.innerText = contributionOfLocation1.toFixed(1) + '%';
                     contributionOfLocation2El.innerText = contributionOfLocation2.toFixed(1) + '%';
                     contributionOfLocation3El.innerText = contributionOfLocation3.toFixed(1) + '%';

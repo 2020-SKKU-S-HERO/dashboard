@@ -194,7 +194,7 @@ select {
   border: none;
   float: right;
   padding: 0 21px 0 5px;
-  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 30%;
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 37%;
   margin-left: 10px;
 }
 select option {
@@ -202,7 +202,7 @@ select option {
 }
 
 select:last-child {
-  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 30%;
+  background: url("/images/svg/combobox_arrow.svg") no-repeat 90% 37%;
 }
 
 .global-nav-container {
