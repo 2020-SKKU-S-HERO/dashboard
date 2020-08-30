@@ -33,7 +33,7 @@ function addZeroInFront(num, width) {
 }
 function addCommaInNumber(num) {
     const sign = num < 0 ? '-' : '';
-    const numberStr = Math.abs(num).toString();
+    const numberStr = num.toFixed(0);
     let resultStr = '';
     const point = numberStr.length % 3;
     let pos = 0;

@@ -39,7 +39,7 @@
             <div class="card card-blue">
                 <div class="center-box">
                     <div class="box-title">
-                        <span>예상 초과 배출량</span>
+                        <span>올해 예상 초과 배출량</span>
                     </div>
                     <div class="box-value">
                         <span id="expected-over-emissions">-</span>
@@ -70,109 +70,109 @@
                         <div class="info-value">
                             <img id="today-compared-to-this-month-average-arrow" src="" alt=""><img src="" alt="">
                             <span id="today-compared-to-this-month-average">-</span>
-                        </div>
+                        </div
                         <div class="info-description">
                             <span>이번 달 평균 대비</span>
                         </div>
                     </li>
                 </ul>
             </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-title">
-                    <span>이전 배출량</span>
-                    <select id="past-emission-chart-date-selector">
-                    </select>
-                    <select id="yearly-monthly-selector">
-                        <option value="daily">일간</option>
-                        <option value="monthly">월간</option>
-                    </select>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-title">
+                        <span>이전 배출량</span>
+                        <select id="past-emission-chart-date-selector">
+                        </select>
+                        <select id="yearly-monthly-selector">
+                            <option value="daily">일간</option>
+                            <option value="monthly">월간</option>
+                        </select>
+                    </div>
+                    <div class="chart">
+                        <iframe id="selected-month-chart" src="" frameborder="0"></iframe>
+                    </div>
+                    <ul class="chart-info">
+                        <li class="info-item">
+                            <div class="info-value">
+                                <span id="selected-month-total-emissions">-</span>
+                            </div>
+                            <div class="info-description">
+                                <span>총 배출량</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-value">
+                                <img id="selected-month-compared-to-last-year-arrow" src="" alt="">
+                                <span id="selected-month-compared-to-last-year">-</span>
+                            </div>
+                            <div class="info-description">
+                                <span>작년 대비</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="chart">
-                    <iframe id="selected-month-chart" src="" frameborder="0"></iframe>
-                </div>
-                <ul class="chart-info">
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span id="selected-month-total-emissions">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>총 배출량</span>
-                        </div>
-                    </li>
-                    <li class="info-item">
-                        <div class="info-value">
-                            <img id="selected-month-compared-to-last-year-arrow" src="" alt="">
-                            <span id="selected-month-compared-to-last-year">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>작년 대비</span>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-title">
-                    <span>예측 배출량</span>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-title">
+                        <span>예측 배출량</span>
+                    </div>
+                    <div class="chart">
+                        <iframe id="prediction-chart" src="" frameborder="0"></iframe>
+                    </div>
+                    <ul class="chart-info">
+                        <li class="info-item">
+                            <div class="info-value">
+                                <span id="this-year-total-prediction-emissions">-</span>
+                            </div>
+                            <div class="info-description">
+                                <span>올해 총 예측 배출량</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-value">
+                                <span id="">-</span>
+                            </div>
+                            <div class="info-description">
+                                <span>정확도</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="chart">
-                    <iframe id="prediction-chart" src="" frameborder="0"></iframe>
-                </div>
-                <ul class="chart-info">
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span id="this-year-total-prediction-emissions">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>올해 총 예측 배출량</span>
-                        </div>
-                    </li>
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span id="">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>정확도</span>
-                        </div>
-                    </li>
-                </ul>
             </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-title">기여도 분석</div>
-                <iframe id="pie-chart" src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&theme=light&panelId=28" frameborder="0"></iframe>
-                <table class="table table-custom2">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: 120px">사업장 명</th>
-                        <th scope="col" style="">올해 배출량</th>
-                        <th scope="col" style="width: 80px">기여도</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">서울 사업장</th>
-                        <td><span id="location1-this-year-emissions">-</span></td>
-                        <td><span id="location1-contribution">-</span></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">청주 사업장</th>
-                        <td><span id="location2-this-year-emissions">-</span></td>
-                        <td><span id="location2-contribution">-</span></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">오산 사업장</th>
-                        <td><span id="location3-this-year-emissions">-</span></td>
-                        <td><span id="location3-contribution">-</span></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-title">기여도 분석</div>
+                    <iframe id="pie-chart" src="http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&theme=light&panelId=28" frameborder="0"></iframe>
+                    <table class="table table-custom2">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width: 120px">사업장 명</th>
+                            <th scope="col" style="">올해 배출량</th>
+                            <th scope="col" style="width: 80px">기여도</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">병점 사업장</th>
+                            <td><span id="location1-this-year-emissions">-</span></td>
+                            <td><span id="location1-contribution">-</span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">수원 사업장</th>
+                            <td><span id="location2-this-year-emissions">-</span></td>
+                            <td><span id="location2-contribution">-</span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">인천 사업장</th>
+                            <td><span id="location3-this-year-emissions">-</span></td>
+                            <td><span id="location3-contribution">-</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

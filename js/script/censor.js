@@ -1,35 +1,24 @@
 import { setDataByPostHttpRequest, locationInfo } from './common.js';
-const gasCensorToggleBtn = document.getElementById('gas-censor-toggle-btn');
-const flowCensorToggleBtn = document.getElementById('flow-censor-toggle-btn');
-const tempCensorToggleBtn = document.getElementById('temp-censor-toggle-btn');
-gasCensorToggleBtn.onchange = () => {
-    if (gasCensorToggleBtn.checked) {
+const mainMotorToggleBtn = document.getElementById('main-motor-toggle-btn');
+const subMotorToggleBtn = document.getElementById('sub-motor-toggle-btn');
+mainMotorToggleBtn.onchange = () => {
+    if (mainMotorToggleBtn.checked) {
         console.log;
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=gas&power=on`, () => {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=main&power=on`, () => {
         });
     }
     else {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=gas&power=off`, () => {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=main&power=off`, () => {
         });
     }
 };
-flowCensorToggleBtn.onchange = () => {
-    if (flowCensorToggleBtn.checked) {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=flow&power=on`, () => {
+subMotorToggleBtn.onchange = () => {
+    if (subMotorToggleBtn.checked) {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=sub&power=on`, () => {
         });
     }
     else {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=flow&power=off`, () => {
-        });
-    }
-};
-tempCensorToggleBtn.onchange = () => {
-    if (tempCensorToggleBtn.checked) {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=temp&power=on`, () => {
-        });
-    }
-    else {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=temp&power=off`, () => {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=sub&power=off`, () => {
         });
     }
 };

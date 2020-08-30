@@ -1,4 +1,4 @@
-{% set title = "탄소배출량 산정 시스템 : CO2 배출량 - 청주 사업장" %}
+{% set title = "탄소배출량 산정 시스템 : CO2 배출량 - 수원 사업장" %}
 {% extends "layout/base.html" %}
 
 {%  block content -%}
@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12">
             <div class="container-title">
-                <span>CO2 배출량 - 청주 사업장</span>
+                <span>CO2 배출량 - 수원 사업장</span>
             </div>
         </div>
     </div>
@@ -42,26 +42,21 @@
                 <table class="table table-borderless table-custom1">
                     <thead>
                     <tr>
-                        <th scope="col" style="width: 100px">센서</th>
-                        <th scope="col" style="">LED 전등</th>
+                        <th scope="col" style="width: 100px">디바이스</th>
+                        <th scope="col" style="">전원</th>
                         <th scope="col" style="width: 100px">연결 상태</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row"><span>가스 센서</span></th>
-                        <td><input type="checkbox" id="gas-censor-toggle-btn"></td>
+                        <th scope="row"><span>LED / 모터</span></th>
+                        <td><input type="checkbox" id="main-motor-toggle-btn" class="switch"></td>
                         <td><img src="images/svg/green_circle.svg" alt=""></td>
                     </tr>
                     <tr>
-                        <th scope="row"><span>유속 센서</span></th>
-                        <td><input type="checkbox" id="flow-censor-toggle-btn"></td>
+                        <th scope="row"><span>서브 모터</span></th>
+                        <td><input type="checkbox" id="sub-motor-toggle-btn" class="switch"></td>
                         <td><img src="images/svg/green_circle.svg" alt=""></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><span>온도 센서</span></th>
-                        <td><input type="checkbox" id="temp-censor-toggle-btn"></td>
-                        <td><img src="images/svg/red_circle.svg" alt=""></td>
                     </tr>
                     </tbody>
                 </table>

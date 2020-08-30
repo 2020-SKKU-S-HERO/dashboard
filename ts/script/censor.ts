@@ -1,41 +1,28 @@
 import { setDataByPostHttpRequest, locationInfo } from './common.js';
 
-const gasCensorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('gas-censor-toggle-btn');
-const flowCensorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('flow-censor-toggle-btn');
-const tempCensorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('temp-censor-toggle-btn');
+const mainMotorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('main-motor-toggle-btn');
+const subMotorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('sub-motor-toggle-btn');
 
-gasCensorToggleBtn.onchange = () => {
-    if (gasCensorToggleBtn.checked) {
+mainMotorToggleBtn.onchange = () => {
+    if (mainMotorToggleBtn.checked) {
         console.log
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=gas&power=on`, (): void => {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=main&power=on`, (): void => {
         
         });
     } else {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=gas&power=off`, (): void => {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=main&power=off`, (): void => {
     
         });
     }
 };
 
-flowCensorToggleBtn.onchange = () => {
-    if (flowCensorToggleBtn.checked) {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=flow&power=on`, (): void => {
+subMotorToggleBtn.onchange = () => {
+    if (subMotorToggleBtn.checked) {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=sub&power=on`, (): void => {
     
         });
     } else {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=flow&power=off`, (): void => {
-    
-        });
-    }
-};
-
-tempCensorToggleBtn.onchange = () => {
-    if (tempCensorToggleBtn.checked) {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=temp&power=on`, (): void => {
-    
-        });
-    } else {
-        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=temp&power=off`, (): void => {
+        setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=sub&power=off`, (): void => {
     
         });
     }

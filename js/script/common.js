@@ -11,24 +11,24 @@ export const info = {
         predictionEmissionsPanelId: 22
     },
     workplace1: {
-        location: '서울',
-        cityName: 'seoul',
+        location: '병점',
+        cityName: 'hwaseong',
         todayEmissionsPanelId: 8,
         pastDailyEmissionsPanelId: 12,
         pastMonthlyEmissionsPanelId: 13,
         predictionEmissionsPanelId: 24
     },
     workplace2: {
-        location: '청주',
-        cityName: 'cheongju',
+        location: '수원',
+        cityName: 'suwon',
         todayEmissionsPanelId: 9,
         pastDailyEmissionsPanelId: 16,
         pastMonthlyEmissionsPanelId: 17,
         predictionEmissionsPanelId: 25
     },
     workplace3: {
-        location: '오산',
-        cityName: 'osan',
+        location: '인천',
+        cityName: 'incheon',
         todayEmissionsPanelId: 10,
         pastDailyEmissionsPanelId: 18,
         pastMonthlyEmissionsPanelId: 19,
