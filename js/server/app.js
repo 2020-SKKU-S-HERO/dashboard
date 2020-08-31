@@ -5,7 +5,7 @@ const express = require("express");
 const nunjucks = require("nunjucks");
 const bodyParser = require("body-parser");
 const emissions_1 = require("./routes/emissions");
-const control_1 = require("./routes/control");
+const login_1 = require("./routes/login");
 class App {
     constructor() {
         this.app = express();
@@ -25,7 +25,7 @@ class App {
             res.render('index.html');
         });
         this.app.use('/emissions', emissions_1.emissionsRouter);
-        this.app.use('/control', control_1.controlRouter);
+        this.app.use('/login', login_1.loginRouter);
     }
     setViewEngine() {
         nunjucks.configure('template', {

@@ -3,9 +3,7 @@ import * as nunjucks from 'nunjucks';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import { emissionsRouter } from './routes/emissions';
-import { controlRouter } from './routes/control';
-import * as http from 'http';
-import { ClientRequest, IncomingMessage } from 'http';
+import { loginRouter } from './routes/login';
 
 class App {
     
@@ -33,7 +31,7 @@ class App {
         });
         
         this.app.use('/emissions', emissionsRouter);
-        this.app.use('/control', controlRouter);
+        this.app.use('/login', loginRouter);
     }
     
     setViewEngine(): void {

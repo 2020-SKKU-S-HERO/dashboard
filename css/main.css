@@ -298,7 +298,7 @@ main .sidebar-nav .sidebar-nav-links > .nav-item > a div {
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div span {
   position: relative;
-  top: 2px;
+  top: 1px;
 }
 main .sidebar-nav .sidebar-nav-links > .nav-item > a div .sidebar-icon {
   height: 20px;
@@ -561,6 +561,19 @@ main .content-container .content-main {
 #pie-chart {
   height: 177px;
   width: 99.9%;
+}
+
+.login-container {
+  height: calc(100vh - 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-container .login-content {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=main.css.map */
