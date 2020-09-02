@@ -399,7 +399,7 @@ main .content-container .content-main {
 .card .chart-info {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid #DDDDDD;
+  border-top: 1px solid #dce0e4;
 }
 .card .chart-info .info-item {
   text-align: center;
@@ -477,7 +477,7 @@ main .content-container .content-main {
   height: 150px;
 }
 .status-card .status-list {
-  border-top: 1px solid #DDDDDD;
+  border-top: 1px solid #dce0e4;
   padding-left: 15px;
 }
 .status-card .status-list .status-item {
@@ -516,7 +516,7 @@ main .content-container .content-main {
   font-size: 15px;
 }
 .table-custom1 thead {
-  border-bottom: 1px solid #DDDDDD;
+  border-bottom: 1px solid #dce0e4;
   text-align: center;
 }
 .table-custom1 thead td, .table-custom1 thead th {
@@ -543,7 +543,7 @@ main .content-container .content-main {
   margin-top: 1px;
 }
 .table-custom2 thead {
-  border-bottom: 3px double #DDDDDD;
+  border-bottom: 3px double #dce0e4;
   text-align: center;
 }
 .table-custom2 thead td, .table-custom2 thead th {

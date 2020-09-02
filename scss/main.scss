@@ -496,7 +496,7 @@ main {
   margin-top: 1px;
   
   thead {
-    border-bottom: 3px double #DDDDDD;
+    border-bottom: 3px double $borderColor;
     text-align: center;
     
     td, th {
