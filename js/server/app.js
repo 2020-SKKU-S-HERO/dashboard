@@ -6,6 +6,7 @@ const nunjucks = require("nunjucks");
 const bodyParser = require("body-parser");
 const emissions_1 = require("./routes/emissions");
 const login_1 = require("./routes/login");
+const datainput_1 = require("./routes/datainput");
 class App {
     constructor() {
         this.app = express();
@@ -26,6 +27,7 @@ class App {
         });
         this.app.use('/emissions', emissions_1.emissionsRouter);
         this.app.use('/login', login_1.loginRouter);
+        this.app.use('/data-input', datainput_1.dataInputRouter);
     }
     setViewEngine() {
         nunjucks.configure('template', {
@@ -39,4 +41,8 @@ class App {
     }
 }
 exports.app = new App().app;
+exports.app.post('/alert/token', (req, res) => {
+    console.log(req.body);
+    res.send('hello');
+});
 //# sourceMappingURL=app.js.map

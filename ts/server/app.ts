@@ -4,6 +4,7 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import { emissionsRouter } from './routes/emissions';
 import { loginRouter } from './routes/login';
+import { dataInputRouter } from './routes/datainput';
 
 class App {
     
@@ -32,6 +33,7 @@ class App {
         
         this.app.use('/emissions', emissionsRouter);
         this.app.use('/login', loginRouter);
+        this.app.use('/data-input', dataInputRouter);
     }
     
     setViewEngine(): void {
@@ -49,3 +51,8 @@ class App {
 }
 
 export const app: express.Express = new App().app;
+
+app.post('/alert/token', (req: any, res: any): void => {
+    console.log(req.body);
+    res.send('hello');
+});
