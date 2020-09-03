@@ -277,7 +277,7 @@ function getThisYearPredictionEmissions(location, onGetEmissions) {
     });
 }
 exports.getThisYearPredictionEmissions = getThisYearPredictionEmissions;
-function insertResourceInput(resourceData, onInsertData) {
+function insertResourceInput(data, onInsertData) {
     const now = new Date();
     const dateStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     const deleteQueryStr = `
@@ -285,7 +285,7 @@ function insertResourceInput(resourceData, onInsertData) {
         WHERE date = '${dateStr}';`;
     const insertQueryStr = `
         INSERT INTO resource_input
-        VALUE('${dateStr}', ${resourceData.limestone}, ${resourceData.clay}, ${resourceData.silicaStone}, ${resourceData.ironOxide}, ${resourceData.gypsum}, ${resourceData.coal});`;
+        VALUE('${dateStr}', ${data.location}, ${data.limestone}, ${data.clay}, ${data.silicaStone}, ${data.ironOxide}, ${data.gypsum}, ${data.coal});`;
     connection.query(deleteQueryStr, (error, results, fields) => {
         if (error) {
             throw error;

@@ -289,7 +289,7 @@ export function getThisYearPredictionEmissions(location: string | undefined, onG
     });
 }
 
-export function insertResourceInput(resourceData: any, onInsertData: (() => void)): void {
+export function insertResourceInput(data: any, onInsertData: (() => void)): void {
     const now: Date = new Date();
     const dateStr: string = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
     const deleteQueryStr: string = `
@@ -297,7 +297,7 @@ export function insertResourceInput(resourceData: any, onInsertData: (() => void
         WHERE date = '${dateStr}';`;
     const insertQueryStr: string = `
         INSERT INTO resource_input
-        VALUE('${dateStr}', ${resourceData.limestone}, ${resourceData.clay}, ${resourceData.silicaStone}, ${resourceData.ironOxide}, ${resourceData.gypsum}, ${resourceData.coal});`;
+        VALUE('${dateStr}', ${data.location}, ${data.limestone}, ${data.clay}, ${data.silicaStone}, ${data.ironOxide}, ${data.gypsum}, ${data.coal});`;
         
     connection.query(deleteQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
         if (error) {

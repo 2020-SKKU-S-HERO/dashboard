@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     const body = req.body;
     const resourceData = {
+        'location': body.location,
         'limestone': body.limestone,
         'clay': body.clay,
         'silicaStone': body.silicaStone,
