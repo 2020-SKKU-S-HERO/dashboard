@@ -288,3 +288,28 @@ export function getThisYearPredictionEmissions(location: string | undefined, onG
         }
     });
 }
+
+export function insertResourceInput(resourceData: any, onInsertData: (() => void)): void {
+    const now: Date = new Date();
+    const dateStr: string = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
+    const deleteQueryStr: string = `
+        DELETE FROM resource_input
+        WHERE date = '${dateStr}';`;
+    const insertQueryStr: string = `
+        INSERT INTO resource_input
+        VALUE('${dateStr}', ${resourceData.limestone}, ${resourceData.clay}, ${resourceData.silicaStone}, ${resourceData.ironOxide}, ${resourceData.gypsum}, ${resourceData.coal});`;
+        
+    connection.query(deleteQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+    
+        connection.query(insertQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+            if (error) {
+                throw error;
+            }
+        
+            onInsertData();
+        });
+    });
+}

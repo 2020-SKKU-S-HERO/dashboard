@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -277,4 +277,26 @@ function getThisYearPredictionEmissions(location, onGetEmissions) {
     });
 }
 exports.getThisYearPredictionEmissions = getThisYearPredictionEmissions;
+function insertResourceInput(resourceData, onInsertData) {
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    const deleteQueryStr = `
+        DELETE FROM resource_input
+        WHERE date = '${dateStr}';`;
+    const insertQueryStr = `
+        INSERT INTO resource_input
+        VALUE('${dateStr}', ${resourceData.limestone}, ${resourceData.clay}, ${resourceData.silicaStone}, ${resourceData.ironOxide}, ${resourceData.gypsum}, ${resourceData.coal});`;
+    connection.query(deleteQueryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        connection.query(insertQueryStr, (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+            onInsertData();
+        });
+    });
+}
+exports.insertResourceInput = insertResourceInput;
 //# sourceMappingURL=db_control.js.map
