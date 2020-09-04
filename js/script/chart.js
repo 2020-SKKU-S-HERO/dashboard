@@ -134,12 +134,12 @@ function setEmissionChartInterval(fromDateString, monthInterval, chartEl) {
         case Interval.DAILY:
             toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + monthInterval, 1, -8, 0, -1);
             fromDate.setHours(-4);
-            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${fromDate.valueOf()}&to=${toDate.valueOf()}&theme=light&panelId=${locationInfo.pastDailyEmissionsPanelId}`;
+            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=1m&from=${fromDate.valueOf()}&to=${toDate.valueOf()}&theme=light&panelId=${locationInfo.pastDailyEmissionsPanelId}`;
             break;
         case Interval.MONTHLY:
             toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + monthInterval, -10, 0, 0, -1);
             fromDate.setDate(-12);
-            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${fromDate.valueOf()}&to=${toDate.valueOf()}&theme=light&panelId=${locationInfo.pastMonthlyEmissionsPanelId}`;
+            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=1m&from=${fromDate.valueOf()}&to=${toDate.valueOf()}&theme=light&panelId=${locationInfo.pastMonthlyEmissionsPanelId}`;
             break;
     }
 }
@@ -294,18 +294,19 @@ window.addEventListener('DOMContentLoaded', () => {
     if (todayEmissionsChartEl) {
         const today = new Date();
         today.setHours(0, 0, 0);
-        todayEmissionsChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=now&theme=light&panelId=${locationInfo.todayEmissionsPanelId}`;
+        todayEmissionsChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${today.valueOf()}&to=now&theme=light&panelId=${locationInfo.todayEmissionsPanelId}`;
     }
     if (predictionChartEl) {
         const today = new Date();
+        const firstDay = new Date(today.getFullYear(), 0, 1);
         const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), 1, 0, 0, -1);
         today.setDate(-12);
-        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=${nextYear.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
+        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${today.valueOf()}&to=${nextYear.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
     }
     if (resourceChartEl) {
         const today = new Date();
         today.setHours(0, 0, 0);
-        resourceChartEl.src = `http://34.64.238.233:3000/d-solo/zze7bhDMk/resource?orgId=1&refresh=5s&from=${today.valueOf()}&to=now&theme=light&panelId=${locationInfo.resourcePanelId}`;
+        resourceChartEl.src = `http://34.64.238.233:3000/d-solo/zze7bhDMk/resource?orgId=1&refresh=10s&from=${today.valueOf()}&to=now&theme=light&panelId=${locationInfo.resourcePanelId}`;
     }
     setSelectorOptions();
     renewTodayEmissionChart();

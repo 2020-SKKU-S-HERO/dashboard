@@ -100,14 +100,14 @@ function getTodayRatioComparedToThisMonthAverage(location, onGetEmissions) {
     let queryStr;
     if (location) {
         queryStr = `
-            SELECT DATE_FORMAT(date_time, '%Y-%m') time, AVG(emissions) average_emissions
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
             FROM co2_emissions
             WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth()}-1' AND location = '${location}'
             GROUP BY time;`;
     }
     else {
         queryStr = `
-            SELECT DATE_FORMAT(date_time, '%Y-%m') time, AVG(emissions) average_emissions
+            SELECT DATE_FORMAT(date_time, '%Y-%m') time, SUM(emissions) total_emissions
             FROM co2_emissions
             WHERE date_time >= '${today.getFullYear()}-${today.getMonth() + 1}-1' AND date_time < '${nextMonth.getFullYear()}-${nextMonth.getMonth()}-1'
             GROUP BY time;`;
@@ -118,7 +118,7 @@ function getTodayRatioComparedToThisMonthAverage(location, onGetEmissions) {
         }
         getTodayEmissions(location, (data) => {
             try {
-                onGetEmissions(((data / results[0]['average_emissions']) - 1) * 100);
+                onGetEmissions(((data / (results[0]['total_emissions'] / today.getDate())) - 1) * 100);
             }
             catch (e) {
                 onGetEmissions(0);
