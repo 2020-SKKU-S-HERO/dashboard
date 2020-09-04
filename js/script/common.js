@@ -16,7 +16,7 @@ export const info = {
         todayEmissionsPanelId: 8,
         pastDailyEmissionsPanelId: 12,
         pastMonthlyEmissionsPanelId: 13,
-        predictionEmissionsPanelId: 24,
+        predictionEmissionsPanelId: 29,
         resourcePanelId: 2
     },
     workplace2: {
@@ -25,7 +25,7 @@ export const info = {
         todayEmissionsPanelId: 9,
         pastDailyEmissionsPanelId: 16,
         pastMonthlyEmissionsPanelId: 17,
-        predictionEmissionsPanelId: 25,
+        predictionEmissionsPanelId: 30,
         resourcePanelId: 3
     },
     workplace3: {
@@ -34,7 +34,7 @@ export const info = {
         todayEmissionsPanelId: 10,
         pastDailyEmissionsPanelId: 18,
         pastMonthlyEmissionsPanelId: 19,
-        predictionEmissionsPanelId: 26,
+        predictionEmissionsPanelId: 31,
         resourcePanelId: 4
     }
 };

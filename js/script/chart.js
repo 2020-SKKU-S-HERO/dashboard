@@ -298,10 +298,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     if (predictionChartEl) {
         const today = new Date();
-        const firstDay = new Date(today.getFullYear(), 0, 1);
+        const firstDay = new Date(today.getFullYear(), 0, -13);
+        const lastDay = new Date(today.getFullYear(), 11, 13);
         const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), 1, 0, 0, -1);
         today.setDate(-12);
-        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${today.valueOf()}&to=${nextYear.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
+        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${firstDay.valueOf()}&to=${lastDay.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
     }
     if (resourceChartEl) {
         const today = new Date();
