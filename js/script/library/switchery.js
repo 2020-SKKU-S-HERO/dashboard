@@ -1721,7 +1721,7 @@
                 this.element.checked = false;
                 this.switcher.style.boxShadow = 'inset 0 0 0 0 ' + this.options.secondaryColor;
                 this.switcher.style.borderColor = this.options.secondaryColor;
-                this.switcher.style.backgroundColor = (this.options.secondaryColor !== defaults.secondaryColor) ? this.options.secondaryColor : '#fff';
+                this.switcher.style.backgroundColor = (this.options.secondaryColor !== defaults.secondaryColor) ? this.options.secondaryColor : '#FFFFFF';
                 this.jack.style.backgroundColor = (this.options.jackSecondaryColor !== this.options.jackColor) ? this.options.jackSecondaryColor : this.options.jackColor;
                 this.setSpeed();
             }
@@ -1973,8 +1973,45 @@
     }
 })();
 
-const switcheryEl = Array.prototype.slice.call(document.querySelectorAll('.switch'));
+import { setDataByPostHttpRequest, locationInfo } from '../common.js';
 
-switcheryEl.forEach((html) => {
-    new Switchery(html, { size: 'small' });
-});
+const mainSwitcheryEl = document.getElementById('main-motor-toggle-btn');
+const subSwitcheryEl = document.getElementById('sub-motor-toggle-btn');
+
+const mainSwitchery = new Switchery(mainSwitcheryEl, { size: 'small' });
+const subSwitchery = new Switchery(subSwitcheryEl, { size: 'small' });
+
+subSwitchery.disable();
+
+mainSwitcheryEl.onchange = () => {
+    if (mainSwitcheryEl.checked) {
+        setDataByPostHttpRequest('mqtt', `workplace=${ locationInfo.location }&censor=main&power=on`, ()=> {
+        
+        });
+        subSwitchery.enable();
+    } else {
+        setDataByPostHttpRequest('mqtt', `workplace=${ locationInfo.location }&censor=main&power=off`, () => {
+        
+        });
+        subSwitchery.disable();
+    
+        if (subSwitcheryEl.checked) {
+            subSwitchery.setPosition(true);
+            setDataByPostHttpRequest('mqtt', `workplace=${ locationInfo.location }&censor=sub&power=off`, () => {
+        
+            });
+        }
+    }
+};
+
+subSwitcheryEl.onchange = () => {
+    if (subSwitcheryEl.checked) {
+        setDataByPostHttpRequest('mqtt', `workplace=${ locationInfo.location }&censor=sub&power=on`, ()=> {
+        
+        });
+    } else {
+        setDataByPostHttpRequest('mqtt', `workplace=${ locationInfo.location }&censor=sub&power=off`, () => {
+        
+        });
+    }
+};

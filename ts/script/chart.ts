@@ -32,6 +32,9 @@ const contributionOfLocation1El: HTMLElement | null = document.getElementById('l
 const contributionOfLocation2El: HTMLElement | null = document.getElementById('location2-contribution');
 const contributionOfLocation3El: HTMLElement | null = document.getElementById('location3-contribution');
 
+// 자원 사용량
+const resourceChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('resource-chart');
+
 
 // 갱신 주기
 const renewingPeriod: number = 10000;
@@ -329,6 +332,9 @@ function renewContributionChart(): void {
     }
 }
 
+function renewResourceChart(): void {
+}
+
 window.addEventListener('DOMContentLoaded', (): void => {
     if (todayEmissionsChartEl) {
         const today: Date = new Date();
@@ -347,12 +353,21 @@ window.addEventListener('DOMContentLoaded', (): void => {
         predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${ today.valueOf() }&to=${ nextYear.valueOf() }&theme=light&panelId=${ locationInfo.predictionEmissionsPanelId }`;
     }
     
+    if (resourceChartEl) {
+        const today: Date = new Date();
+        
+        today.setHours(0, 0, 0);
+        
+        resourceChartEl.src = `http://34.64.238.233:3000/d-solo/zze7bhDMk/resource?orgId=1&refresh=5s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ locationInfo.resourcePanelId }`;
+    }
+    
     setSelectorOptions();
     
     renewTodayEmissionChart();
     renewPredictionEmissionsChart();
     renewCardValue();
     renewContributionChart();
+    renewResourceChart();
 });
 
 yearlyMonthlySelectorEl?.addEventListener('change', (): void => {
@@ -377,3 +392,4 @@ setInterval(renewTodayEmissionChart, renewingPeriod);
 setInterval(renewPredictionEmissionsChart, renewingPeriod);
 setInterval(renewCardValue, renewingPeriod);
 setInterval(renewContributionChart, renewingPeriod);
+setInterval(renewResourceChart, renewingPeriod);

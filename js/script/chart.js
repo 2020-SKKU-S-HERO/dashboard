@@ -20,6 +20,7 @@ const thisYearEmissionsOfLocation3El = document.getElementById('location3-this-y
 const contributionOfLocation1El = document.getElementById('location1-contribution');
 const contributionOfLocation2El = document.getElementById('location2-contribution');
 const contributionOfLocation3El = document.getElementById('location3-contribution');
+const resourceChartEl = document.getElementById('resource-chart');
 const renewingPeriod = 10000;
 var Interval;
 (function (Interval) {
@@ -287,6 +288,8 @@ function renewContributionChart() {
         });
     }
 }
+function renewResourceChart() {
+}
 window.addEventListener('DOMContentLoaded', () => {
     if (todayEmissionsChartEl) {
         const today = new Date();
@@ -299,11 +302,17 @@ window.addEventListener('DOMContentLoaded', () => {
         today.setDate(-12);
         predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=5s&from=${today.valueOf()}&to=${nextYear.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
     }
+    if (resourceChartEl) {
+        const today = new Date();
+        today.setHours(0, 0, 0);
+        resourceChartEl.src = `http://34.64.238.233:3000/d-solo/zze7bhDMk/resource?orgId=1&refresh=5s&from=${today.valueOf()}&to=now&theme=light&panelId=${locationInfo.resourcePanelId}`;
+    }
     setSelectorOptions();
     renewTodayEmissionChart();
     renewPredictionEmissionsChart();
     renewCardValue();
     renewContributionChart();
+    renewResourceChart();
 });
 yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.addEventListener('change', () => {
     const selectedStr = yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.options[yearlyMonthlySelectorEl === null || yearlyMonthlySelectorEl === void 0 ? void 0 : yearlyMonthlySelectorEl.selectedIndex].value;
@@ -322,4 +331,5 @@ setInterval(renewTodayEmissionChart, renewingPeriod);
 setInterval(renewPredictionEmissionsChart, renewingPeriod);
 setInterval(renewCardValue, renewingPeriod);
 setInterval(renewContributionChart, renewingPeriod);
+setInterval(renewResourceChart, renewingPeriod);
 //# sourceMappingURL=chart.js.map

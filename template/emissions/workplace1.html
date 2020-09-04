@@ -96,33 +96,26 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-title">
-                    <span>이전 배출량</span>
-                    <select id="past-emission-chart-date-selector">
-                    </select>
-                    <select id="yearly-monthly-selector">
-                        <option value="daily">일간</option>
-                        <option value="monthly">월간</option>
-                    </select>
+                    <span>현재 자원 사용량</span>
                 </div>
                 <div class="chart">
-                    <iframe id="selected-month-chart" src="" frameborder="0"></iframe>
+                    <iframe id="resource-chart" src="" frameborder="0"></iframe>
                 </div>
                 <ul class="chart-info">
                     <li class="info-item">
                         <div class="info-value">
-                            <span id="selected-month-total-emissions">-</span>
+                            <span id="">-</span>
                         </div>
                         <div class="info-description">
-                            <span>총 배출량</span>
+                            <span>?</span>
                         </div>
                     </li>
                     <li class="info-item">
                         <div class="info-value">
-                            <img id="selected-month-compared-to-last-year-arrow" src="" alt="">
-                            <span id="selected-month-compared-to-last-year">-</span>
+                            <span id="">-</span>
                         </div>
                         <div class="info-description">
-                            <span>작년 대비</span>
+                            <span>?</span>
                         </div>
                     </li>
                 </ul>
@@ -158,10 +151,45 @@
                 </ul>
             </div>
         </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">
+                    <span>이전 배출량</span>
+                    <select id="past-emission-chart-date-selector">
+                    </select>
+                    <select id="yearly-monthly-selector">
+                        <option value="daily">일간</option>
+                        <option value="monthly">월간</option>
+                    </select>
+                </div>
+                <div class="chart">
+                    <iframe id="selected-month-chart" src="" frameborder="0"></iframe>
+                </div>
+                <ul class="chart-info">
+                    <li class="info-item">
+                        <div class="info-value">
+                            <span id="selected-month-total-emissions">-</span>
+                        </div>
+                        <div class="info-description">
+                            <span>총 배출량</span>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-value">
+                            <img id="selected-month-compared-to-last-year-arrow" src="" alt="">
+                            <span id="selected-month-compared-to-last-year">-</span>
+                        </div>
+                        <div class="info-description">
+                            <span>작년 대비</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 <script type="module" src="js/script/chart.js"></script>
 <script type="module" src="js/script/weather.js"></script>
-<script src="js/script/library/switchery.js"></script>
+<script type="module" src="js/script/library/switchery.js"></script>
 <script type="module" src="js/script/censor.js"></script>
 {%  endblock %}
