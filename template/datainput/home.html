@@ -4,7 +4,39 @@
 {%  block content -%}
 <div id="emissions-home" class="container-fluid">
     <div class="row">
-        
+        <div class="col-12">
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="location">지역</label>
+                    <input type="text" id="location" name="location" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="limestone">석회석</label>
+                    <input type="text" id="limestone" name="limestone" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="clay">점토</label>
+                    <input type="text" id="clay" name="clay" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="silica-stone">규소</label>
+                    <input type="text" id="silica-stone" name="silicaStone" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="iron-oxide">산화철</label>
+                    <input type="text" id="iron-oxide" name="ironOxide" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="gypsum">석고</label>
+                    <input type="text" id="gypsum" name="gypsum" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="coal">석탄</label>
+                    <input type="text" id="coal" name="coal" placeholder="">
+                </div>
+                <input type="submit" class="btn btn-primary"></input>
+            </form>
+        </div>
     </div>
 </div>
 {%  endblock %}
