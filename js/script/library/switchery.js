@@ -2015,3 +2015,16 @@ subSwitcheryEl.onchange = () => {
         });
     }
 };
+
+setDataByPostHttpRequest('censorStatus', `workplace=${locationInfo.location}`, (data) => {
+    const json = JSON.parse(data);
+    
+    if (json.main) {
+        mainSwitchery.setPosition(true);
+        subSwitchery.enable();
+    }
+    
+    if (json.sub) {
+        subSwitchery.setPosition(true);
+    }
+});

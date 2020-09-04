@@ -8,6 +8,25 @@ const db_control_1 = require("../db_control");
 const mqtt = require("mqtt");
 const router = express.Router();
 exports.emissionsRouter = router;
+let censorStatus = {
+    location1: {
+        location: '병점',
+        mainMotorStatus: false,
+        subMotorStatus: false
+    },
+    location2: {
+        location: '수원',
+        mainMotorStatus: false,
+        subMotorStatus: false
+    },
+    location3: {
+        location: '인천',
+        mainMotorStatus: false,
+        subMotorStatus: false
+    }
+};
+let mainMotorStatus = false;
+let subMotorStatus = false;
 router.use('/css', express.static('css'));
 router.use('/images', express.static('images'));
 router.use('/js', express.static('js'));
@@ -104,7 +123,11 @@ router.post('/weather', (req, res) => {
     const cityName = req.body.cityName;
     db_control_1.getNowWeatherData(cityName, (data) => {
         if (data) {
-            const weatherData = { 'weather_icon': data['weather_icon'], 'temperature': data['temperature'], 'humidity': data['humidity'] };
+            const weatherData = {
+                'weather_icon': data['weather_icon'],
+                'temperature': data['temperature'],
+                'humidity': data['humidity']
+            };
             res.send(weatherData);
         }
         else {
@@ -122,8 +145,17 @@ router.post('/weather', (req, res) => {
                 });
                 incomingMessage.on('end', () => {
                     const data = JSON.parse(resData);
-                    const weatherDataToSave = { 'city_name': cityName, 'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity': data.main.humidity };
-                    const weatherDataToSend = { 'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity': data.main.humidity };
+                    const weatherDataToSave = {
+                        'city_name': cityName,
+                        'weather_icon': data.weather[0].icon,
+                        'temperature': data.main.temp,
+                        'humidity': data.main.humidity
+                    };
+                    const weatherDataToSend = {
+                        'weather_icon': data.weather[0].icon,
+                        'temperature': data.main.temp,
+                        'humidity': data.main.humidity
+                    };
                     db_control_1.insertWeatherData(weatherDataToSave);
                     res.send(weatherDataToSend);
                 });
@@ -143,6 +175,36 @@ router.post('/mqtt', (req, res) => {
         const workplace = req.body.workplace;
         const censor = req.body.censor;
         const power = req.body.power;
+        let censorStatusInLocation = null;
+        switch (workplace) {
+            case censorStatus.location1.location:
+                censorStatusInLocation = censorStatus.location1;
+                break;
+            case censorStatus.location2.location:
+                censorStatusInLocation = censorStatus.location2;
+                break;
+            case censorStatus.location3.location:
+                censorStatusInLocation = censorStatus.location3;
+                break;
+        }
+        if (censorStatusInLocation) {
+            if (censor === 'main') {
+                if (power === 'on') {
+                    censorStatusInLocation.mainMotorStatus = true;
+                }
+                else if (power === 'off') {
+                    censorStatusInLocation.mainMotorStatus = false;
+                }
+            }
+            else if (censor === 'sub') {
+                if (power === 'on') {
+                    censorStatusInLocation.subMotorStatus = true;
+                }
+                else if (power === 'off') {
+                    censorStatusInLocation.subMotorStatus = false;
+                }
+            }
+        }
         client.publish(`${topic}/${workplace}/${censor}`, power, { qos: 0 }, (err, packet) => {
             if (!err) {
                 console.log(`Data sent to ${topic}/${workplace}/${censor} -- ${power}`);
@@ -157,5 +219,23 @@ router.post('/thisYearPredictionEmissions', (req, res) => {
     db_control.getThisYearPredictionEmissions(location, (data) => {
         res.send(data.toString());
     });
+});
+router.post('/censorStatus', (req, res) => {
+    const workplace = req.body.workplace;
+    let censorStatusInLocation = null;
+    switch (workplace) {
+        case censorStatus.location1.location:
+            censorStatusInLocation = censorStatus.location1;
+            break;
+        case censorStatus.location2.location:
+            censorStatusInLocation = censorStatus.location2;
+            break;
+        case censorStatus.location3.location:
+            censorStatusInLocation = censorStatus.location3;
+            break;
+    }
+    if (censorStatusInLocation) {
+        res.send({ 'main': censorStatusInLocation.mainMotorStatus, 'sub': censorStatusInLocation.subMotorStatus });
+    }
 });
 //# sourceMappingURL=emissions.js.map

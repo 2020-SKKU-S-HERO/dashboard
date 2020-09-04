@@ -1,9 +1,9 @@
-// import { setDataByPostHttpRequest, locationInfo } from './common.js';
-//
-// const mainMotorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('main-motor-toggle-btn');
-// const subMotorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('sub-motor-toggle-btn');
-//
-//
+import { setDataByPostHttpRequest, locationInfo } from './common.js';
+
+const mainMotorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('main-motor-toggle-btn');
+const subMotorToggleBtn: HTMLInputElement = <HTMLInputElement>document.getElementById('sub-motor-toggle-btn');
+
+
 // mainMotorToggleBtn.onchange = (): void => {
 //     if (mainMotorToggleBtn.checked) {
 //         setDataByPostHttpRequest('mqtt', `workplace=${locationInfo.location}&censor=main&power=on`, (): void => {
@@ -27,3 +27,4 @@
 //         });
 //     }
 // };
+

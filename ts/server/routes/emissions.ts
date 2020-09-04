@@ -9,6 +9,27 @@ import * as mqtt from 'mqtt';
 const router: express.Router = express.Router();
 export { router as emissionsRouter };
 
+let censorStatus: any = {
+    location1: {
+        location: '병점',
+        mainMotorStatus: false,
+        subMotorStatus: false
+    },
+    location2: {
+        location: '수원',
+        mainMotorStatus: false,
+        subMotorStatus: false
+    },
+    location3: {
+        location: '인천',
+        mainMotorStatus: false,
+        subMotorStatus: false
+    }
+};
+
+let mainMotorStatus: boolean = false;
+let subMotorStatus: boolean = false;
+
 router.use('/css', express.static('css'));
 router.use('/images', express.static('images'));
 router.use('/js', express.static('js'));
@@ -128,7 +149,11 @@ router.post('/weather', (req: any, res: any): void => {
     
     getNowWeatherData(cityName, (data: any | null): void => {
         if (data) {
-            const weatherData: any = {'weather_icon': data['weather_icon'], 'temperature': data['temperature'], 'humidity' : data['humidity']};
+            const weatherData: any = {
+                'weather_icon': data['weather_icon'],
+                'temperature': data['temperature'],
+                'humidity': data['humidity']
+            };
             
             res.send(weatherData);
         } else {
@@ -136,26 +161,35 @@ router.post('/weather', (req: any, res: any): void => {
             const options = {
                 host: 'api.openweathermap.org',
                 port: 80,
-                path: `/data/2.5/weather?q=${cityName}&appid=${appId}`,
+                path: `/data/2.5/weather?q=${ cityName }&appid=${ appId }`,
                 method: 'GET'
             };
             
             http.get(options, (incomingMessage: IncomingMessage): void => {
                 let resData: string = '';
-        
+                
                 incomingMessage.on('data', (chunk): void => {
                     resData += chunk;
                 });
-        
+                
                 incomingMessage.on('end', (): void => {
                     const data: any = JSON.parse(resData);
-                    const weatherDataToSave: any = {'city_name': cityName, 'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity' : data.main.humidity}
-                    const weatherDataToSend: any = {'weather_icon': data.weather[0].icon, 'temperature': data.main.temp, 'humidity' : data.main.humidity};
-
+                    const weatherDataToSave: any = {
+                        'city_name': cityName,
+                        'weather_icon': data.weather[0].icon,
+                        'temperature': data.main.temp,
+                        'humidity': data.main.humidity
+                    };
+                    const weatherDataToSend: any = {
+                        'weather_icon': data.weather[0].icon,
+                        'temperature': data.main.temp,
+                        'humidity': data.main.humidity
+                    };
+                    
                     insertWeatherData(weatherDataToSave);
                     res.send(weatherDataToSend);
                 });
-        
+                
                 incomingMessage.on('error', (err): void => {
                     console.log(err.message);
                 });
@@ -166,7 +200,7 @@ router.post('/weather', (req: any, res: any): void => {
 
 router.post('/mqtt', (req: any, res: any): void => {
     const host: string = '34.64.238.233';
-    const mqttUri: string = `mqtt://${host}`;
+    const mqttUri: string = `mqtt://${ host }`;
     const topic: string = 'ctrl';
     
     const client: mqtt.MqttClient = mqtt.connect(mqttUri);
@@ -176,9 +210,41 @@ router.post('/mqtt', (req: any, res: any): void => {
         const censor: string = req.body.censor;
         const power: string = req.body.power;
         
-        client.publish(`${topic}/${workplace}/${censor}`, power, { qos: 0 }, (err: Error | undefined, packet: mqtt.Packet | undefined): void => {
+        let censorStatusInLocation: any | null = null;
+        
+        switch (workplace) {
+            case censorStatus.location1.location:
+                censorStatusInLocation = censorStatus.location1;
+                break;
+            
+            case censorStatus.location2.location:
+                censorStatusInLocation = censorStatus.location2;
+                break;
+            
+            case censorStatus.location3.location:
+                censorStatusInLocation = censorStatus.location3;
+                break;
+        }
+        
+        if (censorStatusInLocation) {
+            if (censor === 'main') {
+                if (power === 'on') {
+                    censorStatusInLocation.mainMotorStatus = true;
+                } else if (power === 'off') {
+                    censorStatusInLocation.mainMotorStatus = false;
+                }
+            } else if (censor === 'sub') {
+                if (power === 'on') {
+                    censorStatusInLocation.subMotorStatus = true;
+                } else if (power === 'off') {
+                    censorStatusInLocation.subMotorStatus = false;
+                }
+            }
+        }
+        
+        client.publish(`${ topic }/${ workplace }/${ censor }`, power, { qos: 0 }, (err: Error | undefined, packet: mqtt.Packet | undefined): void => {
             if (!err) {
-                console.log(`Data sent to ${topic}/${workplace}/${censor} -- ${power}`);
+                console.log(`Data sent to ${ topic }/${ workplace }/${ censor } -- ${ power }`);
             }
             
             client.end();
@@ -194,4 +260,28 @@ router.post('/thisYearPredictionEmissions', (req: any, res: any): void => {
     db_control.getThisYearPredictionEmissions(location, (data: number): void => {
         res.send(data.toString());
     });
+});
+
+router.post('/censorStatus', (req: any, res: any): void => {
+    const workplace: string = req.body.workplace;
+    
+    let censorStatusInLocation: any | null = null;
+    
+    switch (workplace) {
+        case censorStatus.location1.location:
+            censorStatusInLocation = censorStatus.location1;
+            break;
+        
+        case censorStatus.location2.location:
+            censorStatusInLocation = censorStatus.location2;
+            break;
+        
+        case censorStatus.location3.location:
+            censorStatusInLocation = censorStatus.location3;
+            break;
+    }
+    
+    if (censorStatusInLocation) {
+        res.send({ 'main': censorStatusInLocation.mainMotorStatus, 'sub': censorStatusInLocation.subMotorStatus });
+    }
 });
