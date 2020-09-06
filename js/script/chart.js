@@ -152,8 +152,9 @@ function setSelectorOptions() {
         case Interval.DAILY:
             setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${locationInfo.location}`, (data) => {
                 if (data !== '0') {
-                    const date = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1);
-                    for (; date.valueOf() <= today.valueOf(); date.setMonth(date.getMonth() + 1)) {
+                    const theMostPastDate = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1, 1);
+                    const date = new Date(today.getFullYear(), today.getMonth(), 1);
+                    for (; date.valueOf() >= theMostPastDate.valueOf(); date.setMonth(date.getMonth() - 1)) {
                         const newOption = new Option(`${date.getFullYear()}-${addZeroInFront(date.getMonth() + 1, 2)}`, `${date.getFullYear()}-${addZeroInFront(date.getMonth() + 1, 2)}-01 00:00:00`);
                         dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.appendChild(newOption);
                         runAfterSettingSelectorOptions();
@@ -170,8 +171,9 @@ function setSelectorOptions() {
         case Interval.MONTHLY:
             setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${locationInfo.location}`, (data) => {
                 if (data !== '0') {
-                    const date = new Date(Number(data.substring(0, 4)), 0, 1);
-                    for (; date.valueOf() <= today.valueOf(); date.setFullYear(date.getFullYear() + 1)) {
+                    const theMostPastDate = new Date(Number(data.substring(0, 4)), 0, 1);
+                    const date = new Date(today.getFullYear(), 0, 1);
+                    for (; date.valueOf() >= theMostPastDate.valueOf(); date.setFullYear(date.getFullYear() - 1)) {
                         const newOption = new Option(`${date.getFullYear()}`, `${date.getFullYear()}-01-01 00:00:00`);
                         dateSelectorEl === null || dateSelectorEl === void 0 ? void 0 : dateSelectorEl.appendChild(newOption);
                         runAfterSettingSelectorOptions();
@@ -298,9 +300,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     if (predictionChartEl) {
         const today = new Date();
-        const firstDay = new Date(today.getFullYear(), 0, 0);
-        const lastDay = new Date(today.getFullYear(), 11, 10);
-        const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), 1, 0, 0, -1);
+        const firstDay = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
+        const lastDay = new Date(today.getFullYear(), today.getMonth() + 2, today.getDate());
         today.setDate(-12);
         predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${firstDay.valueOf()}&to=${lastDay.valueOf()}&theme=light&panelId=${locationInfo.predictionEmissionsPanelId}`;
     }

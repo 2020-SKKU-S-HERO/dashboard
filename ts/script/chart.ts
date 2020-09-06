@@ -177,9 +177,10 @@ function setSelectorOptions(): void {
         case Interval.DAILY:
             setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${ locationInfo.location }`, (data: string): void => {
                 if (data !== '0') {
-                    const date: Date = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1);
+                    const theMostPastDate: Date = new Date(Number(data.substring(0, 4)), Number(data.substring(5)) - 1, 1);
+                    const date: Date = new Date(today.getFullYear(), today.getMonth(), 1);
                     
-                    for (; date.valueOf() <= today.valueOf(); date.setMonth(date.getMonth() + 1)) {
+                    for (; date.valueOf() >= theMostPastDate.valueOf(); date.setMonth(date.getMonth() - 1)) {
                         const newOption: HTMLOptionElement = new Option(`${ date.getFullYear() }-${ addZeroInFront(date.getMonth() + 1, 2) }`, `${ date.getFullYear() }-${ addZeroInFront(date.getMonth() + 1, 2) }-01 00:00:00`);
                         
                         dateSelectorEl?.appendChild(newOption);
@@ -200,9 +201,10 @@ function setSelectorOptions(): void {
         case Interval.MONTHLY:
             setDataByPostHttpRequest('theMostPastEmissionMonth', `location=${ locationInfo.location }`, (data: string): void => {
                 if (data !== '0') {
-                    const date: Date = new Date(Number(data.substring(0, 4)), 0, 1);
+                    const theMostPastDate: Date = new Date(Number(data.substring(0, 4)), 0, 1);
+                    const date: Date = new Date(today.getFullYear(), 0, 1);
                     
-                    for (; date.valueOf() <= today.valueOf(); date.setFullYear(date.getFullYear() + 1)) {
+                    for (; date.valueOf() >= theMostPastDate.valueOf(); date.setFullYear(date.getFullYear() - 1)) {
                         const newOption: HTMLOptionElement = new Option(`${ date.getFullYear() }`, `${ date.getFullYear() }-01-01 00:00:00`);
                         
                         dateSelectorEl?.appendChild(newOption);
@@ -346,9 +348,8 @@ window.addEventListener('DOMContentLoaded', (): void => {
     
     if (predictionChartEl) {
         const today: Date = new Date();
-        const firstDay: Date = new Date(today.getFullYear(), 0, 0);
-        const lastDay: Date = new Date(today.getFullYear(), 11, 10);
-        const nextYear: Date = new Date(today.getFullYear() + 1, today.getMonth(), 1, 0, 0, -1);
+        const firstDay: Date = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
+        const lastDay: Date = new Date(today.getFullYear(), today.getMonth() + 2, today.getDate());
         
         today.setDate(-12);
         
