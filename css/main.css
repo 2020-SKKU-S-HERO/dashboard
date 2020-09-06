@@ -608,6 +608,7 @@ main .content-container .content-main {
   opacity: 0;
   transition-delay: 1s;
   transition-duration: 1s;
+  z-index: 0;
 }
 
 /*# sourceMappingURL=main.css.map */
