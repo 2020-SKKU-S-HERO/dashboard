@@ -428,6 +428,9 @@ main .content-container .content-main {
 .card .chart-info .info-item .info-value--decrease {
   color: #02AAF6;
 }
+.card .chart-info--center {
+  justify-content: center;
+}
 .card .center-box {
   display: flex;
   height: 100%;

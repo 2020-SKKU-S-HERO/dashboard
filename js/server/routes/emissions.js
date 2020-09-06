@@ -240,4 +240,16 @@ router.post('/censorStatus', (req, res) => {
         res.send({ 'main': censorStatusInLocation.mainMotorStatus, 'sub': censorStatusInLocation.subMotorStatus });
     }
 });
+router.post('/predictionAverageError', (req, res) => {
+    const location = req.body.location;
+    db_control_1.getPredictionAverageError(location, (data) => {
+        res.send(data.toString());
+    });
+});
+router.post('/resourceRatio', (req, res) => {
+    const location = req.body.location;
+    db_control_1.getResourceRatio(location, (data) => {
+        res.send(data);
+    });
+});
 //# sourceMappingURL=emissions.js.map

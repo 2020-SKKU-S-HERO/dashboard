@@ -14,6 +14,7 @@ const selectedMonthComparedToLastYearEl = document.getElementById('selected-mont
 const selectedMonthComparedToLastYearArrowEl = document.getElementById('selected-month-compared-to-last-year-arrow');
 const predictionChartEl = document.getElementById('prediction-chart');
 const thisYearTotalPredictionEmissionsEl = document.getElementById('this-year-total-prediction-emissions');
+const recentTwoMonthsPredictionAverageErrorEl = document.getElementById('recent-two-months-prediction-average-error');
 const thisYearEmissionsOfLocation1El = document.getElementById('location1-this-year-emissions');
 const thisYearEmissionsOfLocation2El = document.getElementById('location2-this-year-emissions');
 const thisYearEmissionsOfLocation3El = document.getElementById('location3-this-year-emissions');
@@ -21,6 +22,7 @@ const contributionOfLocation1El = document.getElementById('location1-contributio
 const contributionOfLocation2El = document.getElementById('location2-contribution');
 const contributionOfLocation3El = document.getElementById('location3-contribution');
 const resourceChartEl = document.getElementById('resource-chart');
+const resourceRatioEl = document.getElementById('resource-ratio');
 const renewingPeriod = 10000;
 var Interval;
 (function (Interval) {
@@ -31,6 +33,38 @@ let selectedInterval = Interval.DAILY;
 function addZeroInFront(num, width) {
     const numberStr = num.toString();
     return numberStr.length >= width ? numberStr : new Array(width - numberStr.length + 1).join('0') + numberStr;
+}
+function abbreviateNumber(num) {
+    let abbreviatedNum;
+    let abbreviatedStr;
+    let unit;
+    if (num >= 1000000000) {
+        abbreviatedNum = num / 1000000000;
+        unit = 'b';
+    }
+    else if (num >= 1000000) {
+        abbreviatedNum = num / 1000000;
+        unit = 'm';
+    }
+    else if (num >= 1000) {
+        abbreviatedNum = num / 1000;
+        unit = 'k';
+    }
+    else if (num > 0) {
+        abbreviatedNum = num;
+        unit = '';
+    }
+    else {
+        return '0';
+    }
+    abbreviatedStr = abbreviatedNum.toFixed(2);
+    if (abbreviatedStr.length >= 6) {
+        abbreviatedStr = abbreviatedStr.replace(/\.(\S*)/, '');
+    }
+    else if (abbreviatedStr.length == 5) {
+        abbreviatedStr = Number(abbreviatedStr).toFixed(1);
+    }
+    return abbreviatedStr + unit;
 }
 function addCommaInNumber(num) {
     const sign = num < 0 ? '-' : '';
@@ -56,7 +90,7 @@ function renewPastEmissionsChart() {
         case Interval.DAILY:
             if (selectedMonthTotalEmissions) {
                 setDataByPostHttpRequest('selectedMonthEmissions', `year=${year}&month=${month}&location=${locationInfo.location}`, (data) => {
-                    selectedMonthTotalEmissions.innerText = addCommaInNumber(Number(data)) + ' t';
+                    selectedMonthTotalEmissions.innerText = abbreviateNumber(Number(data)) + ' t';
                 });
             }
             if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
@@ -92,7 +126,7 @@ function renewPastEmissionsChart() {
         case Interval.MONTHLY:
             if (selectedMonthTotalEmissions) {
                 setDataByPostHttpRequest('selectedYearEmissions', `year=${year}&location=${locationInfo.location}`, (data) => {
-                    selectedMonthTotalEmissions.innerText = addCommaInNumber(Number(data)) + ' t';
+                    selectedMonthTotalEmissions.innerText = abbreviateNumber(Number(data)) + ' t';
                 });
             }
             if (selectedMonthComparedToLastYearEl && selectedMonthComparedToLastYearArrowEl) {
@@ -206,13 +240,13 @@ function runAfterSettingSelectorOptions() {
 function renewCardValue() {
     if (thisYearEmissionsEl) {
         setDataByPostHttpRequest('thisYearEmissions', `location=${locationInfo.location}`, (data) => {
-            thisYearEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            thisYearEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
         });
     }
     if (thisYearRemainingPermissibleEmissionsEl && expectedOverEmissionsEl) {
         setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${locationInfo.location}`, (data) => {
             if (Number(data) > 0) {
-                thisYearRemainingPermissibleEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+                thisYearRemainingPermissibleEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
             }
             else {
                 thisYearRemainingPermissibleEmissionsEl.innerText = '0 t';
@@ -221,7 +255,7 @@ function renewCardValue() {
                 const permissibleEmissions = Number(data);
                 const predictionEmissions = Number(predictionData);
                 if (predictionEmissions - permissibleEmissions > 0) {
-                    expectedOverEmissionsEl.innerText = addCommaInNumber(predictionEmissions - permissibleEmissions) + ' t';
+                    expectedOverEmissionsEl.innerText = abbreviateNumber(predictionEmissions - permissibleEmissions) + ' t';
                 }
                 else {
                     expectedOverEmissionsEl.innerText = '0 t';
@@ -233,7 +267,7 @@ function renewCardValue() {
 function renewTodayEmissionChart() {
     if (todayTotalEmissionsEl) {
         setDataByPostHttpRequest('todayEmissions', `location=${locationInfo.location}`, (data) => {
-            todayTotalEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            todayTotalEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
         });
     }
     if (todayComparedToThisMonthAverageEl && todayComparedToThisMonthAverageArrowEl) {
@@ -263,7 +297,12 @@ function renewTodayEmissionChart() {
 function renewPredictionEmissionsChart() {
     if (thisYearTotalPredictionEmissionsEl) {
         setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${locationInfo.location}`, (data) => {
-            thisYearTotalPredictionEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            thisYearTotalPredictionEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
+        });
+    }
+    if (recentTwoMonthsPredictionAverageErrorEl) {
+        setDataByPostHttpRequest('predictionAverageError', `location=${locationInfo.location}`, (data) => {
+            recentTwoMonthsPredictionAverageErrorEl.innerText = abbreviateNumber(Number(data)) + ' t';
         });
     }
 }
@@ -279,9 +318,9 @@ function renewContributionChart() {
                     const contributionOfLocation1 = emissionsOfLocation1 / sumOfEmissions * 100;
                     const contributionOfLocation2 = emissionsOfLocation2 / sumOfEmissions * 100;
                     const contributionOfLocation3 = emissionsOfLocation3 / sumOfEmissions * 100;
-                    thisYearEmissionsOfLocation1El.innerText = addCommaInNumber(emissionsOfLocation1) + ' t';
-                    thisYearEmissionsOfLocation2El.innerText = addCommaInNumber(emissionsOfLocation2) + ' t';
-                    thisYearEmissionsOfLocation3El.innerText = addCommaInNumber(emissionsOfLocation3) + ' t';
+                    thisYearEmissionsOfLocation1El.innerText = abbreviateNumber(emissionsOfLocation1) + ' t';
+                    thisYearEmissionsOfLocation2El.innerText = abbreviateNumber(emissionsOfLocation2) + ' t';
+                    thisYearEmissionsOfLocation3El.innerText = abbreviateNumber(emissionsOfLocation3) + ' t';
                     contributionOfLocation1El.innerText = contributionOfLocation1.toFixed(1) + '%';
                     contributionOfLocation2El.innerText = contributionOfLocation2.toFixed(1) + '%';
                     contributionOfLocation3El.innerText = contributionOfLocation3.toFixed(1) + '%';
@@ -291,6 +330,11 @@ function renewContributionChart() {
     }
 }
 function renewResourceChart() {
+    if (resourceRatioEl) {
+        setDataByPostHttpRequest('resourceRatio', `location=${locationInfo.location}`, (data) => {
+            resourceRatioEl.innerText = data;
+        });
+    }
 }
 window.addEventListener('DOMContentLoaded', () => {
     if (todayEmissionsChartEl) {

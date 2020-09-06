@@ -1,6 +1,7 @@
 import * as mysql from 'mysql';
 import * as db_info from './secret/db_info';
 import { Connection, FieldInfo, MysqlError } from 'mysql';
+import exp = require('constants');
 
 const connection: Connection = mysql.createConnection(db_info.info);
 
@@ -384,5 +385,89 @@ export function getTelegramId(authority: string, onGetData: (telegramId: number)
         results.forEach((element: any): void => {
             onGetData(element['chat_id']);
         });
+    });
+}
+
+export function getPredictionAverageError(location: string, onGetData: (data: number) => void): void {
+    const today: Date = new Date();
+    const twoMonthsAgo: Date = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
+    let queryStr: string;
+    
+    if (location === '') {
+        queryStr = `
+            SELECT predict_value, actual_value
+            FROM predict_value
+            WHERE date_time >= '${twoMonthsAgo.getFullYear()}-${twoMonthsAgo.getMonth() + 1}-${twoMonthsAgo.getDate()}' AND date_time <= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()}'`;
+    } else {
+        queryStr = `
+            SELECT predict_value, actual_value
+            FROM predict_value
+            WHERE date_time >= '${twoMonthsAgo.getFullYear()}-${twoMonthsAgo.getMonth() + 1}-${twoMonthsAgo.getDate()}' AND date_time <= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()}' AND location = '${location}'`;
+    }
+    
+    connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+        
+        let sumOfError: number = 0;
+        
+        results.forEach((element: any): void => {
+            sumOfError += Math.abs(element['actual_value'] - element['predict_value']);
+        });
+        
+        onGetData(sumOfError / results.length);
+    });
+}
+
+export function getResourceRatio(location: string, onGetData: (data: string) => void): void {
+    const today: Date = new Date();
+    const nextDay: Date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    let queryStr: string;
+    
+    if (location === '') {
+        queryStr = `
+            SELECT limestone, clay, silica_stone, iron_oxide, gypsum, coal
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()} 00:00:00' AND date_time < '${nextDay.getFullYear()}-${nextDay.getMonth()}-${nextDay.getDate()} 00:00:00'`;
+    } else {
+        queryStr = `
+            SELECT limestone, clay, silica_stone, iron_oxide, gypsum, coal
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()}' AND date_time < '${nextDay.getFullYear()}-${nextDay.getMonth()}-${nextDay.getDate()} 00:00:00' AND location = '${location}'`;
+    }
+    
+    connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+        
+        let sum: number = 0;
+        let sumOfLimestone: number = 0;
+        let sumOfClay: number = 0;
+        let sumOfSilicaStone: number = 0;
+        let sumOfIronOxide: number = 0;
+        let sumOfGypsum: number = 0;
+        let sumOfCoal: number = 0;
+        
+        results.forEach((element: any): void => {
+            sumOfLimestone += element['limestone'];
+            sumOfClay += element['clay'];
+            sumOfSilicaStone += element['silica_stone'];
+            sumOfIronOxide += element['iron_oxide'];
+            sumOfGypsum += element['gypsum'];
+            sumOfCoal += element['coal'];
+        });
+        
+        sum = sumOfLimestone + sumOfClay + sumOfSilicaStone + sumOfIronOxide + sumOfGypsum + sumOfCoal;
+        
+        const ratioOfLimestone: number = sumOfLimestone / sum * 100;
+        const ratioOfClay: number = sumOfClay / sum * 100;
+        const ratioOfSilicaStone: number = sumOfSilicaStone / sum * 100;
+        const ratioOfIronOxide: number = sumOfIronOxide / sum * 100;
+        const ratioOfGypsum: number = sumOfGypsum / sum * 100;
+        const ratioOfCoal: number = sumOfCoal / sum * 100;
+        
+        onGetData(`${ratioOfClay.toFixed(1)} : ${ratioOfCoal.toFixed(1)} : ${ratioOfGypsum.toFixed(1)} : ${ratioOfIronOxide.toFixed(1)} : ${ratioOfLimestone.toFixed(1)} :  ${ratioOfSilicaStone.toFixed(1)}`);
     });
 }

@@ -96,64 +96,6 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-title">
-                    <span>현재 자원 사용량</span>
-                </div>
-                <div class="chart">
-                    <iframe id="resource-chart" src="" frameborder="0"></iframe>
-                </div>
-                <ul class="chart-info">
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span id="">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>?</span>
-                        </div>
-                    </li>
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span id="">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>?</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-title">
-                    <span>예측 배출량</span>
-                </div>
-                <div class="chart">
-                    <iframe id="prediction-chart" src="" frameborder="0"></iframe>
-                </div>
-                <ul class="chart-info">
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span id="this-year-total-prediction-emissions">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>올해 총 예측 배출량</span>
-                        </div>
-                    </li>
-                    <li class="info-item">
-                        <div class="info-value">
-                            <span id="">-</span>
-                        </div>
-                        <div class="info-description">
-                            <span>정확도</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-title">
                     <span>이전 배출량</span>
                     <select id="past-emission-chart-date-selector">
                     </select>
@@ -181,6 +123,56 @@
                         </div>
                         <div class="info-description">
                             <span>작년 대비</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">
+                    <span>예측 배출량</span>
+                </div>
+                <div class="chart">
+                    <iframe id="prediction-chart" src="" frameborder="0"></iframe>
+                </div>
+                <ul class="chart-info">
+                    <li class="info-item">
+                        <div class="info-value">
+                            <span id="this-year-total-prediction-emissions">-</span>
+                        </div>
+                        <div class="info-description">
+                            <span>올해 총 예측 배출량</span>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-value">
+                            <span id="recent-two-months-prediction-average-error">-</span>
+                        </div>
+                        <div class="info-description">
+                            <span>2개월간 평균 오차</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-title">
+                    <span>현재 자원 사용량</span>
+                </div>
+                <div class="chart">
+                    <iframe id="resource-chart" src="" frameborder="0"></iframe>
+                </div>
+                <ul class="chart-info chart-info--center">
+                    <li class="info-item">
+                        <div class="info-value">
+                            <span id="resource-ratio">-</span>
+                        </div>
+                        <div class="info-description">
+                            <span>자원 사용 비율 (clay ~ silica stone)</span>
                         </div>
                     </li>
                 </ul>

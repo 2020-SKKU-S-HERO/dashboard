@@ -3,7 +3,7 @@ import { app } from '../app';
 import * as db_control from '../db_control';
 import { ClientRequest, IncomingMessage } from 'http';
 import * as http from 'http';
-import { getNowWeatherData, insertWeatherData } from '../db_control';
+import { getNowWeatherData, getPredictionAverageError, getResourceRatio, insertWeatherData } from '../db_control';
 import * as mqtt from 'mqtt';
 
 const router: express.Router = express.Router();
@@ -286,4 +286,20 @@ router.post('/censorStatus', (req: any, res: any): void => {
     if (censorStatusInLocation) {
         res.send({ 'main': censorStatusInLocation.mainMotorStatus, 'sub': censorStatusInLocation.subMotorStatus });
     }
+});
+
+router.post('/predictionAverageError', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    getPredictionAverageError(location, (data: number): void => {
+        res.send(data.toString());
+    });
+});
+
+router.post('/resourceRatio', (req: any, res: any): void => {
+    const location: string = req.body.location;
+    
+    getResourceRatio(location, (data: string): void => {
+        res.send(data);
+    });
 });

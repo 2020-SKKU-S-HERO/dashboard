@@ -22,6 +22,7 @@ const selectedMonthComparedToLastYearArrowEl: HTMLImageElement | null = <HTMLIma
 // 예측 배출량
 const predictionChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('prediction-chart');
 const thisYearTotalPredictionEmissionsEl: HTMLElement | null = document.getElementById('this-year-total-prediction-emissions');
+const recentTwoMonthsPredictionAverageErrorEl: HTMLElement | null = document.getElementById('recent-two-months-prediction-average-error');
 
 // 기여도 분석
 const thisYearEmissionsOfLocation1El: HTMLElement | null = document.getElementById('location1-this-year-emissions');
@@ -34,6 +35,7 @@ const contributionOfLocation3El: HTMLElement | null = document.getElementById('l
 
 // 자원 사용량
 const resourceChartEl: HTMLIFrameElement | null = <HTMLIFrameElement>document.getElementById('resource-chart');
+const resourceRatioEl: HTMLElement | null = document.getElementById('resource-ratio');
 
 
 // 갱신 주기
@@ -50,6 +52,38 @@ function addZeroInFront(num: number, width: number): string {
     const numberStr: string = num.toString();
     
     return numberStr.length >= width ? numberStr : new Array(width - numberStr.length + 1).join('0') + numberStr;
+}
+
+function abbreviateNumber(num: number): string {
+    let abbreviatedNum: number;
+    let abbreviatedStr: string;
+    let unit: string;
+    
+    if (num >= 1000000000) {
+        abbreviatedNum = num / 1000000000;
+        unit = 'b';
+    } else if (num >= 1000000) {
+        abbreviatedNum = num / 1000000;
+        unit = 'm';
+    } else if (num >= 1000) {
+        abbreviatedNum = num / 1000;
+        unit = 'k';
+    } else if (num > 0) {
+        abbreviatedNum = num;
+        unit = '';
+    } else {
+        return '0';
+    }
+    
+    abbreviatedStr = abbreviatedNum.toFixed(2);
+    
+    if (abbreviatedStr.length >= 6) {
+        abbreviatedStr = abbreviatedStr.replace(/\.(\S*)/, '');
+    } else if (abbreviatedStr.length == 5) {
+        abbreviatedStr = Number(abbreviatedStr).toFixed(1);
+    }
+    
+    return abbreviatedStr + unit;
 }
 
 function addCommaInNumber(num: number): string {
@@ -80,7 +114,7 @@ function renewPastEmissionsChart(): void {
         case Interval.DAILY:
             if (selectedMonthTotalEmissions) {
                 setDataByPostHttpRequest('selectedMonthEmissions', `year=${ year }&month=${ month }&location=${ locationInfo.location }`, (data: string): void => {
-                    selectedMonthTotalEmissions.innerText = addCommaInNumber(Number(data)) + ' t';
+                    selectedMonthTotalEmissions.innerText = abbreviateNumber(Number(data)) + ' t';
                 });
             }
             
@@ -114,7 +148,7 @@ function renewPastEmissionsChart(): void {
         case Interval.MONTHLY:
             if (selectedMonthTotalEmissions) {
                 setDataByPostHttpRequest('selectedYearEmissions', `year=${ year }&location=${ locationInfo.location }`, (data: string): void => {
-                    selectedMonthTotalEmissions.innerText = addCommaInNumber(Number(data)) + ' t';
+                    selectedMonthTotalEmissions.innerText = abbreviateNumber(Number(data)) + ' t';
                 });
             }
             
@@ -245,14 +279,14 @@ function runAfterSettingSelectorOptions(): void {
 function renewCardValue(): void {
     if (thisYearEmissionsEl) {
         setDataByPostHttpRequest('thisYearEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            thisYearEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            thisYearEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
         });
     }
     
     if (thisYearRemainingPermissibleEmissionsEl && expectedOverEmissionsEl) {
         setDataByPostHttpRequest('thisYearRemainingPermissibleEmissions', `location=${ locationInfo.location }`, (data: string): void => {
             if (Number(data) > 0) {
-                thisYearRemainingPermissibleEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+                thisYearRemainingPermissibleEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
             } else {
                 thisYearRemainingPermissibleEmissionsEl.innerText = '0 t';
             }
@@ -262,7 +296,7 @@ function renewCardValue(): void {
                 const predictionEmissions: number = Number(predictionData);
                 
                 if (predictionEmissions - permissibleEmissions > 0) {
-                    expectedOverEmissionsEl.innerText = addCommaInNumber(predictionEmissions - permissibleEmissions) + ' t';
+                    expectedOverEmissionsEl.innerText = abbreviateNumber(predictionEmissions - permissibleEmissions) + ' t';
                 } else {
                     expectedOverEmissionsEl.innerText = '0 t';
                 }
@@ -274,7 +308,7 @@ function renewCardValue(): void {
 function renewTodayEmissionChart(): void {
     if (todayTotalEmissionsEl) {
         setDataByPostHttpRequest('todayEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            todayTotalEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            todayTotalEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
         });
     }
     
@@ -303,7 +337,13 @@ function renewTodayEmissionChart(): void {
 function renewPredictionEmissionsChart(): void {
     if (thisYearTotalPredictionEmissionsEl) {
         setDataByPostHttpRequest('thisYearPredictionEmissions', `location=${ locationInfo.location }`, (data: string): void => {
-            thisYearTotalPredictionEmissionsEl.innerText = addCommaInNumber(Number(data)) + ' t';
+            thisYearTotalPredictionEmissionsEl.innerText = abbreviateNumber(Number(data)) + ' t';
+        });
+    }
+    
+    if (recentTwoMonthsPredictionAverageErrorEl) {
+        setDataByPostHttpRequest('predictionAverageError', `location=${ locationInfo.location }`, (data: string) => {
+            recentTwoMonthsPredictionAverageErrorEl.innerText = abbreviateNumber(Number(data)) + ' t';
         });
     }
 }
@@ -321,9 +361,9 @@ function renewContributionChart(): void {
                     const contributionOfLocation2: number = emissionsOfLocation2 / sumOfEmissions * 100;
                     const contributionOfLocation3: number = emissionsOfLocation3 / sumOfEmissions * 100;
     
-                    thisYearEmissionsOfLocation1El.innerText = addCommaInNumber(emissionsOfLocation1) + ' t';
-                    thisYearEmissionsOfLocation2El.innerText = addCommaInNumber(emissionsOfLocation2) + ' t';
-                    thisYearEmissionsOfLocation3El.innerText = addCommaInNumber(emissionsOfLocation3) + ' t';
+                    thisYearEmissionsOfLocation1El.innerText = abbreviateNumber(emissionsOfLocation1) + ' t';
+                    thisYearEmissionsOfLocation2El.innerText = abbreviateNumber(emissionsOfLocation2) + ' t';
+                    thisYearEmissionsOfLocation3El.innerText = abbreviateNumber(emissionsOfLocation3) + ' t';
     
                     contributionOfLocation1El.innerText = contributionOfLocation1.toFixed(1) + '%';
                     contributionOfLocation2El.innerText = contributionOfLocation2.toFixed(1) + '%';
@@ -335,6 +375,11 @@ function renewContributionChart(): void {
 }
 
 function renewResourceChart(): void {
+    if (resourceRatioEl) {
+        setDataByPostHttpRequest('resourceRatio', `location=${ locationInfo.location }`, (data: string): void => {
+           resourceRatioEl.innerText = data;
+        });
+    }
 }
 
 window.addEventListener('DOMContentLoaded', (): void => {

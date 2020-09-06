@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTelegramId = exports.deleteTelegramId = exports.insertTelegramId = exports.insertAndroidToken = exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.getResourceRatio = exports.getPredictionAverageError = exports.getTelegramId = exports.deleteTelegramId = exports.insertTelegramId = exports.insertAndroidToken = exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -363,4 +363,78 @@ function getTelegramId(authority, onGetData) {
     });
 }
 exports.getTelegramId = getTelegramId;
+function getPredictionAverageError(location, onGetData) {
+    const today = new Date();
+    const twoMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
+    let queryStr;
+    if (location === '') {
+        queryStr = `
+            SELECT predict_value, actual_value
+            FROM predict_value
+            WHERE date_time >= '${twoMonthsAgo.getFullYear()}-${twoMonthsAgo.getMonth() + 1}-${twoMonthsAgo.getDate()}' AND date_time <= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()}'`;
+    }
+    else {
+        queryStr = `
+            SELECT predict_value, actual_value
+            FROM predict_value
+            WHERE date_time >= '${twoMonthsAgo.getFullYear()}-${twoMonthsAgo.getMonth() + 1}-${twoMonthsAgo.getDate()}' AND date_time <= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()}' AND location = '${location}'`;
+    }
+    connection.query(queryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        let sumOfError = 0;
+        results.forEach((element) => {
+            sumOfError += Math.abs(element['actual_value'] - element['predict_value']);
+        });
+        onGetData(sumOfError / results.length);
+    });
+}
+exports.getPredictionAverageError = getPredictionAverageError;
+function getResourceRatio(location, onGetData) {
+    const today = new Date();
+    const nextDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    let queryStr;
+    if (location === '') {
+        queryStr = `
+            SELECT limestone, clay, silica_stone, iron_oxide, gypsum, coal
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()} 00:00:00' AND date_time < '${nextDay.getFullYear()}-${nextDay.getMonth()}-${nextDay.getDate()} 00:00:00'`;
+    }
+    else {
+        queryStr = `
+            SELECT limestone, clay, silica_stone, iron_oxide, gypsum, coal
+            FROM co2_emissions
+            WHERE date_time >= '${today.getFullYear()}-${today.getMonth()}-${today.getDate()}' AND date_time < '${nextDay.getFullYear()}-${nextDay.getMonth()}-${nextDay.getDate()} 00:00:00' AND location = '${location}'`;
+    }
+    connection.query(queryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        let sum = 0;
+        let sumOfLimestone = 0;
+        let sumOfClay = 0;
+        let sumOfSilicaStone = 0;
+        let sumOfIronOxide = 0;
+        let sumOfGypsum = 0;
+        let sumOfCoal = 0;
+        results.forEach((element) => {
+            sumOfLimestone += element['limestone'];
+            sumOfClay += element['clay'];
+            sumOfSilicaStone += element['silica_stone'];
+            sumOfIronOxide += element['iron_oxide'];
+            sumOfGypsum += element['gypsum'];
+            sumOfCoal += element['coal'];
+        });
+        sum = sumOfLimestone + sumOfClay + sumOfSilicaStone + sumOfIronOxide + sumOfGypsum + sumOfCoal;
+        const ratioOfLimestone = sumOfLimestone / sum * 100;
+        const ratioOfClay = sumOfClay / sum * 100;
+        const ratioOfSilicaStone = sumOfSilicaStone / sum * 100;
+        const ratioOfIronOxide = sumOfIronOxide / sum * 100;
+        const ratioOfGypsum = sumOfGypsum / sum * 100;
+        const ratioOfCoal = sumOfCoal / sum * 100;
+        onGetData(`${ratioOfClay.toFixed(1)} : ${ratioOfCoal.toFixed(1)} : ${ratioOfGypsum.toFixed(1)} : ${ratioOfIronOxide.toFixed(1)} : ${ratioOfLimestone.toFixed(1)} :  ${ratioOfSilicaStone.toFixed(1)}`);
+    });
+}
+exports.getResourceRatio = getResourceRatio;
 //# sourceMappingURL=db_control.js.map
