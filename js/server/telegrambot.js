@@ -51,7 +51,7 @@ function startTelegramBot() {
     bot.onText(/\/start/, (msg) => {
         const chatId = msg.chat.id;
         db_control_1.insertTelegramId(chatId, () => {
-            bot.sendMessage(chatId, `계정이 등록되었습니다. 앞으로 알림을 받으실 수 있습니다. '/help'라고 입력해서 명령어에 대한 가이드를 받을 수 있습니다.`);
+            bot.sendMessage(chatId, `계정이 등록되었습니다. 앞으로 알림을 받을 수 있습니다. '/help'라고 입력해서 명령어에 대한 가이드를 받을 수 있습니다.`);
             console.log(`register new telegram id : ${chatId}`);
         }, () => {
             bot.sendMessage(chatId, '이미 등록된 계정입니다.');
