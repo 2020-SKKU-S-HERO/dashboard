@@ -30,7 +30,8 @@ class App {
     
     setRouting(): void {
         this.app.get('', (req, res): void => {
-            res.render('index.html');
+            res.writeHead(302, { 'Location': 'emissions/home' });
+            res.end();
         });
         
         this.app.use('/emissions', emissionsRouter);

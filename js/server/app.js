@@ -25,7 +25,8 @@ class App {
     }
     setRouting() {
         this.app.get('', (req, res) => {
-            res.render('index.html');
+            res.writeHead(302, { 'Location': 'emissions/home' });
+            res.end();
         });
         this.app.use('/emissions', emissions_1.emissionsRouter);
         this.app.use('/login', login_1.loginRouter);
