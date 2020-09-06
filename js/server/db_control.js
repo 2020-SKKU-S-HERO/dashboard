@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.getTelegramId = exports.insertTelegramId = exports.insertAndroidToken = exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -299,4 +299,71 @@ function insertResourceInput(data, onInsertData) {
     });
 }
 exports.insertResourceInput = insertResourceInput;
+function insertAndroidToken(data, onInsertData) {
+    const selectQueryStr = `
+        SELECT token
+        FROM android_token
+        WHERE token = '${data.token}'`;
+    const insertQueryStr = `
+        INSERT INTO android_token
+        VALUE('${data.token}', 'administrator');`;
+    connection.query(selectQueryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        if (results.length === 0) {
+            connection.query(insertQueryStr, (error, results, fields) => {
+                if (error) {
+                    throw error;
+                }
+                onInsertData();
+            });
+        }
+        else {
+            onInsertData();
+        }
+    });
+}
+exports.insertAndroidToken = insertAndroidToken;
+function insertTelegramId(telegramId, onSuccessToInsertData, onFailToInsertData) {
+    const selectQueryStr = `
+        SELECT chat_id
+        FROM telegram_chat_id
+        WHERE chat_id = ${telegramId}`;
+    const insertQueryStr = `
+        INSERT INTO telegram_chat_id
+        VALUE(${telegramId}, 'administrator');`;
+    connection.query(selectQueryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        if (results.length === 0) {
+            connection.query(insertQueryStr, (error, results, fields) => {
+                if (error) {
+                    throw error;
+                }
+                onSuccessToInsertData();
+            });
+        }
+        else {
+            onFailToInsertData();
+        }
+    });
+}
+exports.insertTelegramId = insertTelegramId;
+function getTelegramId(authority, onGetData) {
+    const queryStr = `
+        SELECT chat_id
+        FROM telegram_chat_id
+        WHERE authority = '${authority}'`;
+    connection.query(queryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        results.forEach((element) => {
+            onGetData(element['chat_id']);
+        });
+    });
+}
+exports.getTelegramId = getTelegramId;
 //# sourceMappingURL=db_control.js.map

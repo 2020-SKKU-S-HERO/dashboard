@@ -5,6 +5,8 @@ import * as bodyParser from 'body-parser';
 import { emissionsRouter } from './routes/emissions';
 import { loginRouter } from './routes/login';
 import { dataInputRouter } from './routes/datainput';
+import { insertAndroidToken } from './db_control';
+import * as bot from './telegrambot';
 
 class App {
     
@@ -53,6 +55,10 @@ class App {
 export const app: express.Express = new App().app;
 
 app.post('/alert/token', (req: any, res: any): void => {
-    console.log(req.body);
-    res.send('hello');
+    insertAndroidToken(req.body, (): void => {
+    
+    });
+    res.send('token registered');
 });
+
+bot.startTelegramBot();

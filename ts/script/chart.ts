@@ -96,7 +96,7 @@ function renewPastEmissionsChart(): void {
                         selectedMonthComparedToLastYearArrowEl.src = 'images/svg/decrease_arrow.svg';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--decrease');
-                    } else if (data[0] === '0') {
+                    } else if (data === '0') {
                         selectedMonthComparedToLastYearEl.innerText = data + '%';
                         selectedMonthComparedToLastYearArrowEl.src = '';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
@@ -130,7 +130,7 @@ function renewPastEmissionsChart(): void {
                         selectedMonthComparedToLastYearArrowEl.src = 'images/svg/decrease_arrow.svg';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
                         selectedMonthComparedToLastYearEl.parentElement?.classList.add('info-value--decrease');
-                    } else if (data[0] === '0') {
+                    } else if (data === '0') {
                         selectedMonthComparedToLastYearEl.innerText = data + '%';
                         selectedMonthComparedToLastYearArrowEl.src = '';
                         selectedMonthComparedToLastYearEl.parentElement?.classList.remove('info-value--increase');
@@ -283,7 +283,7 @@ function renewTodayEmissionChart(): void {
                 todayComparedToThisMonthAverageArrowEl.src = 'images/svg/decrease_arrow.svg';
                 todayComparedToThisMonthAverageEl.parentElement?.classList.remove('info-value--increase');
                 todayComparedToThisMonthAverageEl.parentElement?.classList.add('info-value--decrease');
-            } else if (data[0] === '0') {
+            } else if (data === '0') {
                 todayComparedToThisMonthAverageEl.innerText = data + '%';
                 todayComparedToThisMonthAverageArrowEl.src = '';
                 todayComparedToThisMonthAverageEl.parentElement?.classList.remove('info-value--increase');
@@ -346,8 +346,8 @@ window.addEventListener('DOMContentLoaded', (): void => {
     
     if (predictionChartEl) {
         const today: Date = new Date();
-        const firstDay: Date = new Date(today.getFullYear(), 0, -13);
-        const lastDay: Date = new Date(today.getFullYear(), 11, 13);
+        const firstDay: Date = new Date(today.getFullYear(), 0, 0);
+        const lastDay: Date = new Date(today.getFullYear(), 11, 10);
         const nextYear: Date = new Date(today.getFullYear() + 1, today.getMonth(), 1, 0, 0, -1);
         
         today.setDate(-12);

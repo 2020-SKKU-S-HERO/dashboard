@@ -290,25 +290,98 @@ export function getThisYearPredictionEmissions(location: string | undefined, onG
 
 export function insertResourceInput(data: any, onInsertData: (() => void)): void {
     const now: Date = new Date();
-    const dateStr: string = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
+    const dateStr: string = `${ now.getFullYear() }-${ now.getMonth() + 1 }-${ now.getDate() }`;
     const deleteQueryStr: string = `
         DELETE FROM resource_input
-        WHERE date = '${dateStr}';`;
+        WHERE date = '${ dateStr }';`;
     const insertQueryStr: string = `
         INSERT INTO resource_input
-        VALUE('${dateStr}', ${data.location}, ${data.limestone}, ${data.clay}, ${data.silicaStone}, ${data.ironOxide}, ${data.gypsum}, ${data.coal});`;
-        
+        VALUE('${ dateStr }', ${ data.location }, ${ data.limestone }, ${ data.clay }, ${ data.silicaStone }, ${ data.ironOxide }, ${ data.gypsum }, ${ data.coal });`;
+    
     connection.query(deleteQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
         if (error) {
             throw error;
         }
-    
+        
         connection.query(insertQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
             if (error) {
                 throw error;
             }
-        
+            
             onInsertData();
+        });
+    });
+}
+
+export function insertAndroidToken(data: any, onInsertData: (() => void)): void {
+    const selectQueryStr: string = `
+        SELECT token
+        FROM android_token
+        WHERE token = '${ data.token }'`;
+    const insertQueryStr: string = `
+        INSERT INTO android_token
+        VALUE('${ data.token }', 'administrator');`;
+    
+    connection.query(selectQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+        
+        if (results.length === 0) {
+            connection.query(insertQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+                if (error) {
+                    throw error;
+                }
+                
+                onInsertData();
+            });
+        } else {
+            onInsertData();
+        }
+    });
+}
+
+export function insertTelegramId(telegramId: number, onSuccessToInsertData: () => void, onFailToInsertData: () => void): void {
+    const selectQueryStr: string = `
+        SELECT chat_id
+        FROM telegram_chat_id
+        WHERE chat_id = ${ telegramId }`;
+    const insertQueryStr: string = `
+        INSERT INTO telegram_chat_id
+        VALUE(${ telegramId }, 'administrator');`;
+    
+    connection.query(selectQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+        
+        if (results.length === 0) {
+            connection.query(insertQueryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+                if (error) {
+                    throw error;
+                }
+                
+                onSuccessToInsertData();
+            });
+        } else {
+            onFailToInsertData();
+        }
+    });
+}
+
+export function getTelegramId(authority: string, onGetData: (telegramId: number) => void): void {
+    const queryStr: string = `
+        SELECT chat_id
+        FROM telegram_chat_id
+        WHERE authority = '${authority}'`;
+    
+    connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+        
+        results.forEach((element: any): void => {
+            onGetData(element['chat_id']);
         });
     });
 }

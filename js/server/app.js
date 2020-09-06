@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const emissions_1 = require("./routes/emissions");
 const login_1 = require("./routes/login");
 const datainput_1 = require("./routes/datainput");
+const db_control_1 = require("./db_control");
+const bot = require("./telegrambot");
 class App {
     constructor() {
         this.app = express();
@@ -42,7 +44,9 @@ class App {
 }
 exports.app = new App().app;
 exports.app.post('/alert/token', (req, res) => {
-    console.log(req.body);
-    res.send('hello');
+    db_control_1.insertAndroidToken(req.body, () => {
+    });
+    res.send('token registered');
 });
+bot.startTelegramBot();
 //# sourceMappingURL=app.js.map
