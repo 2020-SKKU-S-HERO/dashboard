@@ -66,21 +66,14 @@ export function getThisYearEmissions(location: string | undefined, onGetEmission
     });
 }
 
-export function getThisYearPermissibleEmissions(location: string | undefined, onGetEmissions: (data: number) => void): void {
+export function getThisYearPermissibleEmissions(onGetEmissions: (data: number) => void): void {
     const today: Date = new Date();
     let queryStr: string;
     
-    if (location) {
-        queryStr = `
-            SELECT emissions_limit
-            FROM permissible_emissions_limit
-            WHERE year = '${ today.getFullYear() }' AND location = '${ location }';`;
-    } else {
-        queryStr = `
-            SELECT emissions_limit
-            FROM permissible_emissions_limit
-            WHERE year = '${ today.getFullYear() }';`;
-    }
+    queryStr = `
+        SELECT emissions_limit
+        FROM permissible_emissions_limit
+        WHERE year = '${ today.getFullYear() }';`;
     
     connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
         if (error) {
@@ -335,7 +328,7 @@ export function insertAndroidToken(data: any, onInsertData: (() => void)): void 
     });
 }
 
-export function insertTelegramId(telegramId: number, onSuccessToInsertData: () => void, onFailToInsertData: () => void): void {
+export function insertTelegramId(telegramId: number, onSuccessToInsertId: () => void, onFailToInsertId: () => void): void {
     const selectQueryStr: string = `
         SELECT chat_id
         FROM telegram_chat_id
@@ -355,11 +348,25 @@ export function insertTelegramId(telegramId: number, onSuccessToInsertData: () =
                     throw error;
                 }
                 
-                onSuccessToInsertData();
+                onSuccessToInsertId();
             });
         } else {
-            onFailToInsertData();
+            onFailToInsertId();
         }
+    });
+}
+
+export function deleteTelegramId(telegramId: number, onDeleteId: () => void): void {
+    const queryStr: string = `
+        DELETE FROM telegram_chat_id
+        WHERE chat_id = ${telegramId}`;
+    
+    connection.query(queryStr, (error: MysqlError | null, results: any, fields: FieldInfo | undefined): void => {
+        if (error) {
+            throw error;
+        }
+        
+        onDeleteId();
     });
 }
 

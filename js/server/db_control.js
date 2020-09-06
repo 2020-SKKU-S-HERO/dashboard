@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTelegramId = exports.insertTelegramId = exports.insertAndroidToken = exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.getTelegramId = exports.deleteTelegramId = exports.insertTelegramId = exports.insertAndroidToken = exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -64,21 +64,13 @@ function getThisYearEmissions(location, onGetEmissions) {
     });
 }
 exports.getThisYearEmissions = getThisYearEmissions;
-function getThisYearPermissibleEmissions(location, onGetEmissions) {
+function getThisYearPermissibleEmissions(onGetEmissions) {
     const today = new Date();
     let queryStr;
-    if (location) {
-        queryStr = `
-            SELECT emissions_limit
-            FROM permissible_emissions_limit
-            WHERE year = '${today.getFullYear()}' AND location = '${location}';`;
-    }
-    else {
-        queryStr = `
-            SELECT emissions_limit
-            FROM permissible_emissions_limit
-            WHERE year = '${today.getFullYear()}';`;
-    }
+    queryStr = `
+        SELECT emissions_limit
+        FROM permissible_emissions_limit
+        WHERE year = '${today.getFullYear()}';`;
     connection.query(queryStr, (error, results, fields) => {
         if (error) {
             throw error;
@@ -318,7 +310,7 @@ function insertAndroidToken(data, onInsertData) {
     });
 }
 exports.insertAndroidToken = insertAndroidToken;
-function insertTelegramId(telegramId, onSuccessToInsertData, onFailToInsertData) {
+function insertTelegramId(telegramId, onSuccessToInsertId, onFailToInsertId) {
     const selectQueryStr = `
         SELECT chat_id
         FROM telegram_chat_id
@@ -335,15 +327,27 @@ function insertTelegramId(telegramId, onSuccessToInsertData, onFailToInsertData)
                 if (error) {
                     throw error;
                 }
-                onSuccessToInsertData();
+                onSuccessToInsertId();
             });
         }
         else {
-            onFailToInsertData();
+            onFailToInsertId();
         }
     });
 }
 exports.insertTelegramId = insertTelegramId;
+function deleteTelegramId(telegramId, onDeleteId) {
+    const queryStr = `
+        DELETE FROM telegram_chat_id
+        WHERE chat_id = ${telegramId}`;
+    connection.query(queryStr, (error, results, fields) => {
+        if (error) {
+            throw error;
+        }
+        onDeleteId();
+    });
+}
+exports.deleteTelegramId = deleteTelegramId;
 function getTelegramId(authority, onGetData) {
     const queryStr = `
         SELECT chat_id

@@ -57,7 +57,7 @@ router.post('/thisYearEmissions', (req, res) => {
 });
 router.post('/thisYearRemainingPermissibleEmissions', (req, res) => {
     const location = req.body.location;
-    db_control.getThisYearPermissibleEmissions(location, (permissibleEmissions) => {
+    db_control.getThisYearPermissibleEmissions((permissibleEmissions) => {
         db_control.getThisYearEmissions(location, (emissions) => {
             res.send((permissibleEmissions - emissions).toString());
         });
