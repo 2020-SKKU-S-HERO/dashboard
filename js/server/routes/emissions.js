@@ -57,8 +57,10 @@ router.post('/thisYearEmissions', (req, res) => {
 });
 router.post('/thisYearRemainingPermissibleEmissions', (req, res) => {
     const location = req.body.location;
-    db_control.getThisYearRemainingPermissibleEmissions(location, (data) => {
-        res.send(data.toString());
+    db_control.getThisYearPermissibleEmissions(location, (permissibleEmissions) => {
+        db_control.getThisYearEmissions(location, (emissions) => {
+            res.send((permissibleEmissions - emissions).toString());
+        });
     });
 });
 router.post('/todayComparedToThisMonthAverageEmissions', (req, res) => {

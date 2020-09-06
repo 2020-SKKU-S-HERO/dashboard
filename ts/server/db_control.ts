@@ -66,7 +66,7 @@ export function getThisYearEmissions(location: string | undefined, onGetEmission
     });
 }
 
-export function getThisYearRemainingPermissibleEmissions(location: string | undefined, onGetEmissions: ((data: number) => void)): void {
+export function getThisYearPermissibleEmissions(location: string | undefined, onGetEmissions: (data: number) => void): void {
     const today: Date = new Date();
     let queryStr: string;
     
@@ -87,13 +87,7 @@ export function getThisYearRemainingPermissibleEmissions(location: string | unde
             throw error;
         }
         
-        getThisYearEmissions(location, (thisYearData: number): void => {
-            try {
-                onGetEmissions(results[0]['emissions_limit'] - thisYearData);
-            } catch (e) {
-                onGetEmissions(0);
-            }
-        });
+        onGetEmissions(results[0]['emissions_limit']);
     });
 }
 

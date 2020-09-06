@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTelegramId = exports.insertTelegramId = exports.insertAndroidToken = exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearRemainingPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
+exports.getTelegramId = exports.insertTelegramId = exports.insertAndroidToken = exports.insertResourceInput = exports.getThisYearPredictionEmissions = exports.insertWeatherData = exports.getNowWeatherData = exports.getSelectedYearEmissions = exports.getSelectedMonthEmissions = exports.getTheMostPastEmissionMonth = exports.getTodayRatioComparedToThisMonthAverage = exports.getThisYearPermissibleEmissions = exports.getThisYearEmissions = exports.getTodayEmissions = void 0;
 const mysql = require("mysql");
 const db_info = require("./secret/db_info");
 const connection = mysql.createConnection(db_info.info);
@@ -64,7 +64,7 @@ function getThisYearEmissions(location, onGetEmissions) {
     });
 }
 exports.getThisYearEmissions = getThisYearEmissions;
-function getThisYearRemainingPermissibleEmissions(location, onGetEmissions) {
+function getThisYearPermissibleEmissions(location, onGetEmissions) {
     const today = new Date();
     let queryStr;
     if (location) {
@@ -83,17 +83,10 @@ function getThisYearRemainingPermissibleEmissions(location, onGetEmissions) {
         if (error) {
             throw error;
         }
-        getThisYearEmissions(location, (thisYearData) => {
-            try {
-                onGetEmissions(results[0]['emissions_limit'] - thisYearData);
-            }
-            catch (e) {
-                onGetEmissions(0);
-            }
-        });
+        onGetEmissions(results[0]['emissions_limit']);
     });
 }
-exports.getThisYearRemainingPermissibleEmissions = getThisYearRemainingPermissibleEmissions;
+exports.getThisYearPermissibleEmissions = getThisYearPermissibleEmissions;
 function getTodayRatioComparedToThisMonthAverage(location, onGetEmissions) {
     const today = new Date();
     const nextMonth = new Date(today.getFullYear(), today.getMonth() + 2, 1);
