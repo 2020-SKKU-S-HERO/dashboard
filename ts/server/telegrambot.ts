@@ -15,6 +15,7 @@ function alertEvent(): void {
     const INSPECTION_INTERVAL: number = 10000;
     
     let prePercentage: number = 0;
+    let isFirst: boolean = true;
     
     setInterval((): void => {
         // 배출량이 허용 배출량의 10%의 배수가 될때마다 알림
@@ -28,9 +29,11 @@ function alertEvent(): void {
                     prePercentage += 0.1;
                 }
     
-                if (doAlert) {
+                if (doAlert && !isFirst) {
                     sendTelegramMessage('administrator', `올해 배출량이 허용 배출량의 ${(prePercentage * 100).toFixed(0)}%를 초과하였습니다.`);
                 }
+                
+                isFirst = false;
             });
         });
     }, INSPECTION_INTERVAL);
