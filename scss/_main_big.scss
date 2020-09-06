@@ -1,6 +1,7 @@
 @import "main_common";
 
 .global-nav-container {
+  position: relative;
 
   .global-nav {
 
@@ -130,4 +131,9 @@ main {
       font-size: 30px;
     }
   }
+}
+
+.loading {
+  width: calc(100% - #{$sidebarWidth} - 1px);
+  left: $sidebarWidth;
 }

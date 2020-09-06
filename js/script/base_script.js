@@ -29,4 +29,8 @@ window.addEventListener('resize', () => {
 window.addEventListener('DOMContentLoaded', () => {
     setSidebarStatus();
 });
+window.addEventListener('load', () => {
+    var _a;
+    (_a = document.querySelector('.loading')) === null || _a === void 0 ? void 0 : _a.classList.add('loading--finish');
+});
 //# sourceMappingURL=base_script.js.map

@@ -33,3 +33,7 @@ window.addEventListener('resize', (): void => {
 window.addEventListener('DOMContentLoaded', (): void => {
     setSidebarStatus();
 });
+
+window.addEventListener('load', (): void => {
+    document.querySelector('.loading')?.classList.add('loading--finish');
+});

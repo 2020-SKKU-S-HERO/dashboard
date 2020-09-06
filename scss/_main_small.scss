@@ -9,16 +9,15 @@
 }
 
 main {
-  position: absolute;
   top: $headerHeight;
   
   .sidebar-nav {
     position: fixed;
     height: calc(100vh - #{$headerHeight});
     width: 100%;
+    top: $headerHeight;
     left: -100%;
     transition-duration: 0.5s;
-    z-index: 3;
   }
   
   .sidebar--extended {
@@ -78,4 +77,8 @@ main {
       font-size: 22px;
     }
   }
+}
+
+.loading {
+  width: 100%;
 }
