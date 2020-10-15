@@ -6,6 +6,7 @@ const db_control = require("../db_control");
 const http = require("http");
 const db_control_1 = require("../db_control");
 const mqtt = require("mqtt");
+const gcp_info_1 = require("../secret/gcp_info");
 const router = express.Router();
 exports.emissionsRouter = router;
 let censorStatus = {
@@ -169,7 +170,7 @@ router.post('/weather', (req, res) => {
     });
 });
 router.post('/mqtt', (req, res) => {
-    const host = '34.64.238.233';
+    const host = gcp_info_1.gcpInfo.ip;
     const mqttUri = `mqtt://${host}`;
     const topic = 'ctrl';
     const client = mqtt.connect(mqttUri);

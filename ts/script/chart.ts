@@ -1,4 +1,4 @@
-import { setDataByPostHttpRequest, locationInfo, info } from './common.js';
+import { setDataByPostHttpRequest, locationInfo, info, gcpInfo } from './common.js';
 
 // 상단 카드
 const thisYearEmissionsEl: HTMLElement | null = document.getElementById('this-year-total-emissions');
@@ -189,13 +189,13 @@ function setEmissionChartInterval(fromDateString: string, monthInterval: number,
         case Interval.DAILY:
             toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + monthInterval, 1, -8, 0, -1);
             fromDate.setHours(-4);
-            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=1m&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ locationInfo.pastDailyEmissionsPanelId }`;
+            chartEl.src = `http://${gcpInfo.ip}:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=1m&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ locationInfo.pastDailyEmissionsPanelId }`;
             break;
         
         case Interval.MONTHLY:
             toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + monthInterval, -10, 0, 0, -1);
             fromDate.setDate(-12);
-            chartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=1m&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ locationInfo.pastMonthlyEmissionsPanelId }`;
+            chartEl.src = `http://${gcpInfo.ip}:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=1m&from=${ fromDate.valueOf() }&to=${ toDate.valueOf() }&theme=light&panelId=${ locationInfo.pastMonthlyEmissionsPanelId }`;
             break;
     }
 }
@@ -388,7 +388,7 @@ window.addEventListener('DOMContentLoaded', (): void => {
         
         today.setHours(0, 0, 0);
         
-        todayEmissionsChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ locationInfo.todayEmissionsPanelId }`;
+        todayEmissionsChartEl.src = `http://${gcpInfo.ip}:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ locationInfo.todayEmissionsPanelId }`;
     }
     
     if (predictionChartEl) {
@@ -398,7 +398,7 @@ window.addEventListener('DOMContentLoaded', (): void => {
         
         today.setDate(-12);
         
-        predictionChartEl.src = `http://34.64.238.233:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${ firstDay.valueOf() }&to=${ lastDay.valueOf() }&theme=light&panelId=${ locationInfo.predictionEmissionsPanelId }`;
+        predictionChartEl.src = `http://${gcpInfo.ip}:3000/d-solo/i7n74InMk/emissions?orgId=1&refresh=10s&from=${ firstDay.valueOf() }&to=${ lastDay.valueOf() }&theme=light&panelId=${ locationInfo.predictionEmissionsPanelId }`;
     }
     
     if (resourceChartEl) {
@@ -406,7 +406,7 @@ window.addEventListener('DOMContentLoaded', (): void => {
         
         today.setHours(0, 0, 0);
         
-        resourceChartEl.src = `http://34.64.238.233:3000/d-solo/zze7bhDMk/resource?orgId=1&refresh=10s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ locationInfo.resourcePanelId }`;
+        resourceChartEl.src = `http://${gcpInfo.ip}:3000/d-solo/zze7bhDMk/resource?orgId=1&refresh=10s&from=${ today.valueOf() }&to=now&theme=light&panelId=${ locationInfo.resourcePanelId }`;
     }
     
     setSelectorOptions();

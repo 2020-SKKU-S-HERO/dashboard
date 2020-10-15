@@ -3,6 +3,10 @@ const isWorkplace1: HTMLElement | null = document.getElementById('emissions-work
 const isWorkplace2: HTMLElement | null = document.getElementById('emissions-workplace2');
 const isWorkplace3: HTMLElement | null = document.getElementById('emissions-workplace3');
 
+export const gcpInfo = {
+    ip: '34.64.84.89'
+}
+
 export const info: any = {
     home: {
         location: '',

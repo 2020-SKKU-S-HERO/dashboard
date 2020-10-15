@@ -5,6 +5,7 @@ import { ClientRequest, IncomingMessage } from 'http';
 import * as http from 'http';
 import { getNowWeatherData, getPredictionAverageError, getResourceRatio, insertWeatherData } from '../db_control';
 import * as mqtt from 'mqtt';
+import { gcpInfo } from '../secret/gcp_info';
 
 const router: express.Router = express.Router();
 export { router as emissionsRouter };
@@ -201,7 +202,7 @@ router.post('/weather', (req: any, res: any): void => {
 });
 
 router.post('/mqtt', (req: any, res: any): void => {
-    const host: string = '34.64.238.233';
+    const host: string = gcpInfo.ip;
     const mqttUri: string = `mqtt://${ host }`;
     const topic: string = 'ctrl';
     

@@ -2,6 +2,9 @@ const isHome = document.getElementById('emissions-home');
 const isWorkplace1 = document.getElementById('emissions-workplace1');
 const isWorkplace2 = document.getElementById('emissions-workplace2');
 const isWorkplace3 = document.getElementById('emissions-workplace3');
+export const gcpInfo = {
+    ip: '34.64.84.89'
+};
 export const info = {
     home: {
         location: '',
